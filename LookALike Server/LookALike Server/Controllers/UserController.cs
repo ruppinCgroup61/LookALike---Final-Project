@@ -32,6 +32,14 @@ namespace LookALike_Server.Controllers
             return NumberOfInsert;
         }
 
+        // POST api/<UsersController>
+        [HttpPost]
+        [Route("login")]
+        public User Login([FromBody] User u)
+        {
+            return u.UserLogin();
+        }
+
         // PUT api/<UserController>/5
         [HttpPut("{Email}")]
         public int Put([FromBody] User u)

@@ -50,14 +50,14 @@
             return dbs.ReadUsers();
         }
 
-        //public User UserLogin()
-        //{
+        public User UserLogin()
+        {
 
-        //    List<User> AllUsers = Read();
-        //    User FindUserInList = AllUsers.Find(user => user.Email == this.Email && user.Password == this.Password);
-        //    return FindUserInList;
+            List<User> AllUsers = Read();
+            User FindUserInList = AllUsers.Find(user => user.Email == this.Email && user.Password == this.Password);
+            return FindUserInList;
 
-        //}
+        }
 
         public int UpdateUser()
         {
