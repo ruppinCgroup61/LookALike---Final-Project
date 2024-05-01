@@ -1,0 +1,124 @@
+body {
+    font-family: "Courier New", Monospace;
+    /* Font family similar to ASOS */
+    background-color: white;
+    /* Light grey background */
+    margin: 0;
+    padding: 20px;
+}
+
+.form-container {
+    background-color: white;
+    max-width: 400px;
+    padding: 5px;
+
+}
+
+h2 {
+    color: #000;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+input[type="submit"] {
+    border: 1px solid black;
+    background-color: #fefefe;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    background-color: white;
+    /* אפור בינוני */
+    color: black;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.submit {
+    width: 60%;
+    background-color: rgb(71, 68, 68);
+    /* אפור בינוני */
+    color: white;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-left: 15px;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    /* מיקום מהחלק העליון של המסך */
+    left: 20px;
+    /* מיקום מהצד השמאלי של המסך */
+    background: #fff;
+    /* צבע רקע לבן, תוכל לשנות אם רוצה */
+    border: 2px solid #000;
+    /* גבול עגול */
+    border-radius: 50%;
+    /* עיגול הכפתור */
+    width: 30px;
+    /* קוטר העיגול */
+    height: 30px;
+    /* קוטר העיגול */
+    display: flex;
+    justify-content: center;
+    /* ממרכז את האייקון באופן אופקי */
+    align-items: center;
+    /* ממרכז את האייקון באופן אנכי */
+    cursor: pointer;
+    padding: 0;
+    /* הסרת ריפוד במידה ויש */
+    font-size: 16px;
+    /* גודל החץ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* צל עדין לכפתור */
+}
+
+.footer {
+    width: 100%;
+    padding: 20px 0;
+
+    text-align: center;
+    /* ממרכז את הלוגו */
+
+}
+
+.logo {
+    height: 50px;
+    /* גובה הלוגו */
+    width: auto;
+    /* שמירה על יחס הגדלים */
+}
