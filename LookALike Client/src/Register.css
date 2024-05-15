@@ -1,124 +1,197 @@
-body {
-    font-family: "Courier New", Monospace;
-    /* Font family similar to ASOS */
-    background-color: white;
-    /* Light grey background */
+/* Reset CSS */
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+/* Body styles */
+body {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+}
+
+/* Container styles */
+.container {
+    max-width: 340px;
+    margin: 0 auto;
     padding: 20px;
+    flex:1;
 }
 
-.form-container {
-    background-color: white;
-    max-width: 400px;
-    padding: 5px;
+/* Header styles */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
 
 }
 
-h2 {
-    color: #000;
+.header h2 {
+    font-size: 38px;
+    font-weight: bold; /* Added font weight */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Back button styles */
+.back-button {
+    position: relative;
+    top: 48px; /* Adjusted position */
+    left: 5px;
+    background-color: #ffffff;
+    border: 1px solid #424242;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.back-button svg {
+    width: 20px;
+    height: 20px;
+    fill: #424242;
+}
+
+/* Form styles */
+.form {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
     margin-bottom: 20px;
 }
 
-label {
-    display: block;
-    margin-top: 10px;
-    color: #333;
-    font-size: 16px;
+.submit-button[disabled] {
+    background-color: #CCCCCC; /* Grey background color */
+    color: #666666; /* Dark grey text color */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+  }
+
+.InputBlock label {
     font-weight: bold;
+    display: block; /* Added to move labels above input */
+    margin-bottom: 2px; /* Added margin */
+    text-align: left;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="date"],
-input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-input[type="submit"] {
-    border: 1px solid black;
-    background-color: #fefefe;
-    border-radius: 4px;
-}
-
-button {
-    width: 100%;
-    background-color: white;
-    /* אפור בינוני */
-    color: black;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-.submit {
-    width: 60%;
-    background-color: rgb(71, 68, 68);
-    /* אפור בינוני */
-    color: white;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 30px;
-    margin-left: 15px;
-}
-
-.back-button {
+.error {
+    font-size: 12px; /* Reduced font size */
+    color: red; /* Changed color to red */
     position: absolute;
-    top: 20px;
-    /* מיקום מהחלק העליון של המסך */
-    left: 20px;
-    /* מיקום מהצד השמאלי של המסך */
-    background: #fff;
-    /* צבע רקע לבן, תוכל לשנות אם רוצה */
-    border: 2px solid #000;
-    /* גבול עגול */
-    border-radius: 50%;
-    /* עיגול הכפתור */
-    width: 30px;
-    /* קוטר העיגול */
-    height: 30px;
-    /* קוטר העיגול */
+    bottom: -20px; /* Adjusted position */
+    left: 0;
+}
+
+/* Modified InputBlock styles */
+.InputBlock {
+    position: relative;
+}
+
+.InputBlock input[type="text"],
+.InputBlock input[type="email"],
+.InputBlock input[type="password"],
+.InputBlock input[type="tel"],
+.InputBlock input[type="date"],
+.InputBlock input[type="file"] {
+    width: calc(100% - 20px); /* Adjusted width */
+    width: 300px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+    padding: 8px;
+    border: 2px solid #D2D2D2; /* Adjusted border color */
+    background-color: #ffffff; /* Added white background */
+    border-radius: 2px;
+    margin-top: 5px; /* Added margin top */
+}
+
+.file-input-container {
+    position: relative;
     display: flex;
-    justify-content: center;
-    /* ממרכז את האייקון באופן אופקי */
     align-items: center;
-    /* ממרכז את האייקון באופן אנכי */
+}
+
+.file-icon {
+    margin-right: 6px;
+    color:#242424;
+
+}
+
+.custom-file-input {
+    width: 300px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+    display: inline-block;
+    padding: 3px 15px;
+    background-color: #ffffff;
+    color:#242424;
+    border: 2px solid #D2D2D2;
+    border-radius: 2px;
     cursor: pointer;
-    padding: 0;
-    /* הסרת ריפוד במידה ויש */
-    font-size: 16px;
-    /* גודל החץ */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    /* צל עדין לכפתור */
 }
 
-.footer {
-    width: 100%;
-    padding: 20px 0;
+.file-text {
+    margin-left: 5px;
+    color:#242424;
+}
+  
 
+/* Password input container */
+.password-input-container {
+    position: relative;
+}
+
+.password-input-container input[type="password"] {
+    padding-right: 40px;
+}
+
+/* Password toggle icon */
+.password-toggle-icon {
+    position: absolute;
+    top: 60%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color:#D2D2D2
+}
+
+/* Submit button styles */
+.submit-button {
+    width: 80%;
+    background-color: #242424; /* Adjusted button color */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Added margin top */
+}
+
+.submit-button:hover {
+    background-color: #333333;
+}
+
+/* Footer styles */
+.BottomDiv {
     text-align: center;
-    /* ממרכז את הלוגו */
-
+    margin-top: 20px;
 }
 
-.logo {
-    height: 50px;
-    /* גובה הלוגו */
-    width: auto;
-    /* שמירה על יחס הגדלים */
+.BottomDiv h2 {
+    font-size: 27px;
+    font-family: "El Messiri", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
+
+

@@ -2,8 +2,8 @@
 {
     public class UserFollowers
     {
-        string follower_Email;
-        string following_Email;
+        string follower_Email; //מי שעוקב
+        string following_Email; //אחרי מי עוקב
         static List<UserFollowers> UserFollowers_List = new List<UserFollowers>();
 
         public UserFollowers(string follower_Email, string following_Email)

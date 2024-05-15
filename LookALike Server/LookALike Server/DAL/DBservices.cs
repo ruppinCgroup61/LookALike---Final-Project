@@ -367,8 +367,16 @@ public class DBservices
             while (dataReader.Read())
             {
                 Item i = new Item();
+                string item_code_flag = dataReader["Item_Code"].ToString();
                 i.Item_ID= Convert.ToInt32(dataReader["Item_ID"]);
-                i.Item_Code = Convert.ToInt32(dataReader["Item_Code"]);
+                if(item_code_flag == "")
+                {
+                    i.Item_Code = 999;
+                }
+                else
+                {
+                    i.Item_Code = Convert.ToInt32(dataReader["Item_Code"]);
+                }
                 i.Name = dataReader["Name"].ToString();
                 i.Image = dataReader["Image"].ToString();
                 i.Color_Code = dataReader["Color_Code"].ToString();
@@ -770,6 +778,83 @@ public class DBservices
 
         cmd.Parameters.AddWithValue("@Follower_Email", userFollowers.Follower_Email);
         cmd.Parameters.AddWithValue("@Following_Email", userFollowers.Following_Email);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method reads Users from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<ClothingAd> ReadClothingAds()
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<ClothingAd> ClothingAdsList = new List<ClothingAd>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateClothingAdsCommandWithStoredProcedureWithoutParameters("sp_LAL_ReadAllAds", con);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                ClothingAd ca = new ClothingAd();
+                ca.Ad_ID = Convert.ToInt32(dataReader["Ad_ID"]);
+                ca.Price = Convert.ToDouble(dataReader["Price"]);
+                ca.Address = dataReader["Address"].ToString();
+                ca.Ad_Status = dataReader["Ad_Status"].ToString();
+                ca.User_Email = dataReader["User_Email"].ToString();
+                ca.Image1 = dataReader["Image1"].ToString();
+                ca.Image2 = dataReader["Image2"].ToString();
+                ca.Image3 = dataReader["Image3"].ToString();
+                ClothingAdsList.Add(ca);
+            }
+            return ClothingAdsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateClothingAdsCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
 
         return cmd;
     }

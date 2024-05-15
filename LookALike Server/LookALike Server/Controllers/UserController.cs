@@ -1,10 +1,12 @@
 ﻿using LookALike_Server.Class;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace LookALike_Server.Controllers
 {
+    [EnableCors("myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -32,13 +34,25 @@ namespace LookALike_Server.Controllers
             return NumberOfInsert;
         }
 
-        // POST api/<UsersController>
-        [HttpPost]
-        [Route("login")]
-        public User Login([FromBody] User u)
+        // PUT api/<UserController>/login
+        [HttpPut("login")]
+        public IActionResult Login([FromBody] User userCredentials)
         {
-            return u.UserLogin();
+            // Authenticate user
+            var authenticatedUser = userCredentials.UserLogin();
+
+            if (authenticatedUser != null)
+            {
+                // User authenticated successfully, return user data
+                return Ok(authenticatedUser);
+            }
+            else
+            {
+                // Authentication failed, return unauthorized status
+                return Unauthorized();
+            }
         }
+
 
         // PUT api/<UserController>/5
         [HttpPut("{Email}")]

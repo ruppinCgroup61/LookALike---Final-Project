@@ -1,0 +1,111 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  .top-div {
+    display: flex;
+    /* align-items: center; */
+    margin-bottom: 20px;
+    text-align: center;
+    justify-content: space-between;
+    gap: 13px;
+    position: sticky;
+    top:0;
+  }
+
+  .welcome-text {
+    font-size: 25px;
+  }
+  
+  .user-circle {
+    min-width: 60px;
+    height: 60px;
+    background-color: black;
+    border-radius: 50%;
+    background-image: url('/Images/Shir.png');
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.78); /* Add drop shadow */
+  }
+  
+  .IconDiv {
+    /* border: 2px solid transparent; Remove black border */
+    border-radius: 60px; /* Change border radius */
+    padding: 10px; /* Add padding as needed */
+    background-color: #fff; /* Add background color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%; /* Adjust width to fit iPhone 13 Pro screen */
+    margin: 0 auto; /* Center the navbar */
+  }
+  
+  
+  .center-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .block {
+    position: relative;
+    width: 300px;
+    height: 100px;
+    background-color: #eee;
+    margin-bottom: 20px;
+    padding: 30px;
+    display: flex;
+    text-align: left;
+    margin-right: 30px;
+    background-size: cover; /* Ensures the image covers the entire block */
+    background-position: center; /* Centers the image */
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: 0; /* Start from the bottom */
+    left: 0; /* Start from the left */
+    width: 100%; /* Take full width */
+    height: 20px; /* Set height as desired */
+    background-color: rgb(255, 255, 255,0.9); /* White color */
+  }
+  
+  .block p {
+    font-family: "Tenor Sans", sans-serif;
+    position: absolute;
+    bottom: 0; /* Start from the bottom */
+    left: 0; /* Start from the left */
+    font-weight: 400;
+    color: black;
+  }
+
+  .block:nth-child(1) {
+    background-image: url('/Images/wardrobe.jpeg'); /* Specify the URL of your image for the first block */
+    opacity: 0.8;
+  }
+  
+  .block:nth-child(2) {
+    background-image: url('/Images/hangerBanner.jpeg'); /* Specify the URL of your image for the first block */
+    opacity: 0.8;
+  }
+  .block:nth-child(3) {
+    background-image: url('/Images/clothings.jpeg'); /* Specify the URL of your image for the first block */
+    opacity: 0.8;
+  }
+  .block:nth-child(4) {
+    background-image: url('/Images/create\ look.jpeg'); /* Specify the URL of your image for the first block */
+    opacity: 0.8;
+  }
+
+  .logo img{
+    width: 50px;
+    height: 50px;
+  }
+
+
+  

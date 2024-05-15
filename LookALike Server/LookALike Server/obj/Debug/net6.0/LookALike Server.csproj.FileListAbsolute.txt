@@ -73,3 +73,9 @@ C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALik
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike---Final-Project\LookALike Server\LookALike Server\obj\Debug\net6.0\LookALike Server.csproj.CopyComplete
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike---Final-Project\LookALike Server\LookALike Server\obj\Debug\net6.0\LookALike Server.genruntimeconfig.cache
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike---Final-Project\LookALike Server\LookALike Server\obj\Debug\net6.0\ref\LookALike Server.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Debug\net6.0\System.Web.Cors.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Debug\net6.0\System.Web.Http.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Debug\net6.0\System.Web.Http.Cors.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
