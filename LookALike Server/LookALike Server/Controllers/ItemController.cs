@@ -18,10 +18,10 @@ namespace LookALike_Server.Controllers
         }
 
         // GET api/<ItemController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{email}")]
+        public ActionResult<List<Item>> GetAllItemsByUser(string email)
         {
-            return "value";
+            Item listOfItems = new Item("", email);
         }
 
         // POST api/<ItemController>

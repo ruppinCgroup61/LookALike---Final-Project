@@ -1,0 +1,61 @@
+.clothing-list {
+  position: absolute;
+  width: 90%;
+  top: 50px;
+  left: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 20px; /* פחות מרווחים בין הפריטים */
+}
+
+.clothing-item {
+  box-sizing: border-box;
+  margin: 10px auto;
+  position: relative; /* נגדיר את המיקום של האייקון כתלוי במיקום הימני תחתון של התמונה */
+}
+
+.clothing-image img {
+  width: 100%;
+  height: 190px;
+  display: block;
+  margin-bottom: 10px;
+  
+}
+
+.clothing-details {
+  padding: 2px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.clothing-details p {
+  margin: 5px 0;
+  color: black;
+}
+
+.fav {
+  position: absolute;
+  bottom: 75px;
+  right: 10px;
+  z-index: 1; 
+}
+
+.opt {
+  position: absolute;
+  bottom: 75px;
+  left: 10px;
+  z-index: 1; 
+}
+
+.popup {
+  position: absolute;
+  bottom: 100px;
+  left: 10px;
+  z-index: 1;
+}
+
+.del_sale_icon {
+  position: relative;
+  top: 2.5px; /* הזזת האייקונים למטה */
+}

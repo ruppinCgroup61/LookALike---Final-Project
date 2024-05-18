@@ -8,13 +8,12 @@
   
   .top-div {
     display: flex;
-    /* align-items: center; */
     margin-bottom: 20px;
     text-align: center;
     justify-content: space-between;
     gap: 13px;
     position: sticky;
-    top:0;
+    top: 0;
   }
 
   .welcome-text {
@@ -24,13 +23,13 @@
   .user-circle {
     min-width: 60px;
     height: 60px;
-    background-color: black;
+    background-color: transparent; /* Remove background color */
     border-radius: 50%;
-    background-image: url('/Images/Shir.png');
     background-size: cover;
     background-position: center;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.78); /* Add drop shadow */
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.78);
   }
+  
   
   .IconDiv {
     /* border: 2px solid transparent; Remove black border */

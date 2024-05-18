@@ -28,6 +28,7 @@ const Register = () => {
   const [wrongEmailAlert, setWrongEmailAlert] = useState(false);
   const [wrongNameAlert, setWrongNameAlert] = useState(false);
   const [wrongPhoneNumberAlert, setWrongPhoneNumberAlert] = useState(false);
+  const [EmailAlreadyExsist, setEmailAlreadyExsistAlert] = useState(false);
   const navigateTo = useNavigate();
 
   const handleChange = (event) => {
@@ -93,15 +94,25 @@ const Register = () => {
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Registration failed');
+        throw new Error('Catch Error');
       }
       return response.json();
     })
-    .then(data => {
-      console.log('Registration successful:', data);
-      setFirstNameForPopup(data.firstName);
-      setRegistrationSuccess(true);
-      navigateTo("/logIn")
+    .then(data   => {
+      console.log(data);
+      if(data===-1)
+        {
+          console.log('Registration failed');
+          setEmailAlreadyExsistAlert(true);
+
+        }
+      if(data ===1)
+        {
+          console.log('Registration successfull');
+          setFirstNameForPopup(data.firstName);
+          setRegistrationSuccess(true);
+          navigateTo("/logIn")
+        }
     })
     .catch(error => {
       console.error('Error during registration:', error);
@@ -146,11 +157,11 @@ const Register = () => {
   return (
     <div>
       {/* Header Div */}
-      <div className="header">
-        <button onClick={() => navigateTo("/FirstPage")} className="back-button">
+      <div className="header_reg">
+        <button onClick={() => navigateTo("/FirstPage")} className="back-button_Register">
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
-        <h2 className="Hadder">SIGN UP</h2>
+        <h2 className="Hadder_register">SIGN UP</h2>
       </div>
 
       {/* Center Div */}
@@ -292,7 +303,15 @@ const Register = () => {
       </div>
 
       {/* Bottom Div */}
-      <div className="BottomDiv">        
+      <div className="BottomDiv"> 
+      <Stack sx={{ width: '100%' }} spacing={2}>
+      {EmailAlreadyExsist && (
+              <Alert severity="error" onClose={() => {setEmailAlreadyExsistAlert(false);}}>
+                <AlertTitle>Registration failed</AlertTitle>
+                Email already exists!
+                </Alert>
+       )}
+      </Stack>
         <h2>LookALike</h2>
       </div>
     </div>

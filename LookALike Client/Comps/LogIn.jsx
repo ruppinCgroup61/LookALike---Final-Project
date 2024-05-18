@@ -39,11 +39,12 @@ const LogIn = () => {
       image                                             : "null",
       lastName                                          : "Null",
       password                                          : Password,
-      PhoneNumber                                       : 555555555,
+      PhoneNumber                                       : '0501231234',
     };
-  
+
+    //logIn api
     fetch('https://localhost:7215/api/User/login', {
-      method                                            : 'POST',
+      method                                            : 'PUT',
       headers: {
         'Content-Type'                                  : 'application/json'
       },
@@ -51,27 +52,24 @@ const LogIn = () => {
     })
     .then(response => {
       if (!response.ok) {
+        console.log(response);
         throw new Error('Login request failed');
       }
       return response.json();
     })
     .then(data => {
       console.log('Login successful:', data);
-      if (data === -1) {
-        setAlert(true); // Show the alert if login returns -1
-      }
-      if(data === 0){
+        sessionStorage.setItem('email', userData.email);
         setSnackbarMessage(`Welcome ${Email}`);
         setOpenSnackbar(true);
         setTimeout(() => {
-          setOpenSnackbar(false);
-          navigateTo("/HomePage");
+        setOpenSnackbar(false);
+        navigateTo("/HomePage");
         }, 2000);
-      }
     })
     .catch(error => {
       console.error('Error during login:', error);
-      // Handle error - display a message to the user or retry the login
+      setAlert(true); // Show the alert if login returns -1
     });
   };
 
@@ -204,7 +202,7 @@ const LogIn = () => {
       <Stack sx                                         = {{ width: '100%' }} spacing={2}>
         {showAlert && ( // Conditionally render the alert based on showAlert state
           <Alert severity                               = "error" onClose={() => setAlert(false)}>
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle>Login failed</AlertTitle>
             Wrong Email or Password!
           </Alert>
         )}

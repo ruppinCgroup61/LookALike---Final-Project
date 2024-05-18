@@ -1,0 +1,28 @@
+.header {
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 50px; /* גובה הסרגל העליון */
+    width: 100%;
+    background-color: #ffffff; /* צבע רקע */
+    font-size: 18px; /* גודל הטקסט */
+    color: #333333; /* צבע הטקסט */
+  }
+  
+  .menu_icon {
+    font-size: 30px; /* גודל האייקון */
+  }
+  
+  .menu_filters {
+    cursor: pointer; /* להציג את סמן העכבר כעיגול */
+    transition: color 0.3s; /* אנימציה על שינוי הצבע */
+  }
+  
+  
+  .menu_filters.active_filter {
+    font-weight: bold; /* לדוגמה, הוספת מאפיין עיצוב לפילטר הפעיל */
+    color: black;
+  }

@@ -25,40 +25,41 @@ body {
 }
 
 /* Header styles */
-.header {
-    text-align: center;
+.header_reg {
+    display: flex;
+     align-items: center;
     margin-bottom: 20px;
-
+    text-align: center;
+    justify-content:space-evenly;
+    position: sticky;
+    top:0;
 }
 
-.header h2 {
+.Hadder_register {
     font-size: 38px;
     font-weight: bold; /* Added font weight */
-    margin-bottom: 10px;
-    text-align: center;
+    position: relative;
+    right: 20px;
 }
 
 /* Back button styles */
-.back-button {
+.back-button_Register {
     position: relative;
-    top: 48px; /* Adjusted position */
-    left: 5px;
-    background-color: #ffffff;
-    border: 1px solid #424242;
+    right:40px;
+    background: #fff;
+    border: 2px solid #000;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.back-button svg {
-    width: 20px;
-    height: 20px;
-    fill: #424242;
-}
 
 /* Form styles */
 .form {
