@@ -1,4 +1,6 @@
-﻿namespace LookALike_Server.Class
+﻿using System.Net;
+
+namespace LookALike_Server.Class
 {
     public class Brand
     {
@@ -21,6 +23,19 @@
         {
             DBservices dbs = new DBservices();
             return dbs.ReadAllBrands();
+        }
+
+        public string GetBrandNameById(int id)
+        {
+            List<Brand> AllBrand = ReadBrands();
+            foreach (Brand brand in AllBrand)
+            {
+                if (brand.Id == id)
+                {
+                    return brand.BrandName;
+                }
+            }
+            return "Not found";
         }
     }
 }

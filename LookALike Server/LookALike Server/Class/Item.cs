@@ -83,5 +83,53 @@ namespace LookALike_Server.Class
             return dbs.UpdateItem(this);
 
         }
+
+        public List<object> GetAllItemsByUser(string email)
+        {
+            // Read all items
+            List<Item> allItems = Read();
+            // Create a list to store the filtered items
+            List<object> itemsByUser = new List<object>();
+
+            // Assuming Brand and ClothingType have methods to get names by IDs
+            Brand brand = new Brand();
+            ClothingType clothingType = new ClothingType();
+
+            foreach (Item item in allItems)
+            {
+                // Filter items by the provided email
+                if (item.User_Email == email)
+                {
+                    // Get brand name and clothing type name using their IDs
+                    string brandName = brand.GetBrandNameById(item.Brand_ID);
+                    string clothingTypeName = clothingType.GetClothingTypeNameById(item.ClothingType_ID);
+
+                    // Create a new object with the required properties
+                    var itemObject = new
+                    {
+                        item.Item_ID,
+                        item.Item_Code,
+                        item.Name,
+                        item.Image,
+                        Clothing_Type = clothingTypeName,
+                        item.Color_Code,
+                        item.Season,
+                        item.Size,
+                        Brand = brandName,
+                        item.Price,
+                        item.Is_Favorite,
+                        item.Status,
+                        item.User_Email
+                    };
+
+                    // Add the object to the list
+                    itemsByUser.Add(itemObject);
+                }
+            }
+
+            // Return the list of items
+            return itemsByUser;
+        }
+
     }
 }

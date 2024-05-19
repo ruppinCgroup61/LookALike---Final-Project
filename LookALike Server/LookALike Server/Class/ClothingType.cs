@@ -26,5 +26,18 @@
             DBservices dbs = new DBservices();
             return dbs.ReadAllClothingTypes();
         }
+
+        public string GetClothingTypeNameById(int id)
+        {
+            List<ClothingType> AllClothingType = ReadClothingTypes();
+            foreach (ClothingType c in AllClothingType)
+            {
+                if (c.Id == id)
+                {
+                    return c.clothing_Type;
+                }
+            }
+            return "Not found";
+        }
     }
 }
