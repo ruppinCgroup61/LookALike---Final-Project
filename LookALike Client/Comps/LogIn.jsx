@@ -15,7 +15,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import {useNavigate } from 'react-router-dom';
 
-
+//yakirco0412@gmail.com
+//Yc2023!!
 
 const LogIn = () => {
   const [Email, setUsername]                            = useState('');
@@ -93,7 +94,7 @@ const LogIn = () => {
   const handleEmailChange = (e) => {
     setUsername(e.target.value);
     if (!isEmailValid()) {
-      setEmailError('Email should be in the right format');
+      setEmailError('');
     } else {
       setEmailError('');
     }
@@ -102,7 +103,7 @@ const LogIn = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     if (!isPasswordValid()) {
-      setPasswordError('The password must contain an uppercase letter, a lowercase letter, a number and a special character');
+      setPasswordError('');
     } else {
       setPasswordError('');
     }

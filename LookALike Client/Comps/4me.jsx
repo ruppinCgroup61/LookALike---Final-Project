@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
@@ -9,20 +9,42 @@ import "../src/CreateAd.css";
 import NaviBarFooter from "./NaviBarFooter";
 
 function CreateAd() {
-  const navigateTo = useNavigate();
-  const [ad, setAd] = useState({
-    price: "",
-    address: "",
-    condition: "New",
-  });
-  const [showModal, setShowModal] = useState(false);
-  const [isAddressOk, setIsAddressOk] = useState(true);
+  const [dataFromServer, setDataFromServer] = useState(null);
   let clothingAd = null;
   let userEmail = sessionStorage.getItem("email");
-  const { item } = useParams(); //item_ID
 
-  console.log(item); //item_ID
+  useEffect(() => {
+    fetch(`https://localhost:7215/api/Item`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data); // ניתן לעדכן את ה-state או לעשות פעולות נדרשות עם הנתונים שהתקבלו
+        setDataFromServer([...data]);
+      })
+      .catch((error) => {
+        console.error("There was a problem with fetch operation:", error);
+      });
+  }, []);
 
+  // if (!dataFromServer) {
+  //   return <div>Loading...</div>;
+  // }
+
+  console.log("44");
+  console.log(dataFromServer);
+  console.log("44");
+
+  const { item } = useParams();
+  console.log(item);
   const searchParams = new URLSearchParams(window.location.search);
   const choosenItem = JSON.parse(
     decodeURIComponent(searchParams.get("choosenItem"))
@@ -31,6 +53,21 @@ function CreateAd() {
   console.log("1");
   console.log(choosenItem);
   console.log("1");
+
+  let photo = choosenItem.image;
+  let color = "red";
+  let name = choosenItem.name;
+  let phone = "0527827133";
+
+  const [ad, setAd] = useState({
+    price: "",
+    address: "",
+    condition: "New",
+  });
+
+  const [showModal, setShowModal] = useState(false);
+  const [isAddressOk, setIsAddressOk] = useState(true);
+  const navigateTo = useNavigate();
 
   function handleSubmit() {
     if (!ad.price || !ad.address || !ad.condition) {
@@ -44,49 +81,48 @@ function CreateAd() {
         return;
       }
       clothingAd = {
-        ad_ID: 0,
         user_Email: userEmail,
-        item_ID: parseFloat(choosenItem.item_ID),
-        price: parseFloat(ad.price),
-        address: ad.address,
-        ad_Status1: "Live",
-        condition1: ad.condition,
-        item_Image: "string",
-        phone_Number: "string",
-        itemName: "string",
-        clothingType_Name: "string",
+        item_ID: choosenItem.item_ID,
+        price: choosenItem.price,
+        address: choosenItem.address,
+        Ad_Status: "Live",
+        Condition: choosenItem.Condition,
       };
       console.log("55");
       console.log(clothingAd);
       console.log("55");
 
-      fetch("https://localhost:7215/api/ClothingAd", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(clothingAd),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Catch Error");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          if (data === -1) {
-            console.log("create ad failed");
-          }
-          if (data === 1) {
-            console.log("create ad successfull");
-          }
-        })
-        .catch((error) => {
-          console.error("Error during create ad:", error);
-        });
+      navigateTo("/ad", {
+        state: { ...ad, photo, color, name, phone },
+      });
 
-      navigateTo(`/ad`);
+      
+
+      // fetch("https://localhost:7215/api/ClothingAd", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(clothingAd),
+      // })
+      //   .then((response) => {
+      //     if (!response.ok) {
+      //       throw new Error("Catch Error");
+      //     }
+      //     return response.json();
+      //   })
+      //   .then((data) => {
+      //     console.log(data);
+      //     if (data === -1) {
+      //       console.log("create ad failed");
+      //     }
+      //     if (data === 1) {
+      //       console.log("create ad successfull");
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error during create ad:", error);
+      //   });
     }
   }
 
@@ -98,7 +134,9 @@ function CreateAd() {
           <div className="image-container">
             <img src={choosenItem.image} alt={choosenItem.name} />
           </div>
-          <h2>{choosenItem.name.toUpperCase()}</h2>
+          <h2>
+            {choosenItem.color} {choosenItem.name.toUpperCase()}
+          </h2>
           <div className="input-group">
             <label htmlFor="price">Price:</label>
             <input

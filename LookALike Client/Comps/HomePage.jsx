@@ -1,86 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import '../src/HomePage.css';
-import { faUser, faTshirt, faSuitcase, faUsers, faStore, faBell } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
-import NaviBarFooter from './NaviBarFooter';
+import React, { useState, useEffect } from "react";
+import "../src/HomePage.css";
+import {
+  faUser,
+  faTshirt,
+  faSuitcase,
+  faUsers,
+  faStore,
+  faBell,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesomeIcon
+import NaviBarFooter from "./NaviBarFooter";
 
 export default function HomePage() {
-  const [value, setValue] = useState('profile');
   const [userList, setUserList] = useState([]);
-  const userEmail = sessionStorage.getItem('email'); // Retrieve email from session storage
-  const [user, setUser] = useState(null); // State to store the user data
-  const [UserImg, setUserImg] = useState();
-  const [FoundUser, setFoundUser]  = useState();
+  const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
+  //const [user, setUser] = useState(); // State to store the user data
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
-  // Function to fetch user list from the server
-  const getAllUsers = () => {
-    fetch('https://localhost:7215/api/User', {
-      method: 'GET',
+  // Fetch user list from the server when the component mounts
+  useEffect(() => {
+    fetch("https://localhost:7215/api/User", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to fetch user data');
+          throw new Error("Failed to fetch user data");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setUserList([...data]); // Update the userList state with the fetched data
         console.log(data);
       })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
       });
-  };
-
-  
-  // Fetch user list from the server when the component mounts
-  useEffect(() => {
-    getAllUsers();
-
   }, []);
 
-  const ImageShow = (image) => {
-    setUserImg(image);
-  };
+  // הצגת הודעת טעינה אם הנתונים עדיין לא נטענו
+  if (!userList) {
+    return <div>Loading...</div>;
+  }
+  console.log(userList);
 
+  let u = "";
   // Function to find the user by email address
-  useEffect(() => {
-    if (userEmail && userList && userList.length > 0) {
-      setFoundUser(userList.find(user => user.email === userEmail));
-      if (FoundUser) {
-        ImageShow(foundUser.image); // Call ImageShow with the user's image
-      }
-    }
-  }, [userEmail, userList]);
-
-  // Log the current value of UserImg whenever it changes
-  useEffect(() => {
-    console.log(UserImg);
-  }, [UserImg]);
-
-
-
+  if (userList && userList.length > 0) {
+    u = userList.find((user) => user.email === userEmail);
+    console.log("sss");
+    console.log(u.image);
+  }
 
   return (
     <div className="container">
       <div className="top-div">
         <div className="user-circle">
-         <img src={UserImg} alt="User" />
+          <img src={u.image} alt="User" />
         </div>
         {/* Display welcome message with user's first name and last name */}
-        {user && <h1 className="welcome-text">Welcome {user.firstName} {user.lastName}</h1>}
+        <h1 className="welcome-text">
+          Welcome {u.firstName} {u.lastName}
+        </h1>
       </div>
       <div className="center-div">
         <div className="block">
           <div className="overlay"></div>
-          <p onClick={getAllUsers}>Enter Your Wardrobe</p>
+          <p>Enter Your Wardrobe</p>
         </div>
         <div className="block">
           <div className="overlay"></div>

@@ -477,6 +477,7 @@ public class DBservices
         cmd.Parameters.AddWithValue("@Size", item.Size);
         cmd.Parameters.AddWithValue("@Brand_ID", item.Brand_ID);
         cmd.Parameters.AddWithValue("@Price", item.Price);
+        cmd.Parameters.AddWithValue("@Season", item.Season);
         cmd.Parameters.AddWithValue("@Is_Favorite", item.Is_Favorite);
         cmd.Parameters.AddWithValue("@Status", item.Status);
         cmd.Parameters.AddWithValue("@Email", item.User_Email);
