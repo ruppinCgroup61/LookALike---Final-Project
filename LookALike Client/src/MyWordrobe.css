@@ -1,4 +1,9 @@
+.containerW {
+  height: 100%; /* Set container height to 100% of viewport height */
+}
+
 .clothing-list {
+  flex: 1;
   position: absolute;
   width: 90%;
   top: 50px;
@@ -13,6 +18,8 @@
   box-sizing: border-box;
   margin: 10px auto;
   position: relative; /* נגדיר את המיקום של האייקון כתלוי במיקום הימני תחתון של התמונה */
+  border:1px soild #252525;
+
 }
 
 .clothing-image img {

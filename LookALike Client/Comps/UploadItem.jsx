@@ -19,7 +19,7 @@ function UploadItem() {
         price: 0,
         is_Favorite: false,
         status: 'live',
-        user_Email: 'yakirco0412@gmail.com',
+        user_Email: '',
         clothingType_ID: 0,
     });
 
@@ -29,6 +29,7 @@ function UploadItem() {
     const imageCaptureInput = useRef(null);
     const sizes = ['XS', 'S', 'M', 'L', 'XL'];
     const navigateTo = useNavigate();
+    const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
 
     useEffect(() => {
         // Fetch all brands and clothing types when the component mounts
@@ -40,9 +41,9 @@ function UploadItem() {
         const { name, value } = event.target;
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: value,
+            user_Email:userEmail
         }));
-        console.log(formDataUpload);
     };
 
      // Function to handle size selection
@@ -73,7 +74,7 @@ function UploadItem() {
     const openCamera = () => {
         imageCaptureInput.current.click();
     };
-
+    console.log(formDataUpload);
     const SubmitUpload = (event) => {
         event.preventDefault();
         console.log(formDataUpload);

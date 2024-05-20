@@ -11,7 +11,10 @@ import MarketPlace from '../Comps/MarketPlace'
 import CreateAd from '../Comps/CreateAd'
 import Ad from '../Comps/Ad'
 import Map from '../Comps/Map'
-
+import BottomSelectionPage from '../Comps/BottomSelectionPage'
+import CalendarPage from '../Comps/CalendarPage'
+import FCManualLook from '../Comps/FCManualLook'
+import TopSelectionPage from '../Comps/TopSelectionPage'
 
 function App() {
 
@@ -46,6 +49,11 @@ function App() {
         <Route path='/CreateAd/:item' element={<CreateAd/>}></Route>
         <Route path='/Map' element={<Map/>}></Route>
         <Route path='/Ad' element={<Ad/>}></Route>
+        <Route path='/BottomSelectionPage' element={<BottomSelectionPage/>}></Route>
+        <Route path='/CalendarPage' element={<CalendarPage/>}></Route>
+        <Route path='/FCManualLook' element={<FCManualLook/>}></Route>
+        <Route path='/TopSelectionPage' element={<TopSelectionPage/>}></Route>
+
       </Routes>
     </>
   )

@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../src/HomePage.css";
-import {
-  faUser,
-  faTshirt,
-  faSuitcase,
-  faUsers,
-  faStore,
-  faBell,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesomeIcon
 import NaviBarFooter from "./NaviBarFooter";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation from React Router
+
 
 export default function HomePage() {
   const [userList, setUserList] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading
   const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
-  //const [user, setUser] = useState(); // State to store the user data
-
 
   // Fetch user list from the server when the component mounts
   useEffect(() => {
@@ -37,14 +30,30 @@ export default function HomePage() {
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false regardless of success or failure
       });
   }, []);
 
-  // הצגת הודעת טעינה אם הנתונים עדיין לא נטענו
-  if (!userList) {
-    return <div>Loading...</div>;
+  // Set a timeout to change the loading state after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 50000);
+
+    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  }, []);
+
+  // Render the circular loader if still loading
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <CircularProgress  color="inherit"/>
+        <div className="Loading">Your wardrobe is in preparation....</div>
+      </div>
+    );
   }
-  console.log(userList);
 
   let u = "";
   // Function to find the user by email address
@@ -54,6 +63,7 @@ export default function HomePage() {
     console.log(u.image);
   }
 
+  // Render the page content once loading is complete
   return (
     <div className="container">
       <div className="top-div">
@@ -66,21 +76,27 @@ export default function HomePage() {
         </h1>
       </div>
       <div className="center-div">
+        <Link to="/MyWardrobe">
+          <div className="block">
+            <div className="overlay"></div>
+            <p>Enter Your Wardrobe</p>
+          </div>
+        </Link>
         <div className="block">
-          <div className="overlay"></div>
-          <p>Enter Your Wardrobe</p>
-        </div>
-        <div className="block">
-          <div className="overlay"></div>
-          <p>Enter Market Place</p>
+          <Link to="/MarketPlace">
+            <div className="overlay"></div>
+            <p>Enter Market Place</p>
+          </Link>
         </div>
         <div className="block">
           <div className="overlay"></div>
           <p>Enter @BarBelisha Wardrobe</p>
         </div>
         <div className="block">
-          <div className="overlay"></div>
-          <p>Create New Look</p>
+          <Link to="/FCManualLook">
+            <div className="overlay"></div>
+            <p>Create New Look</p>
+          </Link>
         </div>
       </div>
       <div className="bottom-div">

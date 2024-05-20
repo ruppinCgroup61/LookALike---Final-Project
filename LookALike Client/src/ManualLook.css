@@ -1,0 +1,62 @@
+.app-container {
+    text-align: center;
+    position: relative; /* Ensure relative positioning for absolute positioning within */
+  }
+  
+  .urbanist-heading {
+    font-family: "Urbanist", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    /* font-size: 40px; */
+    margin-bottom: 100px;
+  }
+  
+  .icon-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  
+  .icon-container1,
+  .icon-container2 {
+    position: relative; /* Ensure relative positioning for absolute positioning within */
+  }
+  
+  .icon-container1 {
+    z-index: 1; /* Make sure this container appears on top */
+  }
+  
+  .icon-container2 {
+    z-index: 0;
+  }
+  
+  .icon {
+    font-size: 60px;
+    color: black;
+    width: 120px;
+    height: 120px;
+  }
+  
+  .selected-icon {
+    width: 100px;
+    height: 100px;
+    color: black;
+  }
+  
+  .icon-button {
+    font-size: 60px;
+    color: black;
+  }
+  
+  .calendar-button {
+    margin-top: 40px;
+    border-radius: 8px;
+    border: 1px solid #000000;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    width: 80%;
+  }
+  

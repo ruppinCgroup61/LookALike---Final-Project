@@ -14,88 +14,107 @@ function MyWardrobe() {
   const [favorites, setFavorites] = useState([]); // סטייט לאייקונים מועדפים
   const [dataFromServer, setDataFromServer] = useState(null);
   const [filteredClothes, setFilteredClothes] = useState([]);
-  let userEmail = sessionStorage.getItem("email");
-
   const [brands, setBrands] = useState([]);
   const [clothingTypes, setClothingTypes] = useState([]);
+  const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
 
+  const [ItemToUpdate, setItemToUpdate] = useState({
+    item_ID: 0,
+    item_Code: 0,
+    name: '',
+    image: 'null',
+    color_Code: '',
+    season: '',
+    size: '',
+    brand_ID: 0,
+    price: 0,
+    is_Favorite: false,
+    status: 'live',
+    user_Email: userEmail,
+    clothingType_ID: 0,
+  });
+
+  console.log(ItemToUpdate);
+  // קבלת הפריטים של המשתמש מהשרת
   useEffect(() => {
-    // קבלת הפריטים של המשתמש מהשרת
-    fetch(`https://localhost:7215/api/Item/${userEmail}`, {
-      method: "GET",
+    fetch('https://localhost:7215/api/Item/yakirco0412@gmail.com', {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
     })
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         console.log(data); // ניתן לעדכן את ה-state או לעשות פעולות נדרשות עם הנתונים שהתקבלו
         setDataFromServer([...data]);
         setFilteredClothes([...data]);
       })
-      .catch((error) => {
-        console.error("There was a problem with fetch operation:", error);
+      .catch(error => {
+        console.error('There was a problem with fetch operation:', error);
       });
 
-    // קבלת קוד המותג מהשרת
-    fetch("https://localhost:7215/api/Brand", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Catch Error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setBrands(data);
-      })
-      .catch((error) => {
-        console.error("Error during fetching brands:", error);
-      });
-
-    // קבלת קוד סוג הפריט מהשרת
-    fetch("https://localhost:7215/api/ClothingType", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Catch Error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setClothingTypes(data);
-      })
-      .catch((error) => {
-        console.error("Error during fetching clothing types:", error);
-      });
   }, []); // [] מועבר כאן כדי להראות שה-fetch צריך להתרחש רק פעם אחת בטעינה הראשונית של המרכיב
 
-  // הצגת הודעת טעינה אם הנתונים עדיין לא נטענו
-  if (!dataFromServer) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    // Fetch all brands and clothing types when the component mounts
+    GetAllBrands();
+    GetAllClothingTypes();
+  }, []);
 
-  console.log("1");
-  console.log(dataFromServer);
-  console.log("shir");
-  console.log(dataFromServer[0].image);
-  console.log("shir");
-  console.log(brands);
-  console.log("shir");
-  console.log(clothingTypes);
+  const GetAllBrands = () => {
+    fetch('https://localhost:7215/api/Brand', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Catch Error');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setBrands(data);
+        console.log(brands);
+      })
+      .catch(error => {
+        console.error('Error during fetching brands:', error);
+      });
+  };
+
+  const GetAllClothingTypes = () => {
+    fetch('https://localhost:7215/api/ClothingType', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Catch Error');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setClothingTypes(data);
+        console.log(clothingTypes);
+
+      })
+      .catch(error => {
+        console.error('Error during fetching clothing types:', error);
+      });
+  };
+
+  // הצגת הודעת טעינה אם הנתונים עדיין לא נטענו
+  if (!(dataFromServer&&clothingTypes&&brands)) {
+    return <div>Loading...</div>;
+  };
 
   // לחיצה על ה+
   const togglePopup = (index) => {
@@ -109,72 +128,65 @@ function MyWardrobe() {
   };
 
   // הכנסה והוצאה ממועדפים
-  const toggleFavorite = (index, i) => {
-    let favItem = i;
+  const toggleFavorite = (index) => {
+    const newFavorites = [...favorites];
+    const selectedItem = dataFromServer[index];
     
-    const newFavorites = [...favorites]; // עותק חדש של רשימת המועדפים
+    // Create a copy of the selected item
+    const updatedItem = { ...selectedItem };
+  
+    // Toggle is_Favorite based on its current value
+    updatedItem.is_Favorite = !updatedItem.is_Favorite;
+  
+    // Find matching brand_ID from brands
+    const matchedBrand = brands.find((brand) => brand.brandName === selectedItem.brand);
+    if (matchedBrand) {
+      updatedItem.brand_ID = matchedBrand.id;
+    }
+  
+    // Find matching clothingType_ID from clothingTypes
+    const matchedClothingType = clothingTypes.find((type) => type.clothing_Type === selectedItem.clothing_Type);
+    if (matchedClothingType) {
+      updatedItem.clothingType_ID = matchedClothingType.id;
+    }
+  
+    // Update the state with the updated item
+    setItemToUpdate(updatedItem);
+  
+    // Update the favorites array based on the updated item's index
     if (newFavorites.includes(index)) {
-      favItem.is_Favorite = false;
-      console.log(favItem.is_Favorite);
-      let brandResult = brands.find(obj => obj.brandName === favItem.brand);
-      let clothResult = clothingTypes.find(obj => obj.clothing_Type === favItem.clothing_Type);
-      // הוספת השדות הרצויים
-      favItem.brand_ID = brandResult.id;
-      favItem.clothingType_ID = clothResult.id;
-      // מחיקת השדות המיותרים
-      delete favItem.brand;
-      delete favItem.clothing_Type;
-      console.log(brandResult);
-      console.log(clothResult);
-      // אם המועדף כבר קיים, מחק אותו
       const indexToRemove = newFavorites.indexOf(index);
       newFavorites.splice(indexToRemove, 1);
     } else {
-      // אם המועדף אינו קיים, הוסף אותו
-      favItem.is_Favorite = true;
-      let brandResult = brands.find(obj => obj.brandName === favItem.brand);
-      let clothResult = clothingTypes.find(obj => obj.clothing_Type === favItem.clothing_Type);
-      // הוספת השדות הרצויים
-      favItem.brand_ID = brandResult.id;
-      favItem.clothingType_ID = clothResult.id;
-      // מחיקת השדות המיותרים
-      delete favItem.brand;
-      delete favItem.clothing_Type;
-      console.log(brandResult);
-      console.log(clothResult);
-      console.log(favItem);
       newFavorites.push(index);
     }
-    // עדכן את הסטייט
     setFavorites(newFavorites);
-
-    // עדכון מועדף/לא מועדף בשרת
-    fetch(`https://localhost:7215/api/Item/${favItem.item_ID}`, {
-      method: "PUT",
+  
+    // Perform API request to update the item on the server
+    let api = `https://localhost:7215/api/Item/${selectedItem.item_ID}`;
+    fetch(api, {
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(favItem),
+      body: JSON.stringify(updatedItem)
     })
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
-          throw new Error("Catch Error");
+          throw new Error('Catch Error');
         }
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         console.log(data);
-        if (data === -1) {
-          console.log("Change failed");
-        }
-        if (data === 1) {
-          console.log("Changed successfull");
-        }
       })
-      .catch((error) => {
-        console.error("Error during change:", error);
+      .catch(error => {
+        console.error('Error during item update:', error);
       });
   };
+  
+
+
 
   return (
     <>
@@ -198,12 +210,12 @@ function MyWardrobe() {
                 {favorites.includes(index) ? (
                   <IoIosHeart
                     className="fav"
-                    onClick={() => toggleFavorite(index, item)}
+                    onClick={() => toggleFavorite(index)}
                   />
                 ) : (
                   <IoIosHeartEmpty
                     className="fav"
-                    onClick={() => toggleFavorite(index, item)}
+                    onClick={() => toggleFavorite(index)}
                   />
                 )}
 
@@ -213,9 +225,7 @@ function MyWardrobe() {
                     <Link
                       to={{
                         pathname: `/CreateAd/${item.item_ID}`,
-                        search: `choosenItem=${encodeURIComponent(
-                          JSON.stringify({ ...item })
-                        )}`,
+                        search: `choosenItem=${encodeURIComponent(JSON.stringify({ ...item }))}`,
                       }}
                     >
                       <button style={{ paddingLeft: 10, paddingRight: 10 }}>
@@ -238,7 +248,9 @@ function MyWardrobe() {
               </div>
             </div>
           ))}
-          <NaviBarFooter /> {/* הצגת הסרגל התחתון */}
+          <div className='Navbar Footer'>
+            <NaviBarFooter />
+          </div>
         </div>
       </div>
     </>
