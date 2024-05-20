@@ -18,7 +18,6 @@ namespace LookALike_Server.Class
         string status;
         string user_Email;
         int clothingType_ID;
-        static List<Item> ItemList = new List<Item>();
 
         public Item(int item_ID, int item_Code, string name, string image, string color_Code, string season, string size, int brand_ID, double price, bool is_Favorite, string status, string user_Email, int clothingType_ID)
         {
@@ -35,6 +34,7 @@ namespace LookALike_Server.Class
             Status = status;
             User_Email = user_Email;
             ClothingType_ID = clothingType_ID;
+
         }
 
         public Item()
@@ -54,6 +54,7 @@ namespace LookALike_Server.Class
         public string Status { get => status; set => status = value; }
         public string User_Email { get => user_Email; set => user_Email = value; }
         public int ClothingType_ID { get => clothingType_ID; set => clothingType_ID = value; }
+        
 
         public bool Insert()
         {

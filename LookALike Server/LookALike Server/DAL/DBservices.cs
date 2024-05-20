@@ -821,6 +821,8 @@ public class DBservices
                 ca.Condition1 = dataReader["Condition"].ToString();
                 ca.Item_Image = dataReader["Image"].ToString();
                 ca.Phone_Number = dataReader["Phone_Number"].ToString();
+                ca.ItemName = dataReader["name"].ToString();
+                ca.ClothingType_Name = dataReader["Clothing_Type"].ToString();
                 ClothingAdsList.Add(ca);
 
             }
