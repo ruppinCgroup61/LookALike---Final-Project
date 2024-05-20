@@ -1,0 +1,67 @@
+.ad_container {
+    position: relative;
+    bottom: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+}
+
+.ad_container:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ad_container img {
+    width: 100%;
+    height: auto;
+    /* שמירה על הפרופורציות של התמונה */
+    max-width: 100%;
+    /* גודל מקסימלי לרוחב */
+    max-height: 200px;
+    /* גודל מקסימלי לגובה, לדוגמה */
+    display: block;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    object-fit: contain;
+    /* שמירה על הפרופורציות בתוך הגודל המוגדר */
+}
+
+.ad_container h3 {
+    text-align: center;
+    margin: 10px 10px;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.ad_container p {
+    text-align: center;
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.ad_container p:first-child {
+    margin-top: 15px;
+}
+
+.ad_container .map_container {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+}
+
+.ad_container .map_container iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.ad_container a {
+    position: relative;
+    top: 3px;
+    right: 5px;
+}

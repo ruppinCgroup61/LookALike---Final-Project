@@ -813,14 +813,16 @@ public class DBservices
             {
                 ClothingAd ca = new ClothingAd();
                 ca.Ad_ID = Convert.ToInt32(dataReader["Ad_ID"]);
+                ca.User_Email = dataReader["User_Email"].ToString();
+                ca.Item_ID = Convert.ToInt32(dataReader["Item_ID"]);
                 ca.Price = Convert.ToDouble(dataReader["Price"]);
                 ca.Address = dataReader["Address"].ToString();
-                ca.Ad_Status = dataReader["Ad_Status"].ToString();
-                ca.User_Email = dataReader["User_Email"].ToString();
-                ca.Image1 = dataReader["Image1"].ToString();
-                ca.Image2 = dataReader["Image2"].ToString();
-                ca.Image3 = dataReader["Image3"].ToString();
+                ca.Ad_Status1 = dataReader["Ad_Status"].ToString();
+                ca.Condition1 = dataReader["Condition"].ToString();
+                ca.Item_Image = dataReader["Image"].ToString();
+                ca.Phone_Number = dataReader["Phone_Number"].ToString();
                 ClothingAdsList.Add(ca);
+
             }
             return ClothingAdsList;
         }
@@ -856,6 +858,76 @@ public class DBservices
         cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
 
         cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method Inserts a Item to the Items table 
+    //--------------------------------------------------------------------------------------------------
+    public int Insert(ClothingAd clothingAd)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateAdInsertCommandWithStoredProcedure("sp_LAL_InsertNewAd", con, clothingAd);  // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand for Insert Ad using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateAdInsertCommandWithStoredProcedure(String spName, SqlConnection con, ClothingAd clothingAd)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@Item_ID", clothingAd.Item_ID);
+        cmd.Parameters.AddWithValue("@Price", clothingAd.Price);
+        cmd.Parameters.AddWithValue("@Ad_Status", clothingAd.Ad_Status1);
+        cmd.Parameters.AddWithValue("@Address", clothingAd.Address);
+        cmd.Parameters.AddWithValue("@User_Email", clothingAd.User_Email);
+        cmd.Parameters.AddWithValue("@Condition", clothingAd.Condition1);
+
 
         return cmd;
     }

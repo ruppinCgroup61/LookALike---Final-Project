@@ -27,7 +27,7 @@ export default function NaviBarFooter() {
       case "/social-network":
         setActiveIcon("socialNetwork");
         break;
-      case "/market-place":
+      case "/MarketPlace":
         setActiveIcon("marketPlace");
         break;
       default:
@@ -54,7 +54,7 @@ export default function NaviBarFooter() {
         <Link to="/social-network">
           <FaUserGroup color={activeIcon === "socialNetwork" ? "#242424" : "#999999"} />
         </Link>
-        <Link to="/market-place">
+        <Link to="/MarketPlace">
           <FaShoppingCart color={activeIcon === "marketPlace" ? "#242424" : "#999999"} />
         </Link>
       </div>

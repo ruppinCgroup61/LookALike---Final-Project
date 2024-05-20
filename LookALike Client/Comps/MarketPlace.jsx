@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import "../src/CSSc/WardrobeFilters.css";
+import "../src/WardrobeFilters.css";
 import WardrobeFilters from "./WardrobeFilters";
 import NaviBarFooter from "./NaviBarFooter";
 

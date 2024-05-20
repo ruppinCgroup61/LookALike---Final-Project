@@ -17,10 +17,12 @@
 
 .clothing-image img {
   width: 100%;
-  height: 190px;
+  height: auto; /* שמירה על הפרופורציות של התמונה */
+  max-width: 100%; /* גודל מקסימלי לרוחב */
+  max-height: 200px; /* גודל מקסימלי לגובה, לדוגמה */
   display: block;
   margin-bottom: 10px;
-  
+  object-fit: contain; /* שמירה על הפרופורציות בתוך הגודל המוגדר */
 }
 
 .clothing-details {
@@ -36,14 +38,14 @@
 
 .fav {
   position: absolute;
-  bottom: 75px;
+  bottom: 85px;
   right: 10px;
   z-index: 1; 
 }
 
 .opt {
   position: absolute;
-  bottom: 75px;
+  bottom: 85px;
   left: 10px;
   z-index: 1; 
 }
@@ -51,7 +53,6 @@
 .popup {
   position: absolute;
   bottom: 100px;
-  left: 10px;
   z-index: 1;
 }
 

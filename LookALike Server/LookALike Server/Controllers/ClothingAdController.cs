@@ -26,8 +26,15 @@ namespace LookALike_Server.Controllers
 
         // POST api/<ClothingAdController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public int Post([FromBody] ClothingAd clothingAd)
         {
+            int NumberOfInsert = -1;
+            bool insertCheck = clothingAd.Insert();
+            if (insertCheck)
+            {
+                NumberOfInsert = 1;
+            }
+            return NumberOfInsert;
         }
 
         // PUT api/<ClothingAdController>/5
