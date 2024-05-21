@@ -8,6 +8,8 @@ import "../src/MyWordrobe.css";
 import "../src/WardrobeFilters.css";
 import NaviBarFooter from "./NaviBarFooter";
 import WardrobeFilters from "./WardrobeFilters";
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 function MyWardrobe() {
   const [selectedItem, setSelectedItem] = useState([]); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
@@ -112,10 +114,17 @@ function MyWardrobe() {
       });
   };
 
-  // הצגת הודעת טעינה אם הנתונים עדיין לא נטענו
-  if (!(dataFromServer&&clothingTypes&&brands)) {
-    return <div>Loading...</div>;
-  };
+
+
+   // Render the circular loader if still loading
+   if (!(dataFromServer&&clothingTypes&&brands)) {
+    return (
+      <div className="loading-container">
+        <CircularProgress  color="inherit"/>
+        {/* <div className="Loading">Your wardrobe is in preparation....</div> */}
+      </div>
+    );
+  }
 
   // לחיצה על ה+
   const togglePopup = (index) => {

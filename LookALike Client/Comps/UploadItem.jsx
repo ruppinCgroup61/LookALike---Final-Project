@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import NaviBarFooter from "./NaviBarFooter";
 import { useNavigate } from 'react-router-dom';
-
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
 
 function UploadItem() {
     const [formDataUpload, setFormData] = useState({
@@ -30,6 +31,8 @@ function UploadItem() {
     const sizes = ['XS', 'S', 'M', 'L', 'XL'];
     const navigateTo = useNavigate();
     const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     useEffect(() => {
         // Fetch all brands and clothing types when the component mounts
@@ -42,12 +45,12 @@ function UploadItem() {
         setFormData(prevState => ({
             ...prevState,
             [name]: value,
-            user_Email:userEmail
+            user_Email: userEmail
         }));
     };
 
-     // Function to handle size selection
-     const handleSizeSelection = (size) => {
+    // Function to handle size selection
+    const handleSizeSelection = (size) => {
         setFormData(prevState => ({
             ...prevState,
             size: size // update the size in the form data
@@ -98,6 +101,12 @@ function UploadItem() {
                 }
                 if (data === 1) {
                     console.log('item added successfully');
+                    setSnackbarMessage(`item added successfully`);
+                    setOpenSnackbar(true);
+                    setTimeout(() => {
+                      setOpenSnackbar(false);
+                      navigateTo("/MyWardrobe");
+                    }, 2000);
                 }
             })
             .catch(error => {
@@ -148,7 +157,7 @@ function UploadItem() {
     };
 
     // const [data, setData] = useState('Not Found');  // מצב התחלתי של טקסט התוצאה
-     const [isActive, setIsActive] = useState(false); // כדי לשלוט על הפעלת הסריקה
+    const [isActive, setIsActive] = useState(false); // כדי לשלוט על הפעלת הסריקה
     // const handleUpdate = (err, result) => {
     //     if (result) {
     //         setData(result.text);
@@ -283,7 +292,32 @@ function UploadItem() {
             <div className='Navbar Footer'>
                 <NaviBarFooter />
             </div>
-        </div>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                open={openSnackbar}
+                autoHideDuration={2000}
+                onClose={() => setOpenSnackbar(false)}
+            >
+                <SnackbarContent
+                    sx={{
+                        backgroundColor: '#fff',
+                        boxShadow: '0 3px 5px rgba(0, 0, 0, 0.2)',
+                        borderRadius: '4px',
+                        border: '1px solid #d2d2d2',
+                        textAlign: 'center',
+                        fontFamily: 'Urbanist, sans-serif',
+                        fontSize: '20px',
+                        color: '#333',
+                        fontWeight: 'bold',
+                        padding: '10px 20px',
+                    }}
+                    message={snackbarMessage}
+                />
+            </Snackbar>
+        </div >
     );
 }
 

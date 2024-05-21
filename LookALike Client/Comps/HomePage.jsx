@@ -50,7 +50,7 @@ export default function HomePage() {
     return (
       <div className="loading-container">
         <CircularProgress  color="inherit"/>
-        <div className="Loading">Your wardrobe is in preparation....</div>
+        {/* <div className="Loading">Your wardrobe is in preparation....</div> */}
       </div>
     );
   }

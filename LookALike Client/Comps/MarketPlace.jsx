@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "../src/WardrobeFilters.css";
 import WardrobeFilters from "./WardrobeFilters";
 import NaviBarFooter from "./NaviBarFooter";
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 export default function MarketPlace() {
   const [dataFromServer, setDataFromServer] = useState(null);
@@ -34,8 +36,13 @@ export default function MarketPlace() {
   }, []);
 
   if (!dataFromServer) {
-    return <div>Loading...</div>;
-  }
+    return (
+      <div className="loading-container">
+        <CircularProgress  color="inherit"/>
+        {/* <div className="Loading">Your wardrobe is in preparation....</div> */}
+      </div>
+    );  }
+
 
   console.log("99");
   console.log(dataFromServer);
@@ -78,7 +85,9 @@ export default function MarketPlace() {
               </div>
             </div>
           ))}
-          <NaviBarFooter />
+         <div className='Navbar Footer'>
+            <NaviBarFooter />
+          </div>
         </div>
       </div>
     </>
