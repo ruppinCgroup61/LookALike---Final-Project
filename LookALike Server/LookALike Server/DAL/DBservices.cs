@@ -785,7 +785,7 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
-    // This method reads Users from the database 
+    // This method reads ClothingAds from the database 
     //--------------------------------------------------------------------------------------------------
     public List<ClothingAd> ReadClothingAds()
     {
@@ -866,7 +866,7 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
-    // This method Inserts a Item to the Items table 
+    // This method Inserts a ClothingAd to the Items table 
     //--------------------------------------------------------------------------------------------------
     public int Insert(ClothingAd clothingAd)
     {
@@ -909,7 +909,7 @@ public class DBservices
     }
 
     //---------------------------------------------------------------------------------
-    // Create the SqlCommand for Insert Ad using a stored procedure
+    // Create the SqlCommand for Insert ClothingAd using a stored procedure
     //---------------------------------------------------------------------------------
     private SqlCommand CreateAdInsertCommandWithStoredProcedure(String spName, SqlConnection con, ClothingAd clothingAd)
     {
@@ -931,6 +931,159 @@ public class DBservices
         cmd.Parameters.AddWithValue("@User_Email", clothingAd.User_Email);
         cmd.Parameters.AddWithValue("@Condition", clothingAd.Condition1);
 
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method Inserts a ManualLook to the Items table 
+    //--------------------------------------------------------------------------------------------------
+    public int Insert(ManualLook manualLook)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreatemanualLookInsertCommandWithStoredProcedure("sp_LAL_InsertNewManualLook", con, manualLook);  // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand for Insert ManualLook using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreatemanualLookInsertCommandWithStoredProcedure(String spName, SqlConnection con, ManualLook manualLook)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@Look_ID", manualLook.LookId);
+        cmd.Parameters.AddWithValue("@TopSelection_ItemId", manualLook.TopSelection_ItemId);
+        cmd.Parameters.AddWithValue("@ButtomSelection_ItemId", manualLook.ButtomSelection_ItemId);
+        cmd.Parameters.AddWithValue("@TopSelection_Image", manualLook.TopSelection_Image);
+        cmd.Parameters.AddWithValue("@ButtomSelection_Image", manualLook.ButtomSelection_Image);
+        cmd.Parameters.AddWithValue("@CreatedDateDateTime", manualLook.CreatedDate);
+        cmd.Parameters.AddWithValue("@CalendarDateDateTime", manualLook.CalendarDate);
+        cmd.Parameters.AddWithValue("@UserEmai", manualLook.UserEmail);
+
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method reads Manual Looks from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<ManualLook> ReadAllManualLook()
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<ManualLook> ManualLooksList = new List<ManualLook>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateManualLookCommandWithStoredProcedureWithoutParameters("sp_LAL_ReadAllManualLook", con);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                ManualLook ml = new ManualLook();
+                ml.LookId = Convert.ToInt32(dataReader["Look_ID"]);
+                ml.TopSelection_ItemId = Convert.ToInt32(dataReader["TopSelection_ItemId"]);
+                ml.ButtomSelection_ItemId = Convert.ToInt32(dataReader["ButtomSelection_ButtomSelection_ItemIdItemI"]);
+                ml.TopSelection_Image = dataReader["TopSelection_Image"].ToString();
+                ml.ButtomSelection_Image = dataReader["ButtomSelection_Image"].ToString();
+                // Retrieve Date_of_birth as DateTime
+                DateTime CreatedDate = (DateTime)dataReader["CreatedDateDateTime"];
+                ml.CreatedDate = CreatedDate;
+                DateTime CalendarDate = (DateTime)dataReader["CalendarDateDateTime"];
+                ml.CalendarDate = CalendarDate;
+                ml.UserEmail = dataReader["UserEmail"].ToString();
+                ManualLooksList.Add(ml);
+
+            }
+            return ManualLooksList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateManualLookCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
 
         return cmd;
     }
