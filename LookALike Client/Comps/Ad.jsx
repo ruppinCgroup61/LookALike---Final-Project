@@ -44,11 +44,6 @@ export default function Ad() {
 
     const lastAd = dataFromServer[dataFromServer.length - 1];
 
-  // קבלת הפרמטרים מקומפוננטת CreateAd
-  // const location = useLocation();
-  // const { price, address, condition, photo, color, name, phone } =
-  //   location.state;
-
   // פונקציה הפותחת את אפליקציית WhatsApp כאשר לוחצים על הקישור
   const openWhatsApp = () => {
     // יפתח חלון וואצאפ

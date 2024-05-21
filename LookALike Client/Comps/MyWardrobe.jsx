@@ -16,7 +16,8 @@ function MyWardrobe() {
   const [filteredClothes, setFilteredClothes] = useState([]);
   const [brands, setBrands] = useState([]);
   const [clothingTypes, setClothingTypes] = useState([]);
-  const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
+  //const userEmail = encodeURIComponent(sessionStorage.getItem("email"));
+  let userEmail = sessionStorage.getItem("email");
 
   const [ItemToUpdate, setItemToUpdate] = useState({
     item_ID: 0,
@@ -34,10 +35,10 @@ function MyWardrobe() {
     clothingType_ID: 0,
   });
 
-  console.log(ItemToUpdate);
+  console.log(userEmail);
   // קבלת הפריטים של המשתמש מהשרת
   useEffect(() => {
-    fetch('https://localhost:7215/api/Item/yakirco0412@gmail.com', {
+    fetch(`https://localhost:7215/api/Item/${userEmail}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

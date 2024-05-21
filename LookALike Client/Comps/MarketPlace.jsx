@@ -1,16 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../src/WardrobeFilters.css";
 import WardrobeFilters from "./WardrobeFilters";
 import NaviBarFooter from "./NaviBarFooter";
 
-export default function MarketPlace(props) {
-
-  const [filteredClothes, setFilteredClothes] = useState(props.ads);
+export default function MarketPlace() {
+  const [dataFromServer, setDataFromServer] = useState(null);
+  const [filteredClothes, setFilteredClothes] = useState(null);
   const navigateTo = useNavigate();
 
-  function Showad(item) {
+  useEffect(() => {
+    // קבלת הפריטים של המשתמש מהשרת
+    fetch(`https://localhost:7215/api/ClothingAd`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data); // ניתן לעדכן את ה-state או לעשות פעולות נדרשות עם הנתונים שהתקבלו
+        setDataFromServer([...data]);
+        setFilteredClothes([...data]);
+      })
+      .catch((error) => {
+        console.error("There was a problem with fetch operation:", error);
+      });
+  }, []);
 
+  if (!dataFromServer) {
+    return <div>Loading...</div>;
+  }
+
+  console.log("99");
+  console.log(dataFromServer);
+  console.log("99");
+
+  function Showad(item) {
     navigateTo("/ad", {
       state: { ...item },
     });
@@ -19,9 +50,9 @@ export default function MarketPlace(props) {
   return (
     <>
       <div className="containerW">
-      <div className="header">
+        <div className="header">
           <WardrobeFilters
-            clothes={props.ads}
+            clothes={dataFromServer}
             setFilteredClothes={setFilteredClothes}
           />
         </div>
@@ -29,12 +60,18 @@ export default function MarketPlace(props) {
           {filteredClothes.map((item, index) => (
             <div key={index} className="clothing-item">
               <div className="clothing-image">
-                <img src={item.photo} alt={item.name} onClick={() => Showad(item)} />
+                <img
+                  src={item.item_Image
+                  }
+                  alt={item.itemName
+                  }
+                  onClick={() => Showad(item)}
+                />
               </div>
               <div className="clothing-details">
                 <p>
                   <strong>
-                    {item.color.toUpperCase()} {item.name.toUpperCase()} -{" "}
+                    {item.itemName.toUpperCase()} -{" "}
                     {item.price}$
                   </strong>
                 </p>

@@ -80,13 +80,12 @@ function CreateAd() {
           }
           if (data === 1) {
             console.log("create ad successfull");
+            navigateTo(`/ad`);
           }
         })
         .catch((error) => {
           console.error("Error during create ad:", error);
         });
-
-      navigateTo(`/ad`);
     }
   }
 

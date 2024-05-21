@@ -45,7 +45,7 @@ function App() {
         <Route path='/HomePage' element={<HomePage/>}></Route>
         <Route path='/MyWardrobe' element={<MyWardrobe clothes={userClothes} />}></Route>
         <Route path='/UploadItem' element={<UploadItem/>}></Route>
-        <Route path='/MarketPlace' element={<MarketPlace ads={allAds}/>}></Route>
+        <Route path='/MarketPlace' element={<MarketPlace />}></Route>
         <Route path='/CreateAd/:item' element={<CreateAd/>}></Route>
         <Route path='/Map' element={<Map/>}></Route>
         <Route path='/Ad' element={<Ad/>}></Route>
