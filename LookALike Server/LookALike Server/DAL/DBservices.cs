@@ -994,14 +994,14 @@ public class DBservices
 
         cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
 
-        cmd.Parameters.AddWithValue("@Look_ID", manualLook.LookId);
+        //cmd.Parameters.AddWithValue("@Look_ID", manualLook.LookId);
         cmd.Parameters.AddWithValue("@TopSelection_ItemId", manualLook.TopSelection_ItemId);
         cmd.Parameters.AddWithValue("@ButtomSelection_ItemId", manualLook.ButtomSelection_ItemId);
         cmd.Parameters.AddWithValue("@TopSelection_Image", manualLook.TopSelection_Image);
         cmd.Parameters.AddWithValue("@ButtomSelection_Image", manualLook.ButtomSelection_Image);
         cmd.Parameters.AddWithValue("@CreatedDateDateTime", manualLook.CreatedDate);
         cmd.Parameters.AddWithValue("@CalendarDateDateTime", manualLook.CalendarDate);
-        cmd.Parameters.AddWithValue("@UserEmai", manualLook.UserEmail);
+        cmd.Parameters.AddWithValue("@UserEmail", manualLook.UserEmail);
 
 
         return cmd;

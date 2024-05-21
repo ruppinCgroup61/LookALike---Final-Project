@@ -24,7 +24,7 @@
 
         public ManualLook(int lookId, int topSelection_ItemId, int buttomSelection_ItemId, string topSelection_Image, string buttomSelection_Image, DateTime createdDate, DateTime calendarDate, string userEmail)
         {
-            LookId = lookId;
+            LookId = -1;
             TopSelection_ItemId = topSelection_ItemId;
             ButtomSelection_ItemId = buttomSelection_ItemId;
             TopSelection_Image = topSelection_Image;
