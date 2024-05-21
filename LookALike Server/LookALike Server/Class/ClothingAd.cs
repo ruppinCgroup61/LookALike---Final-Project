@@ -58,10 +58,10 @@
             foreach (ClothingAd I in AllClothingAd)
             {
 
-                //if (I.Item_ID == this.Item_ID && I.User_Email == this.User_Email)
-                //{
-                //    return false;
-                //}
+                if (I.Item_ID == this.Item_ID && I.User_Email == this.User_Email)
+                {
+                    return false;
+                }
             }
             dbs.Insert(this);
             return true;

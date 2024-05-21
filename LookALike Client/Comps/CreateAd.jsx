@@ -4,7 +4,8 @@ import { Modal, Button } from "react-bootstrap";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
-
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
 import "../src/CreateAd.css";
 import NaviBarFooter from "./NaviBarFooter";
 
@@ -27,6 +28,8 @@ function CreateAd() {
   const choosenItem = JSON.parse(
     decodeURIComponent(searchParams.get("choosenItem"))
   );
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   console.log("1");
   console.log(choosenItem);
@@ -77,6 +80,12 @@ function CreateAd() {
           console.log(data);
           if (data === -1) {
             console.log("create ad failed");
+            setSnackbarMessage(`Item already in Market-Place!`);
+                    setOpenSnackbar(true);
+                    setTimeout(() => {
+                      setOpenSnackbar(false);
+                      navigateTo("/MyWardrobe");
+                    }, 2000);
           }
           if (data === 1) {
             console.log("create ad successfull");
@@ -143,6 +152,31 @@ function CreateAd() {
           </div>
           <button onClick={handleSubmit}>Submit</button>
         </div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={openSnackbar}
+          autoHideDuration={2000}
+          onClose={() => setOpenSnackbar(false)}
+        >
+          <SnackbarContent
+            sx={{
+              backgroundColor: '#fff',
+              boxShadow: '0 3px 5px rgba(0, 0, 0, 0.2)',
+              borderRadius: '4px',
+              border: '1px solid #d2d2d2',
+              textAlign: 'center',
+              fontFamily: 'Urbanist, sans-serif',
+              fontSize: '20px',
+              color: '#333',
+              fontWeight: 'bold',
+              padding: '10px 20px',
+            }}
+            message={snackbarMessage}
+          />
+        </Snackbar>
       </div>
       <NaviBarFooter />
 
