@@ -1,8 +1,6 @@
 ﻿using LookALike_Server.Class;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace LookALike_Server.Controllers
 {
     [Route("api/[controller]")]
@@ -18,13 +16,30 @@ namespace LookALike_Server.Controllers
         }
 
         // GET api/<ItemController>/5
-        [HttpGet("{email}")]
-        public ActionResult<List<object>> GetAllItemsByUser(string email)
+        [HttpGet("GetAllTop{email}")]
+        public ActionResult<List<Item>> GetTopItemsByUser(string email)
         {
             // Create an instance of Item to access the method
             Item item = new Item();
             // Call the method and get the list of items
-            List<object> items = item.GetAllItemsByUser(email);
+            List<Item> items = item.GetAllTopItems(email);
+
+            // Check if the list is null or empty and return appropriate response
+            if (items == null || items.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+        }
+        // GET api/<ItemController>/5
+        [HttpGet("GetAllBottom{email}")]
+        public ActionResult<List<Item>> GetBottomItemsByUser(string email)
+        {
+            // Create an instance of Item to access the method
+            Item item = new Item();
+            // Call the method and get the list of items
+            List<Item> items = item.GetAllBottomItems(email);
 
             // Check if the list is null or empty and return appropriate response
             if (items == null || items.Count == 0)
@@ -41,7 +56,7 @@ namespace LookALike_Server.Controllers
         {
             int NumberOfInsert = -1;
             bool insertCheck = item.Insert();
-            if(insertCheck)
+            if (insertCheck)
             {
                 NumberOfInsert = 1;
             }

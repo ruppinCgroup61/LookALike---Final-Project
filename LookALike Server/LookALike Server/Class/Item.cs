@@ -85,6 +85,18 @@ namespace LookALike_Server.Class
 
         }
 
+        public List<Item> GetAllTopItems(string email)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetAllTop(email);
+        }
+        
+        public List<Item> GetAllBottomItems(string email)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetAllBottom(email);
+        }
+
         public List<object> GetAllItemsByUser(string email)
         {
             // Read all items

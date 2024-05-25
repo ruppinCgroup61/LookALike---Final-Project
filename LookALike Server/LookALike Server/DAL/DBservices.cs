@@ -411,6 +411,26 @@ public class DBservices
 
     }
 
+    //---------------------------------------------------------------------------------
+    // Create the Read using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateItemsCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        return cmd;
+    }
+
+
     //--------------------------------------------------------------------------------------------------
     // This method Update item from the database 
     //--------------------------------------------------------------------------------------------------
@@ -487,21 +507,175 @@ public class DBservices
         return cmd;
     }
 
-    //---------------------------------------------------------------------------------
-    // Create the Read using a stored procedure
-    //---------------------------------------------------------------------------------
-    private SqlCommand CreateItemsCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
+    //--------------------------------------------------------------------------------------------------
+    // This method read all top items from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<Item> GetAllTop(string email)
     {
+        SqlConnection con;
+        SqlCommand cmd;
+        List<Item> itemsList = new List<Item>();
 
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw ex;
+        }
+
+        cmd = CreateGetAllTopCommandWithStoredProcedureWithParameters("sp_LAL_GetTopItemsByUser", con, email); // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                Item i = new Item();
+                string item_code_flag = dataReader["Item_Code"].ToString();
+                i.Item_ID = Convert.ToInt32(dataReader["Item_ID"]);
+                if (item_code_flag == "")
+                {
+                    i.Item_Code = 999;
+                }
+                else
+                {
+                    i.Item_Code = Convert.ToInt32(dataReader["Item_Code"]);
+                }
+                i.Name = dataReader["Name"].ToString();
+                i.Image = dataReader["Image"].ToString();
+                i.Color_Code = dataReader["Color_Code"].ToString();
+                i.Season = dataReader["Season"].ToString();
+                i.Size = dataReader["Size"].ToString();
+                i.Brand_ID = Convert.ToInt32(dataReader["Brand_ID"]);
+                i.Price = Convert.ToDouble(dataReader["Price"]);
+                i.Is_Favorite = dataReader.GetBoolean(dataReader.GetOrdinal("Is_Favorite"));
+                i.Status = dataReader["Status"].ToString();
+                i.User_Email = dataReader["Email"].ToString();
+                i.ClothingType_ID = Convert.ToInt32(dataReader["Clothing_Type_ID"]);
+
+                itemsList.Add(i);
+            }
+            return itemsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw ex;
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the command with stored procedure and parameters
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateGetAllTopCommandWithStoredProcedureWithParameters(string spName, SqlConnection con, string email)
+    {
         SqlCommand cmd = new SqlCommand(); // create the command object
 
         cmd.Connection = con;              // assign the connection to the command object
 
-        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+        cmd.CommandText = spName;          // can be Select, Insert, Update, Delete 
 
         cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
 
         cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        // Add parameters
+        cmd.Parameters.AddWithValue("@Email", email);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method read all bottom items from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<Item> GetAllBottom(string email)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        List<Item> itemsList = new List<Item>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw ex;
+        }
+
+        cmd = CreateGetAllBottomCommandWithStoredProcedureWithParameters("sp_LAL_GetBottomItemsByUser", con, email); // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                Item i = new Item();
+                //string item_code_flag = dataReader["Item_Code"].ToString();
+                i.Item_ID = Convert.ToInt32(dataReader["Item_ID"]);
+                i.Item_Code = Convert.ToInt32(dataReader["Item_Code"]);
+                i.Name = dataReader["Name"].ToString();
+                i.Image = dataReader["Image"].ToString();
+                i.Color_Code = dataReader["Color_Code"].ToString();
+                i.Season = dataReader["Season"].ToString();
+                i.Size = dataReader["Size"].ToString();
+                i.Brand_ID = Convert.ToInt32(dataReader["Brand_ID"]);
+                i.Price = Convert.ToDouble(dataReader["Price"]);
+                i.Is_Favorite = dataReader.GetBoolean(dataReader.GetOrdinal("Is_Favorite"));
+                i.Status = dataReader["Status"].ToString();
+                i.User_Email = dataReader["Email"].ToString();
+                i.ClothingType_ID = Convert.ToInt32(dataReader["Clothing_Type_ID"]);
+
+                itemsList.Add(i);
+            }
+            return itemsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw ex;
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the command with stored procedure and parameters
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateGetAllBottomCommandWithStoredProcedureWithParameters(string spName, SqlConnection con, string email)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;          // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        // Add parameters
+        cmd.Parameters.AddWithValue("@Email", email);
 
         return cmd;
     }
@@ -721,7 +895,7 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
-    // This method Inserts a Item to the Items table 
+    // This method Inserts a Follower to the Items table 
     //--------------------------------------------------------------------------------------------------
     public int InsertNewFollower(UserFollowers uf)
     {
