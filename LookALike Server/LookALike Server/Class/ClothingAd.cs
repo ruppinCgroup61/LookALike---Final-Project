@@ -66,5 +66,11 @@
             dbs.Insert(this);
             return true;
         }
+
+        public List<object> ReadWithFullName()
+        {
+            DBservices dbs = new DBservices();
+            return dbs.ReadWithFullName();
+        }
     }
 }

@@ -1108,6 +1108,91 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
+    // This method reads ClothingAds from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<object> ReadWithFullName()
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> ClothingAdsList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateReadWithFullNameCommandWithStoredProcedureWithoutParameters("sp_LAL_ReadAllAdsWithFullName", con);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+
+                var ca = new
+                {
+                   Ad_ID = Convert.ToInt32(dataReader["Ad_ID"]),
+                User_Email = dataReader["User_Email"].ToString(),
+                Item_ID = Convert.ToInt32(dataReader["Item_ID"]),
+                Price = Convert.ToDouble(dataReader["Price"]),
+                Address = dataReader["Address"].ToString(),
+                Ad_Status1 = dataReader["Ad_Status"].ToString(),
+                Condition1 = dataReader["Condition"].ToString(),
+                Item_Image = dataReader["Image"].ToString(),
+                Phone_Number = dataReader["Phone_Number"].ToString(),
+                ItemName = dataReader["name"].ToString(),
+                ClothingType_Name = dataReader["Clothing_Type"].ToString(),
+                FullName = dataReader["FullName"].ToString(),
+                };
+                ClothingAdsList.Add(ca);
+
+            }
+            return ClothingAdsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateReadWithFullNameCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
     // This method Inserts a ClothingAd to the Items table 
     //--------------------------------------------------------------------------------------------------
     public int Insert(ClothingAd clothingAd)

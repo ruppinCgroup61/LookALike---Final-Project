@@ -17,6 +17,14 @@ namespace LookALike_Server.Controllers
             return clothingAd.Read();
         }
 
+        // GET: api/<ClothingAdController>
+        [HttpGet("GetWithFullName")]
+        public IEnumerable<object> GetWithFullName()
+        {
+            ClothingAd clothingAd = new ClothingAd();
+            return clothingAd.ReadWithFullName();
+        }
+
         // GET api/<ClothingAdController>/5
         [HttpGet("{id}")]
         public string Get(int id)
