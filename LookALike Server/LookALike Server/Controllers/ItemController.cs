@@ -50,6 +50,24 @@ namespace LookALike_Server.Controllers
             return Ok(items);
         }
 
+        // GET api/<ItemController>/5
+        [HttpGet("GetAllItemsByUser{email}")]
+        public ActionResult<List<object>> GetAllItemsByUser(string email)
+        {
+            // Create an instance of Item to access the method
+            Item item = new Item();
+            // Call the method and get the list of items
+            List<object> items = item.GetAllItemsByUser(email);
+
+            // Check if the list is null or empty and return appropriate response
+            if (items == null || items.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+        }
+
         // POST api/<ItemController>
         [HttpPost]
         public int Post([FromBody] Item item)

@@ -1280,13 +1280,13 @@ public class DBservices
                 ManualLook ml = new ManualLook();
                 ml.LookId = Convert.ToInt32(dataReader["Look_ID"]);
                 ml.TopSelection_ItemId = Convert.ToInt32(dataReader["TopSelection_ItemId"]);
-                ml.ButtomSelection_ItemId = Convert.ToInt32(dataReader["ButtomSelection_ButtomSelection_ItemIdItemI"]);
+                ml.ButtomSelection_ItemId = Convert.ToInt32(dataReader["ButtomSelection_ItemId"]);
                 ml.TopSelection_Image = dataReader["TopSelection_Image"].ToString();
                 ml.ButtomSelection_Image = dataReader["ButtomSelection_Image"].ToString();
                 // Retrieve Date_of_birth as DateTime
-                DateTime CreatedDate = (DateTime)dataReader["CreatedDateDateTime"];
+                DateTime CreatedDate = (DateTime)dataReader["CreatedDate"];
                 ml.CreatedDate = CreatedDate;
-                DateTime CalendarDate = (DateTime)dataReader["CalendarDateDateTime"];
+                DateTime CalendarDate = (DateTime)dataReader["CalendarDate"];
                 ml.CalendarDate = CalendarDate;
                 ml.UserEmail = dataReader["UserEmail"].ToString();
                 ManualLooksList.Add(ml);
