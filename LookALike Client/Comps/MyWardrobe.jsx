@@ -4,63 +4,45 @@ import { BsPlusLg } from "react-icons/bs";
 import { CiExport } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../src/MyWordrobe.css";
 import "../src/WardrobeFilters.css";
 import NaviBarFooter from "./NaviBarFooter";
 import WardrobeFilters from "./WardrobeFilters";
 import CircularProgress from "@mui/material/CircularProgress";
 
-
 function MyWardrobe() {
-  const [selectedItem, setSelectedItem] = useState([]); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
-  const [favorites, setFavorites] = useState([]); // סטייט לאייקונים מועדפים
+  const [selectedItem, setSelectedItem] = useState(null); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
   const [dataFromServer, setDataFromServer] = useState(null);
   const [filteredClothes, setFilteredClothes] = useState([]);
   const [brands, setBrands] = useState([]);
   const [clothingTypes, setClothingTypes] = useState([]);
-  //const userEmail = encodeURIComponent(sessionStorage.getItem("email"));
-  let userEmail = sessionStorage.getItem("email");
-
-  const [ItemToUpdate, setItemToUpdate] = useState({
-    item_ID: 0,
-    item_Code: 0,
-    name: '',
-    image: 'null',
-    color_Code: '',
-    season: '',
-    size: '',
-    brand_ID: 0,
-    price: 0,
-    is_Favorite: false,
-    status: 'live',
-    user_Email: userEmail,
-    clothingType_ID: 0,
-  });
+  const userEmail = sessionStorage.getItem("email");
+  const navigateTo = useNavigate();
 
   console.log(userEmail);
   // קבלת הפריטים של המשתמש מהשרת
   useEffect(() => {
-    fetch(`https://localhost:7215/api/Item/${userEmail}`, {
-      method: 'GET',
+    fetch(`https://localhost:7215/api/Item/GetAllItemsByUser${userEmail}`, {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data); // ניתן לעדכן את ה-state או לעשות פעולות נדרשות עם הנתונים שהתקבלו
         setDataFromServer([...data]);
         setFilteredClothes([...data]);
       })
-      .catch(error => {
-        console.error('There was a problem with fetch operation:', error);
+      .catch((error) => {
+        console.error("There was a problem with fetch operation:", error);
       });
-
   }, []); // [] מועבר כאן כדי להראות שה-fetch צריך להתרחש רק פעם אחת בטעינה הראשונית של המרכיב
 
   useEffect(() => {
@@ -70,58 +52,54 @@ function MyWardrobe() {
   }, []);
 
   const GetAllBrands = () => {
-    fetch('https://localhost:7215/api/Brand', {
-      method: 'GET',
+    fetch("https://localhost:7215/api/Brand", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Catch Error');
+          throw new Error("Catch Error");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setBrands(data);
         console.log(brands);
       })
-      .catch(error => {
-        console.error('Error during fetching brands:', error);
+      .catch((error) => {
+        console.error("Error during fetching brands:", error);
       });
   };
 
   const GetAllClothingTypes = () => {
-    fetch('https://localhost:7215/api/ClothingType', {
-      method: 'GET',
+    fetch("https://localhost:7215/api/ClothingType", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Catch Error');
+          throw new Error("Catch Error");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setClothingTypes(data);
         console.log(clothingTypes);
-
       })
-      .catch(error => {
-        console.error('Error during fetching clothing types:', error);
+      .catch((error) => {
+        console.error("Error during fetching clothing types:", error);
       });
   };
 
-
-
-   // Render the circular loader if still loading
-   if (!(dataFromServer&&clothingTypes&&brands)) {
+  // Render the circular loader if still loading
+  if (!(dataFromServer && clothingTypes && brands)) {
     return (
       <div className="loading-container">
-        <CircularProgress  color="inherit"/>
-        {/* <div className="Loading">Your wardrobe is in preparation....</div> */}
+        <CircularProgress color="inherit" />
       </div>
     );
   }
@@ -139,64 +117,62 @@ function MyWardrobe() {
 
   // הכנסה והוצאה ממועדפים
   const toggleFavorite = (index) => {
-    const newFavorites = [...favorites];
-    const selectedItem = dataFromServer[index];
-    
-    // Create a copy of the selected item
+    const selectedItem = filteredClothes[index];
+
+    // יצירת עותק של הפריט הנבחר
     const updatedItem = { ...selectedItem };
-  
-    // Toggle is_Favorite based on its current value
-    updatedItem.is_Favorite = !updatedItem.is_Favorite;
-  
-    // Find matching brand_ID from brands
-    const matchedBrand = brands.find((brand) => brand.brandName === selectedItem.brand);
+
+    // שינוי של is_Favorite בהתאם לערך הנוכחי שלו
+    updatedItem.is_Favorite = !selectedItem.is_Favorite;
+
+    // מציאת brand_ID התואם מתוך המותגים
+    const matchedBrand = brands.find(
+      (brand) => brand.brandName === selectedItem.brand
+    );
     if (matchedBrand) {
       updatedItem.brand_ID = matchedBrand.id;
     }
-  
-    // Find matching clothingType_ID from clothingTypes
-    const matchedClothingType = clothingTypes.find((type) => type.clothing_Type === selectedItem.clothing_Type);
+
+    // מציאת clothingType_ID התואם מתוך סוגי הבגדים
+    const matchedClothingType = clothingTypes.find(
+      (type) => type.clothing_Type === selectedItem.clothing_Type
+    );
     if (matchedClothingType) {
       updatedItem.clothingType_ID = matchedClothingType.id;
     }
-  
-    // Update the state with the updated item
-    setItemToUpdate(updatedItem);
-  
-    // Update the favorites array based on the updated item's index
-    if (newFavorites.includes(index)) {
-      const indexToRemove = newFavorites.indexOf(index);
-      newFavorites.splice(indexToRemove, 1);
-    } else {
-      newFavorites.push(index);
-    }
-    setFavorites(newFavorites);
-  
-    // Perform API request to update the item on the server
+
+    // ביצוע בקשת API לעדכון הפריט בשרת
     let api = `https://localhost:7215/api/Item/${selectedItem.item_ID}`;
+
     fetch(api, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedItem)
+      body: JSON.stringify(updatedItem),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Catch Error');
+          throw new Error("Catch Error");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
+        console.log(updatedItem);
+        const updatedFilteredClothes = [...filteredClothes];
+        updatedFilteredClothes[index] = updatedItem;
+        setFilteredClothes(updatedFilteredClothes);
+        setDataFromServer(updatedFilteredClothes);
       })
-      .catch(error => {
-        console.error('Error during item update:', error);
+      .catch((error) => {
+        console.error("Error during item update:", error);
       });
   };
-  
 
-
+  const ShowDetails = (item) => {
+    navigateTo('/ShowDetails', { state: { item } });
+  }
 
   return (
     <>
@@ -211,13 +187,13 @@ function MyWardrobe() {
           {filteredClothes.map((item, index) => (
             <div key={index} className="clothing-item">
               <div className="clothing-image">
-                <img src={item.image} alt={item.name} />
+                <img src={item.image} alt={item.name} onClick={() => ShowDetails(item)}/>
 
                 {/*לחיצה על הפלוס*/}
                 <BsPlusLg className="opt" onClick={() => togglePopup(index)} />
 
                 {/* החלף בין האייקונים בהתאם לסטייט */}
-                {favorites.includes(index) ? (
+                {item.is_Favorite ? (
                   <IoIosHeart
                     className="fav"
                     onClick={() => toggleFavorite(index)}
@@ -235,14 +211,16 @@ function MyWardrobe() {
                     <Link
                       to={{
                         pathname: `/CreateAd/${item.item_ID}`,
-                        search: `choosenItem=${encodeURIComponent(JSON.stringify({ ...item }))}`,
+                        search: `choosenItem=${encodeURIComponent(
+                          JSON.stringify({ ...item })
+                        )}`,
                       }}
                     >
-                      <button style={{ paddingLeft: 10, paddingRight: 10 }}>
+                      <button style={{ paddingLeft: 15, paddingRight: 15, marginBottom: 10 }}>
                         <CiExport className="del_sale_icon" /> For sale
                       </button>
                     </Link>
-                    <button style={{ paddingLeft: 10, paddingRight: 10 }}>
+                    <button style={{ paddingLeft: 19, paddingRight: 19, marginBottom: 10 }}>
                       <MdDeleteForever className="del_sale_icon" /> Delete
                     </button>
                   </div>
@@ -258,7 +236,7 @@ function MyWardrobe() {
               </div>
             </div>
           ))}
-          <div className='Navbar Footer'>
+          <div className="Navbar Footer">
             <NaviBarFooter />
           </div>
         </div>

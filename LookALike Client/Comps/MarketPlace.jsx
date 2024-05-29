@@ -5,15 +5,14 @@ import WardrobeFilters from "./WardrobeFilters";
 import NaviBarFooter from "./NaviBarFooter";
 import CircularProgress from "@mui/material/CircularProgress";
 
-
 export default function MarketPlace() {
   const [dataFromServer, setDataFromServer] = useState(null);
   const [filteredClothes, setFilteredClothes] = useState(null);
   const navigateTo = useNavigate();
 
   useEffect(() => {
-    // קבלת הפריטים של המשתמש מהשרת
-    fetch(`https://localhost:7215/api/ClothingAd`, {
+    // קבלת המודעות מהשרת (יחד עם שם בעל הפריט)
+    fetch(`https://localhost:7215/api/ClothingAd/GetWithFullName`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,20 +37,16 @@ export default function MarketPlace() {
   if (!dataFromServer) {
     return (
       <div className="loading-container">
-        <CircularProgress  color="inherit"/>
+        <CircularProgress color="inherit" />
         {/* <div className="Loading">Your wardrobe is in preparation....</div> */}
       </div>
-    );  }
+    );
+  }
 
-
-  console.log("99");
   console.log(dataFromServer);
-  console.log("99");
 
   function Showad(item) {
-    navigateTo("/ad", {
-      state: { ...item },
-    });
+    navigateTo(`/Ad/${item.item_ID}`);
   }
 
   return (
@@ -68,24 +63,26 @@ export default function MarketPlace() {
             <div key={index} className="clothing-item">
               <div className="clothing-image">
                 <img
-                  src={item.item_Image
-                  }
-                  alt={item.itemName
-                  }
+                  src={item.item_Image}
+                  alt={item.itemName}
                   onClick={() => Showad(item)}
                 />
               </div>
               <div className="clothing-details">
                 <p>
+                <strong>
+                    {item.fullName}
+                  </strong>
+                </p>
+                <p>
                   <strong>
-                    {item.itemName.toUpperCase()} -{" "}
-                    {item.price}$
+                    {item.itemName.toUpperCase()} - {item.price}$
                   </strong>
                 </p>
               </div>
             </div>
           ))}
-         <div className='Navbar Footer'>
+          <div className="Navbar Footer">
             <NaviBarFooter />
           </div>
         </div>

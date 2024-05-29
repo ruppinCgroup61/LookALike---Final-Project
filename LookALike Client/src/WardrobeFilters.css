@@ -25,4 +25,5 @@
   .menu_filters.active_filter {
     font-weight: bold; /* לדוגמה, הוספת מאפיין עיצוב לפילטר הפעיל */
     color: black;
+    font-size: 20px;
   }

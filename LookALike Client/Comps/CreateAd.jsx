@@ -89,7 +89,7 @@ function CreateAd() {
           }
           if (data === 1) {
             console.log("create ad successfull");
-            navigateTo(`/ad`);
+            navigateTo(`/Ad/${item}`);
           }
         })
         .catch((error) => {
