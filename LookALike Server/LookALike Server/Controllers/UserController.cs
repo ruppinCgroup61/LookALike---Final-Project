@@ -53,6 +53,23 @@ namespace LookALike_Server.Controllers
             }
         }
 
+        // GET api/<ItemController>/GetUserFullName/{email}
+        [HttpGet("GetUserFullName/{email}")]
+        public ActionResult<string> GetUserFullName(string email)
+        {
+            // Create an instance of User to access the method
+            User user = new User();
+            string fullName = user.GetFullName(email);
+
+            // Check if the full name is null and return appropriate response
+            if (fullName == null)
+            {
+                return NotFound("Full name not found for the provided email.");
+            }
+
+            return Ok(fullName);
+        }
+
 
         // PUT api/<UserController>/5
         [HttpPut("{Email}")]

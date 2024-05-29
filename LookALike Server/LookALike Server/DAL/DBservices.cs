@@ -265,6 +265,73 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
+    // This method reads Users from the database 
+    //--------------------------------------------------------------------------------------------------
+    public string GetUserFullName(string email)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        string userFullName = null;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateGetUserFullNameCommandWithStoredProcedure("sp_LAL_GetUserFullName", con, email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            if (dataReader.Read())
+            {
+                userFullName = dataReader["FullName"].ToString();
+            }
+
+            return userFullName;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateGetUserFullNameCommandWithStoredProcedure(String spName, SqlConnection con, string email)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+        cmd.CommandText = spName;          // set the stored procedure name
+        cmd.CommandTimeout = 10;           // time to wait for the execution, default is 30 seconds
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        // Add the input parameter for the stored procedure
+        cmd.Parameters.AddWithValue("@Email", email);
+
+        return cmd;
+    }
+
+
+    //--------------------------------------------------------------------------------------------------
     // This method Inserts a Item to the Items table 
     //--------------------------------------------------------------------------------------------------
     public int Insert(Item item)

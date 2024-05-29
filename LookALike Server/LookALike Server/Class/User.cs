@@ -65,5 +65,11 @@
             return dbs.UpdateUser(this);
 
         }
+        public string GetFullName(string email)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetUserFullName(email);
+
+        }
     }
 }
