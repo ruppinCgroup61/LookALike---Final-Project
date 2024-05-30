@@ -16,14 +16,27 @@ export default function ShowDetails() {
 
   return (
     <>
-      <div className="ad_container">
+      <div className="ad_container" id="item_details_container">
         <img src={item.image} alt={item.name} />
-        <h3>{item.name.toUpperCase()}</h3>
-        <p>{item.size}</p>
-        <br />
+        <h2 style={{marginBottom: 18, marginTop: 28}}>
+          {item.name.toUpperCase()}
+        </h2>
+        <p><strong>Brand:</strong> {item.brand}</p>
+        <p><strong>Type:</strong> {item.clothing_Type}</p>
+        <p><strong>Season:</strong> {item.season}</p>
+        <p><strong>Size:</strong> {item.size}</p>
+        <p><strong>Cost:</strong> {item.price}$</p>
       </div>
       {/* Close button */}
-      <div className="CloseAd" style={{ position: "absolute", top: "10px", right: "10px", cursor: "pointer" }}>
+      <div
+        className="CloseAd"
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          cursor: "pointer",
+        }}
+      >
         <FaTimes onClick={closeAd} size={24} />
       </div>
       <div className="Navbar Footer">

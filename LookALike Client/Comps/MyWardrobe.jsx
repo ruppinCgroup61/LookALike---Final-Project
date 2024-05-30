@@ -10,6 +10,7 @@ import "../src/WardrobeFilters.css";
 import NaviBarFooter from "./NaviBarFooter";
 import WardrobeFilters from "./WardrobeFilters";
 import CircularProgress from "@mui/material/CircularProgress";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function MyWardrobe() {
   const [selectedItem, setSelectedItem] = useState(null); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
@@ -171,11 +172,14 @@ function MyWardrobe() {
   };
 
   const ShowDetails = (item) => {
-    navigateTo('/ShowDetails', { state: { item } });
-  }
+    navigateTo("/ShowDetails", { state: { item } });
+  };
 
   return (
     <>
+      {/* <div className="wardrobe_Header" id="w_header">
+        <h3 className="LogoFont" id="h_header">My Wardrobe</h3>
+      </div> */}
       <div className="containerW">
         <div className="header">
           <WardrobeFilters
@@ -187,7 +191,11 @@ function MyWardrobe() {
           {filteredClothes.map((item, index) => (
             <div key={index} className="clothing-item">
               <div className="clothing-image">
-                <img src={item.image} alt={item.name} onClick={() => ShowDetails(item)}/>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  onClick={() => ShowDetails(item)}
+                />
 
                 {/*לחיצה על הפלוס*/}
                 <BsPlusLg className="opt" onClick={() => togglePopup(index)} />
@@ -216,11 +224,23 @@ function MyWardrobe() {
                         )}`,
                       }}
                     >
-                      <button style={{ paddingLeft: 15, paddingRight: 15, marginBottom: 10 }}>
+                      <button
+                        style={{
+                          paddingLeft: 15,
+                          paddingRight: 15,
+                          marginBottom: 10,
+                        }}
+                      >
                         <CiExport className="del_sale_icon" /> For sale
                       </button>
                     </Link>
-                    <button style={{ paddingLeft: 19, paddingRight: 19, marginBottom: 10 }}>
+                    <button
+                      style={{
+                        paddingLeft: 19,
+                        paddingRight: 19,
+                        marginBottom: 10,
+                      }}
+                    >
                       <MdDeleteForever className="del_sale_icon" /> Delete
                     </button>
                   </div>

@@ -1,0 +1,198 @@
+/* Reset CSS */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Body styles */
+body {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+}
+
+/* Container styles */
+.container {
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 20px;
+    flex:1;
+}
+
+/* Header styles */
+.header_reg {
+    display: flex;
+     align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
+    justify-content:space-evenly;
+    position: sticky;
+    top:0;
+}
+
+.Hadder_register {
+    font-size: 38px;
+    font-weight: bold; /* Added font weight */
+    position: relative;
+    right: 20px;
+}
+
+/* Back button styles */
+.back-button_Register {
+    position: relative;
+    right:40px;
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Form styles */
+.form {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.submit-button[disabled] {
+    background-color: #CCCCCC; /* Grey background color */
+    color: #666666; /* Dark grey text color */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+  }
+
+.InputBlock label {
+    font-weight: bold;
+    display: block; /* Added to move labels above input */
+    margin-bottom: 2px; /* Added margin */
+    text-align: left;
+}
+
+.error {
+    font-size: 12px; /* Reduced font size */
+    color: red; /* Changed color to red */
+    position: absolute;
+    bottom: -20px; /* Adjusted position */
+    left: 0;
+}
+
+/* Modified InputBlock styles */
+.InputBlock {
+    position: relative;
+}
+
+.InputBlock input[type="text"],
+.InputBlock input[type="email"],
+.InputBlock input[type="password"],
+.InputBlock input[type="tel"],
+.InputBlock input[type="date"],
+.InputBlock input[type="file"] {
+    width: calc(100% - 20px); /* Adjusted width */
+    width: 300px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+    padding: 8px;
+    border: 2px solid #D2D2D2; /* Adjusted border color */
+    background-color: #ffffff; /* Added white background */
+    border-radius: 2px;
+    margin-top: 5px; /* Added margin top */
+}
+
+.file-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.file-icon {
+    margin-right: 6px;
+    color:#242424;
+
+}
+
+.custom-file-input {
+    width: 300px; /* Adjusted width */
+    height: 30px; /* Adjusted height */
+    display: inline-block;
+    padding: 3px 15px;
+    background-color: #ffffff;
+    color:#242424;
+    border: 2px solid #D2D2D2;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.file-text {
+    margin-left: 5px;
+    color:#242424;
+}
+  
+
+/* Password input container */
+.password-input-container {
+    position: relative;
+}
+
+.password-input-container input[type="password"] {
+    padding-right: 40px;
+}
+
+/* Password toggle icon */
+.password-toggle-icon {
+    position: absolute;
+    top: 60%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color:#D2D2D2
+}
+
+/* Submit button styles */
+.submit-button {
+    width: 80%;
+    background-color: #242424; /* Adjusted button color */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Added margin top */
+}
+
+.submit-button:hover {
+    background-color: #333333;
+}
+
+/* Footer styles */
+.BottomDiv {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.BottomDiv h2 {
+    font-size: 27px;
+    font-family: "El Messiri", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+

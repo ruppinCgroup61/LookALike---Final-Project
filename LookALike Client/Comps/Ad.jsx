@@ -14,7 +14,7 @@ export default function Ad() {
 
   useEffect(() => {
     // Fetch the user's items from the server
-    fetch(`https://localhost:7215/api/ClothingAd`, {
+    fetch(`https://localhost:7215/api/ClothingAd/GetWithFullName`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -58,20 +58,20 @@ export default function Ad() {
   return (
     <>
       <div className="ad_container">
-        <img src={foundAd.item_Image} alt={foundAd.item_Image} />
-        <h3>{foundAd.itemName.toUpperCase()}</h3>
-        <p>{foundAd.price}$</p>
+        <img src={foundAd.item_Image} alt={foundAd.itemName} />
+        <h3 style={{marginBottom: 0}}>{foundAd.itemName.toUpperCase()} ( {foundAd.itemSize} )</h3>
+        <h3 style={{marginTop: 0}}>by {foundAd.fullName.toUpperCase()}</h3>
+        <p>Price: {foundAd.price}$</p>
         <p>Condition: {foundAd.condition1}</p>
-        <p>{foundAd.address}</p>
-        <Map address={foundAd.address} />
-        <br />
         {/* Link that triggers the openWhatsApp function */}
-        <p>
+        <p style={{marginBottom: 20}}>
           <a href="#" onClick={openWhatsApp} style={{ color: "black" }}>
             <FaWhatsapp />
           </a>
           0{foundAd.phone_Number}
         </p>
+        <p>{foundAd.address}</p>
+        <Map address={foundAd.address} />
       </div>
       {/* Close button */}
       <div className="CloseAd" style={{ position: "absolute", top: "10px", right: "10px", cursor: "pointer" }}>

@@ -1,0 +1,157 @@
+.ad-form {
+    position: relative;
+    bottom: 40px;
+    max-width: 100%;
+    padding: 40px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ad-form h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.ad-content {
+    text-align: center;
+}
+
+.ad-form .image-container img {
+    width: 100%;
+    height: auto;
+    /* שמירה על הפרופורציות של התמונה */
+    max-width: 100%;
+    /* גודל מקסימלי לרוחב */
+    max-height: 200px;
+    /* גודל מקסימלי לגובה, לדוגמה */
+    display: block;
+    margin-bottom: 10px;
+    object-fit: contain;
+    /* שמירה על הפרופורציות בתוך הגודל המוגדר */
+}
+
+.ad-form .ad-content h2 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.ad-form .input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.ad-form .input-group label {
+    flex: 1;
+    text-align: right;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.ad-form .input-group input {
+    flex: 2;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+    background-color: transparent;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.ad-form .input-group input:focus {
+    border-bottom-color: #f5dede;
+    outline: none;
+}
+
+.ad-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.ad-form select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.ad-form select option {
+    color: #333;
+}
+
+.ad-form button {
+    width: 40%;
+    background-color: black;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+/* CSS עבור מודאל */
+.modal {
+    display: none;
+    /* מודאל לא יוצג ברגע שהוא לא פתוח */
+    position: fixed;
+    /* מודאל יישאר במקום גם כאשר המשתמש מנוטרל את הדף */
+    z-index: 1050;
+    /* מודאל יוצג מעל רוב האלמנטים */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* גלילה אוטומטית במידת הצורך */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* רקע חצי שקוף */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* מרווח באמצע הדף */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* רוחב מודאל */
+}
+
+/* סגירת מודאל */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.address_alert {
+    position: fixed;
+    top: 42px;
+    width: 70%;
+    right: 42px;
+}
