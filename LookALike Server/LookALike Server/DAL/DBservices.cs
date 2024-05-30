@@ -148,11 +148,7 @@ public class DBservices
                 // Retrieve Date_of_birth as DateTime
                 DateTime dateOfBirth = (DateTime)dataReader["Date_of_Birth"];
                 // Convert DateTime to DateOnly
-                //DateOnly dateOnlyOfBirth = new DateOnly(dateOfBirth.Year, dateOfBirth.Month, dateOfBirth.Day);
                 u.DateOfBirth = dateOfBirth;
-
-                //u.DateOfBirth = (DateOnly)dataReader["Date_of_birth"];
-
                 u.Password = dataReader["Password"].ToString();
                 UsersList.Add(u);
             }
@@ -187,7 +183,7 @@ public class DBservices
 
         cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
 
-        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+        cmd.CommandTimeout = 20;           // Time to wait for the execution' The default is 30 seconds
 
         cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
 
@@ -1139,17 +1135,19 @@ public class DBservices
                 var ca = new
                 {
                    Ad_ID = Convert.ToInt32(dataReader["Ad_ID"]),
-                User_Email = dataReader["User_Email"].ToString(),
-                Item_ID = Convert.ToInt32(dataReader["Item_ID"]),
-                Price = Convert.ToDouble(dataReader["Price"]),
-                Address = dataReader["Address"].ToString(),
-                Ad_Status1 = dataReader["Ad_Status"].ToString(),
-                Condition1 = dataReader["Condition"].ToString(),
-                Item_Image = dataReader["Image"].ToString(),
-                Phone_Number = dataReader["Phone_Number"].ToString(),
-                ItemName = dataReader["name"].ToString(),
-                ClothingType_Name = dataReader["Clothing_Type"].ToString(),
-                FullName = dataReader["FullName"].ToString(),
+                    User_Email = dataReader["User_Email"].ToString(),
+                    Item_ID = Convert.ToInt32(dataReader["Item_ID"]),
+                     Price = Convert.ToDouble(dataReader["Price"]),
+                    Address = dataReader["Address"].ToString(),
+                    Ad_Status1 = dataReader["Ad_Status"].ToString(),
+                     Condition1 = dataReader["Condition"].ToString(),
+                    Item_Image = dataReader["Image"].ToString(),
+                     Phone_Number = dataReader["Phone_Number"].ToString(),
+                      ItemName = dataReader["name"].ToString(),
+                     ClothingType_Name = dataReader["Clothing_Type"].ToString(),
+                    FullName = dataReader["FullName"].ToString(),
+                    ItemSize = dataReader["Size"].ToString(),
+
                 };
                 ClothingAdsList.Add(ca);
 
