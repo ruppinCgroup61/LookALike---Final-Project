@@ -6,6 +6,7 @@ import NaviBarFooter from "./NaviBarFooter";
 import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
+import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
 function UploadItem() {
     const [formDataUpload, setFormData] = useState({
@@ -33,6 +34,7 @@ function UploadItem() {
     const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    
 
     useEffect(() => {
         // Fetch all brands and clothing types when the component mounts
@@ -156,18 +158,24 @@ function UploadItem() {
             });
     };
 
-    // const [data, setData] = useState('Not Found');  // מצב התחלתי של טקסט התוצאה
+    const [data, setData] = useState('Not Found');  // מצב התחלתי של טקסט התוצאה
     const [isActive, setIsActive] = useState(false); // כדי לשלוט על הפעלת הסריקה
-    // const handleUpdate = (err, result) => {
-    //     if (result) {
-    //         setData(result.text);
-    //         setIsActive(false); // עצור את הסריקה לאחר קריאת תוצאה
-    //     } else {
-    //         setData('Scanning...'); // עדכון הטקסט בזמן סריקה
-    //     }
-    //     //console.log("1")
-    // };
-    // const [imageUrl, setImageUrl] = useState('');
+    const handleUpdate = (err, result) => {
+        if (result) {
+            setData(result.text);
+            setIsActive(false); // עצור את הסריקה לאחר קריאת תוצאה
+            console.log(result);
+            // setFormData(prevState => ({
+            //     ...prevState,
+            //     item_Code: result.text // update the barcode in the form data
+            // }));
+            
+        } else {
+            setData('Scanning...'); // עדכון הטקסט בזמן סריקה
+        }
+        //console.log("1")
+    };
+    const [imageUrl, setImageUrl] = useState('');
 
     // useEffect(() => {
     //     const fetchImage = async () => {
@@ -212,7 +220,17 @@ function UploadItem() {
                     {imagePreviewUrl && <img src={imagePreviewUrl} alt="Preview" className="image-preview" />}
                     {isActive && (
                         <div>
-                            {/* BarcodeScannerComponent goes here */}
+                            <BarcodeScannerComponent
+                                width={500}
+                                height={500}
+                                onUpdate={handleUpdate}
+                            />
+
+                            <div>
+                                <h1>Fetched Image</h1>
+                              
+                                {imageUrl && <img src={imageUrl} alt="Fetched" />}
+                            </div> 
                         </div>
                     )}
                     <input

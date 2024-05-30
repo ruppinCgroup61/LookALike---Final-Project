@@ -4,7 +4,8 @@
 
 .HeaderForLook {
   padding-top: 10px;
-  font-size: 45px;
+  font-size: 35px;
+  margin-top: 30px;
 }
 
 .Upload_Header3 {
@@ -12,11 +13,13 @@
   display:flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: fixed;
   border-bottom: 1px solid grey;
-  padding-bottom: 15px;
+  padding-bottom: 5px;
   gap: 20px;
-  bottom: 20px;
+  top: 20px;
+  left: 30px;
+  right: 30px;
 }
 
 .LogoFont3 {
@@ -36,7 +39,7 @@
 
 .icon-container {
   position: relative;
-  /* margin-bottom: 20px; מרווח בין האייקונים */
+  margin-bottom: 5px;
 }
 
 .icon-button {
