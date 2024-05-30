@@ -34,7 +34,6 @@ const LogIn = () => {
   const [ForgotPasswordEmail, setForgotPasswordEmail] = useState('');
   const [retrievedPassword, setRetrievedPassword] = useState('');
 
-
   const handleLogIn = () => {
     const userData = {
       dateOfBirth: '2024-05-04T16:32:31.976Z',

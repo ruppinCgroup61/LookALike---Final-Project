@@ -29,6 +29,9 @@ const Register = () => {
   const [wrongNameAlert, setWrongNameAlert] = useState(false);
   const [wrongPhoneNumberAlert, setWrongPhoneNumberAlert] = useState(false);
   const [EmailAlreadyExsist, setEmailAlreadyExsistAlert] = useState(false);
+  const api = location.hostname === "localhost" || location.hostname === "127.0.0.1" ?
+  `https://localhost:7215/api/Users` :
+  `https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User`;
   const navigateTo = useNavigate();
 
   const handleChange = (event) => {
@@ -85,7 +88,7 @@ const Register = () => {
     e.preventDefault();
     const userData = { ...formData };
     console.log(userData);
-    fetch('https://localhost:7215/api/User', {
+    fetch(api, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -158,7 +161,7 @@ const Register = () => {
     <div>
       {/* Header Div */}
       <div className="header_reg">
-        <button onClick={() => navigateTo("/FirstPage")} className="back-button_Register">
+        <button onClick={() => navigateTo("/")} className="back-button_Register">
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <h2 className="Hadder_register">SIGN UP</h2>

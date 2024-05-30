@@ -5,8 +5,8 @@ export default function FirstPage() {
     
   return (
     <div>
-        <img style={{width: 80}} src="/Images/kolav.png" alt="lookalike" />
-        <img style={{width: 300, marginBottom:100}} src="/Images/lookalike.png" alt="lookalike" />
+        <img style={{width: 80}} src="public/Images/kolav.png" alt="lookalike" />
+        <img style={{width: 300, marginBottom:100}} src="public/Images/lookalike.png" alt="lookalike" />
         <Link to="/login">
             <button style={{backgroundColor: '#EEEEEE', width: 200, color: 'black', margin: 10}}>Log in</button>
         </Link>

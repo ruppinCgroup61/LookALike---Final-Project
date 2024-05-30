@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../src/CreateALook.css';
 
 const BottomSelectionPage = ({ setSelectedBottom }) => {
-  const bottoms = [
-    { id: 1, name: 'Bottom 1', image: '../Images/00108412805-e1.jpg' },
-    { id: 2, name: 'Bottom 2', image: '../Images/00108412800-e1.jpg' },
-    // הוסיפי פריטים נוספים כפי שנדרש
-  ];
+  const [bottoms, setBottoms] = useState([]);
+  const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
+
+  useEffect(() => {
+    fetch(`https://localhost:7215/api/Item/GetAllBottom${userEmail}`, { // Correct path according to your API
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          console.log("Error fetching bottoms");
+          throw new Error('Error fetching bottoms');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setBottoms(data);
+        console.log("Data fetched successfully:", data);
+      })
+      .catch(error => {
+        console.error('Error during fetching bottoms:', error);
+      });
+  }, [userEmail]); // Ensure the fetch happens only once when userEmail changes
 
   return (
     <div>
       <h2>Select a Bottom</h2>
       <div className="items-list">
         {bottoms.map(bottom => (
-          <div key={bottom.id} className="item" >
+          <div key={bottom.item_ID} className="item">
             <Link to="/FCManualLook" onClick={() => setSelectedBottom(bottom)}>
-              <img className="item-image" src={bottom.image} alt={bottom.name} />
+              <img src={bottom.image} alt={bottom.name} />
               <p>{bottom.name}</p>
             </Link>
           </div>

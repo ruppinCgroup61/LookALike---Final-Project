@@ -81,7 +81,6 @@
   padding: 30px;
   display: flex;
   text-align: left;
-  margin-right: 30px;
   background-size: cover;
   background-position: center;
 }
@@ -105,22 +104,22 @@
 }
 
 .block:nth-child(1) {
-  background-image: url('/Images/wardrobe.jpeg');
+  background-image: url('public/Images/wardrobe.jpeg');
   opacity: 0.8;
 }
 
 .block:nth-child(2) {
-  background-image: url('/Images/hangerBanner.jpeg');
+  background-image: url('public/Images/hangerBanner.jpeg');
   opacity: 0.8;
 }
 
 .block:nth-child(3) {
-  background-image: url('/Images/clothings.jpeg');
+  background-image: url('public/Images/clothings.jpeg');
   opacity: 0.8;
 }
 
 .block:nth-child(4) {
-  background-image: url('/Images/create\ look.jpeg');
+  background-image: url('public/Images/create look.jpeg');
   opacity: 0.8;
 }
 
@@ -132,4 +131,9 @@
 
 .Loading{
   font-size: 30px;
+}
+
+.imageBTN{
+  background-color: #fff;
+  
 }

@@ -5,6 +5,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
 import { FaUserGroup } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation from React Router
+import { GrAddCircle } from "react-icons/gr";
+
 
 import "../src/NaviBarFooter.css";
 
@@ -21,14 +23,11 @@ export default function NaviBarFooter() {
       case "/MyWardrobe":
         setActiveIcon("closet");
         break;
-      case "/ShowDetails":
-        setActiveIcon("closet");
+      case "/FCManualLook":
+        setActiveIcon("createLook");
         break;
       case "/UploadItem":
         setActiveIcon("createOutfit");
-        break;
-      case "/social-network":
-        setActiveIcon("socialNetwork");
         break;
       case "/MarketPlace":
         setActiveIcon("marketPlace");
@@ -46,27 +45,19 @@ export default function NaviBarFooter() {
     <div className="footer">
       <div className="footer-container">
         <Link to="/HomePage">
-          <IoPersonSharp
-            color={activeIcon === "profile" ? "#242424" : "#999999"}
-          />
+          <IoPersonSharp color={activeIcon === "profile" ? "#242424" : "#999999"} />
         </Link>
-        <Link to="/UploadItem">
-          <FaWandMagicSparkles
-            color={activeIcon === "createOutfit" ? "#242424" : "#999999"}
-          />
+        <Link to="/FCManualLook">
+          <FaWandMagicSparkles color={activeIcon === "createLook" ? "#242424" : "#999999"} />
         </Link>
         <Link to="/MyWardrobe">
           <TbHanger color={activeIcon === "closet" ? "#242424" : "#999999"} />
         </Link>
-        <Link to="/social-network">
-          <FaUserGroup
-            color={activeIcon === "socialNetwork" ? "#242424" : "#999999"}
-          />
+        <Link to="/UploadItem">
+          <GrAddCircle color={activeIcon === "createOutfit" ? "#242424" : "#999999"} />
         </Link>
         <Link to="/MarketPlace">
-          <FaShoppingCart
-            color={activeIcon === "marketPlace" ? "#242424" : "#999999"}
-          />
+          <FaShoppingCart color={activeIcon === "marketPlace" ? "#242424" : "#999999"} />
         </Link>
       </div>
     </div>

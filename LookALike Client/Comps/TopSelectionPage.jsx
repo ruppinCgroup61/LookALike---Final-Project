@@ -1,21 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const TopSelectionPage = ({ setSelectedTop }) => {
-  const tops = [
-    { id: 1, name: 'Top 1', image: '../Images/04805428802-e1.jpg' },
-    { id: 2, name: 'Top 2', image: '../Images/06224495251-e1.jpg' },
-    // Add more items as needed
-  ];
+  //console.log("sss")
+  const [tops, setTops] = useState([]);
+  const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
+
+  useEffect(() => {
+    fetch(`https://localhost:7215/api/Item/GetAllTop${userEmail}`, { // Correct path according to your API
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          console.log("Error fetching tops");
+          throw new Error('Error fetching tops');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setTops(data);
+        console.log("Data fetched successfully:", data);
+      })
+      .catch(error => {
+        console.error('Error during fetching tops:', error);
+      });
+    }, []);
+
+ 
+      // console.log(data);
 
   return (
     <div>
       <h2>Select a Top</h2>
       <div className="items-list">
         {tops.map(top => (
-          <div key={top.id} className="item">
+          <div key={top.item_ID} className="item">
             <Link to="/FCManualLook" onClick={() => setSelectedTop(top)}>
-              <img className="item-image" src={top.image} alt={top.name} />
+              <img src={top.image} alt={top.name} />
               <p>{top.name}</p>
             </Link>
           </div>
