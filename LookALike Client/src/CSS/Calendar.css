@@ -1,0 +1,35 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .calendar-page-container {
+    width: 100%;
+  }
+
+  /* סגנון לתאריכים שאינם בעתיד */
+.react-calendar__tile--now {
+    background-color: gray;
+    pointer-events: none; /* מונע קליקים על התאריכים */
+  }
+  
+  
+  @media only screen and (max-width: 390px) { /* רוחב ה-iPhone 13 Pro */
+      .calendar-page-container {
+          margin: auto;
+      }
+      .calendar,
+      .h4,
+      .BTNCal {
+          margin-left: auto;
+          margin-right: auto;
+          display: block; /* זה יגרום להם לתפס את רוחב המסך במלואו */
+      }
+  }
+
+  .BTNCal{
+    padding: 20px;
+  }
+  

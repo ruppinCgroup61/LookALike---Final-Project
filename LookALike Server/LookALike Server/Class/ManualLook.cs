@@ -40,6 +40,14 @@
             return dbs.ReadAllManualLook();
         }
 
+        public List<ManualLook> ReadByEmail(string UserMail)
+        {
+            DBservices dbs = new DBservices();
+            List<ManualLook> EmailManualLookList = new List<ManualLook>();
+            EmailManualLookList = dbs.ReadAllManualLookByEmail(UserMail);
+            return EmailManualLookList;
+        }
+
         public bool Insert()
         {
             DBservices dbs = new DBservices();

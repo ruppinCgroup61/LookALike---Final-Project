@@ -18,10 +18,20 @@ namespace LookALike_Server.Controllers
         }
 
         // GET api/<ManualLookController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetAllManualLooksbyEmail/{email}")]
+        public IActionResult GetAllManualLooksbyEmail(string email)
         {
-            return "value";
+            // Create an instance of PopUp to access the method
+            ManualLook manualLook = new ManualLook();
+            List<ManualLook> manualLookList = manualLook.ReadByEmail(email);
+
+            // Check if there are popups
+            if (manualLookList == null || manualLookList.Count == 0)
+            {
+                return NotFound("There are no PopUps for this user");
+            }
+
+            return Ok(manualLookList);
         }
 
         // POST api/<ItemController>

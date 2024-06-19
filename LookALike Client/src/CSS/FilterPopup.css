@@ -1,0 +1,28 @@
+.filter-sidebar {
+    width: 250px;
+    padding: 16px;
+}
+
+.filter-sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.filter-sidebar-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter-sidebar-button {
+    margin-right: 8px;
+}
+
+.filter-sidebar .MuiFormControlLabel-root {
+    display: block;
+    width: 100%;
+}
+
+.filter-sidebar .MuiCheckbox-root {
+    margin-right: 8px;
+}
