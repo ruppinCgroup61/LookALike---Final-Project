@@ -1413,6 +1413,305 @@ public class DBservices
         return cmd;
     }
 
+    //--------------------------------------------------------------------------------------------------
+    // This method reads Manual Looks from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<ManualLook> ReadAllManualLookByEmail(string email)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<ManualLook> ManualLooksList = new List<ManualLook>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadAllLooksByEmailWithStoredProcedureWithoutParameters("sp_LAL_ReadAllManualLookByMail", con, email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                ManualLook ml = new ManualLook();
+                ml.LookId = Convert.ToInt32(dataReader["Look_ID"]);
+                ml.TopSelection_ItemId = Convert.ToInt32(dataReader["TopSelection_ItemId"]);
+                ml.ButtomSelection_ItemId = Convert.ToInt32(dataReader["ButtomSelection_ItemId"]);
+                ml.TopSelection_Image = dataReader["TopSelection_Image"].ToString();
+                ml.ButtomSelection_Image = dataReader["ButtomSelection_Image"].ToString();
+                // Retrieve Date_of_birth as DateTime
+                DateTime CreatedDate = (DateTime)dataReader["CreatedDate"];
+                ml.CreatedDate = CreatedDate;
+                DateTime CalendarDate = (DateTime)dataReader["CalendarDate"];
+                ml.CalendarDate = CalendarDate;
+                ml.UserEmail = dataReader["UserEmail"].ToString();
+                ManualLooksList.Add(ml);
+
+            }
+            return ManualLooksList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadAllLooksByEmailWithStoredProcedureWithoutParameters(String spName, SqlConnection con, string email)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@UserEmail", email);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method Inserts a new Pop up to the PopUps table 
+    //--------------------------------------------------------------------------------------------------
+    public int InsertNewPopUp(PopUp popup)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateNewPopUpWithStoredProcedure("SP_LAL_CreateNewPopUp", con, popup);  // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand for Insert ManualLook using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateNewPopUpWithStoredProcedure(String spName, SqlConnection con, PopUp popup)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@UserMail", popup.UserMail);
+        cmd.Parameters.AddWithValue("@StartDate", popup.StartDate);
+        cmd.Parameters.AddWithValue("@EndDate", popup.EndDate);
+        cmd.Parameters.AddWithValue("@Status", popup.Status);
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method reads Manual Looks from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<PopUp> ReadAllPopUps()
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<PopUp> PopUpsList = new List<PopUp>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadAllPopUpsWithStoredProcedure("sp_LAL_ReadAllPopUps", con);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                PopUp pu = new PopUp();
+                pu.PopUpId = Convert.ToInt32(dataReader["Id"]);
+                pu.UserMail = dataReader["UserMail"].ToString();
+                pu.StartDate= (DateTime)dataReader["StartDate"];
+                pu.EndDate= (DateTime)dataReader["EndDate"];
+                pu.Status = Convert.ToBoolean(dataReader["Status"]); // Reading the Status field
+                PopUpsList.Add(pu);
+
+            }
+            return PopUpsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadAllPopUpsWithStoredProcedure(String spName, SqlConnection con)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method read all bottom items from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<PopUp> ReadPopUpsByEmail(string email)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        List<PopUp> PopUpsList = new List<PopUp>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadAllPopUpsByEmailWithStoredProcedureWithParameters("sp_LAL_ReadAllPopUpsByEmail", con, email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                PopUp pu = new PopUp();
+                pu.PopUpId = Convert.ToInt32(dataReader["Id"]);
+                pu.UserMail = dataReader["UserMail"].ToString();
+                pu.StartDate = (DateTime)dataReader["StartDate"];
+                pu.EndDate = (DateTime)dataReader["EndDate"];
+                pu.Status = Convert.ToBoolean(dataReader["Status"]); // Reading the Status field
+                PopUpsList.Add(pu);
+
+            }
+            return PopUpsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the command with stored procedure and parameters
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadAllPopUpsByEmailWithStoredProcedureWithParameters(string spName, SqlConnection con, string email)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;          // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        // Add parameters
+        cmd.Parameters.AddWithValue("@UserMail", email);
+
+        return cmd;
+    }
+
     //---------------------------------------------------------------------------------
     // Create the SqlCommand using a stored procedure
     //---------------------------------------------------------------------------------
