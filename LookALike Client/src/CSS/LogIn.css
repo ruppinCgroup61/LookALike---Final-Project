@@ -1,0 +1,112 @@
+/* Reset CSS */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.container {
+  max-width: 340px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Set container height to fill the viewport */
+}
+
+.tit {
+  display: flex;
+  /* align-items: center; */
+  margin-bottom: 20px;
+  text-align: center;
+  justify-content: space-between;
+  gap: 13px;
+  position: sticky;
+  top:0;
+}
+
+.title {
+  color: #333;
+  font-size: 35px;
+}
+
+.input {
+  width: calc(100% - 40px);
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 2px solid #d2d2d2;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+.Label{
+  text-align: left;
+}
+
+.input:focus {
+  border-color: #000;
+}
+
+.back-button2 {
+  position: relative;
+  top:10px;
+  right:10px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+  width: calc(100% - 40px);
+  padding: 12px;
+  background-color: #242424;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #333;
+}
+
+.button:disabled {
+  background-color: #ccc; /* Change color to gray when disabled */
+  cursor: not-allowed; /* Change cursor to not-allowed when disabled */
+}
+
+.forgotPasswordButton {
+  width: calc(100% - 40px);
+  margin-top: 10px;
+  background: none;
+  border: #242424;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.forgotPasswordButton:hover {
+  color: #000;
+}
+
+.PasswordToPresent{
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: #242424;
+}

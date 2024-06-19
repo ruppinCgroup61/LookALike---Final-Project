@@ -1559,6 +1559,7 @@ public class DBservices
         cmd.Parameters.AddWithValue("@StartDate", popup.StartDate);
         cmd.Parameters.AddWithValue("@EndDate", popup.EndDate);
         cmd.Parameters.AddWithValue("@Status", popup.Status);
+        cmd.Parameters.AddWithValue("@PopUp_Name", popup.PopUp_Name);
         return cmd;
     }
 
@@ -1596,6 +1597,7 @@ public class DBservices
                 pu.StartDate= (DateTime)dataReader["StartDate"];
                 pu.EndDate= (DateTime)dataReader["EndDate"];
                 pu.Status = Convert.ToBoolean(dataReader["Status"]); // Reading the Status field
+                pu.PopUp_Name = dataReader["PopUp_Name"].ToString();
                 PopUpsList.Add(pu);
 
             }

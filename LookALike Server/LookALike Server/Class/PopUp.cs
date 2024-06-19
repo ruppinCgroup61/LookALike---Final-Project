@@ -7,15 +7,17 @@
         DateTime startDate;
         DateTime endDate;
         bool status;
+        string popUp_Name;
         static List<PopUp> AllPopUps = new List<PopUp>();
 
-        public PopUp(int popUpId, string userMail, DateTime startDate, DateTime endDate, bool status)
+        public PopUp(int popUpId, string userMail, DateTime startDate, DateTime endDate, bool status, string popUp_Name)
         {
             PopUpId = popUpId;
             UserMail = userMail;
             StartDate = startDate;
             EndDate = endDate;
             Status = status;
+            PopUp_Name = popUp_Name;
         }
 
         public PopUp() { }
@@ -25,6 +27,7 @@
         public DateTime StartDate { get => startDate; set => startDate = value; }
         public DateTime EndDate { get => endDate; set => endDate = value; }
         public bool Status { get => status; set => status = value; }
+        public string PopUp_Name { get => popUp_Name; set => popUp_Name = value; }
 
         public int CreateNewPopUp()
         {
