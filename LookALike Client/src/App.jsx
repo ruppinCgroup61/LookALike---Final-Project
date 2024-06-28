@@ -17,6 +17,8 @@ import FCManualLook from './Comps/FCManualLook'
 import TopSelectionPage from './Comps/TopSelectionPage'
 import ShowDetails from './Comps/ShowDetails'
 import SocialNetwork from './Comps/SocialNetwork'
+import BusinessHomePage from './Comps/BusinessHomePage'
+import CreatePopup from './Comps/CreatePopup'
 
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
         <Route path="/calendar" element={<CalendarPage selectedTop={selectedTop} selectedBottom={selectedBottom} />} />
         <Route path='/ShowDetails' element={<ShowDetails />}></Route>
         <Route path='/SocialNetwork' element={<SocialNetwork />}></Route>
+        <Route path='/BusinessHomePage' element={<BusinessHomePage />}></Route>
+        <Route path='/CreatePopup' element={<CreatePopup />}></Route>
       </Routes>
     </>
   )

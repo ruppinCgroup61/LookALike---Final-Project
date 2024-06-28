@@ -22,7 +22,7 @@ export default function SocialNetwork() {
   return (
     <div className='SN_Container'>
       <div className='SN_Header'>
-        <h2 className='HeaderSocial'>Social Network</h2>
+        <h2>Social Network</h2>
         <IoPeopleSharp className='header-icon' />
       </div>
       <div className='SN_Center'>
@@ -35,6 +35,24 @@ export default function SocialNetwork() {
         <NaviBarFooter />
       </div>
 
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add New Friend</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="email"
+            label="Friend's Email"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Add</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../CSS/HomePage.css";
-import NaviBarFooter from "../Comps/NaviBarFooter";
+import NaviBarFooter from "./NaviBarFooter";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BzWBTwNObeHBJ4OiEu5Tr7bNBd2WD1NTeJef0CUTylZVFqz2Bx/MkBeSLtVD8oa2oNldpm5jDPD7ZpYXiBAqXA==",
+  "dgSpecHash": "eogn47hHbvHSjfl+dVczyRVV+yXYfdrovUs/rewlcFW7i0bp9vU0RekhXm2kYn/dG07wRG4UxXwmAhw2uyWX4Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\LookALike_Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
+  "projectFilePath": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\Copy\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Shir\\.nuget\\packages\\htmlagilitypack\\1.11.61\\htmlagilitypack.1.11.61.nupkg.sha512",
     "C:\\Users\\Shir\\.nuget\\packages\\microsoft.aspnet.cors\\5.3.0\\microsoft.aspnet.cors.5.3.0.nupkg.sha512",

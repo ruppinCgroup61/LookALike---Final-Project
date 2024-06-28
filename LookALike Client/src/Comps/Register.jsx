@@ -1,37 +1,48 @@
-import React, { useState } from 'react';
-import '../CSS/Register.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faEye, faEyeSlash, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
+import React, { useState } from "react";
+import "../CSS/Register.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowLeft,
+  faEye,
+  faEyeSlash,
+  faCheckCircle,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Tooltip from "@mui/material/Tooltip";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    dateOfBirth: '',
-    email: '',
-    firstName: '',
-    image: '',
-    lastName: '',
-    password: '',
-    PhoneNumber: '',
+    dateOfBirth: "",
+    email: "",
+    firstName: "",
+    image: "",
+    lastName: "",
+    password: "",
+    PhoneNumber: "",
+    isBusiness: false
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const [firstNameForPopup, setFirstNameForPopup] = useState('');
-  const [selectedFileName, setSelectedFileName] = useState('');
+  const [firstNameForPopup, setFirstNameForPopup] = useState("");
+  const [selectedFileName, setSelectedFileName] = useState("");
   const [imageAdded, setImageAdded] = useState(false);
   const [wrongPasswordAlert, setWrongPasswordAlert] = useState(false);
   const [wrongEmailAlert, setWrongEmailAlert] = useState(false);
   const [wrongNameAlert, setWrongNameAlert] = useState(false);
   const [wrongPhoneNumberAlert, setWrongPhoneNumberAlert] = useState(false);
   const [EmailAlreadyExsist, setEmailAlreadyExsistAlert] = useState(false);
-  const api = location.hostname === "localhost" || location.hostname === "127.0.0.1" ?
-  `https://localhost:7215/api/Users` :
-  `https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User`;
+  const api =
+    location.hostname === "localhost" || location.hostname === "127.0.0.1"
+      ? `https://localhost:7215/api/User`
+      : `https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User`;
   const navigateTo = useNavigate();
 
   const handleChange = (event) => {
@@ -70,16 +81,19 @@ const Register = () => {
 
   const handleInputBlur = (name) => {
     // Show error message when input field loses focus and is empty or when password is invalid
-    if ((name === 'password' && !isPasswordValid())) {
+    if (name === "password" && !isPasswordValid()) {
       setWrongPasswordAlert(true);
     }
-    if (name === 'email' && !isEmailValid()) {
+    if (name === "email" && !isEmailValid()) {
       setWrongEmailAlert(true);
     }
-    if ((name === 'firstName' || name === 'lastName') && !isNameValid(formData[name])) {
+    if (
+      (name === "firstName" || name === "lastName") &&
+      !isNameValid(formData[name])
+    ) {
       setWrongNameAlert(true);
     }
-    if (name === 'PhoneNumber' && !isPhoneNumberValid(formData[name])) {
+    if (name === "PhoneNumber" && !isPhoneNumberValid(formData[name])) {
       setWrongPhoneNumberAlert(true);
     }
   };
@@ -89,37 +103,34 @@ const Register = () => {
     const userData = { ...formData };
     console.log(userData);
     fetch(api, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Catch Error');
-      }
-      return response.json();
-    })
-    .then(data   => {
-      console.log(data);
-      if(data===-1)
-        {
-          console.log('Registration failed');
-          setEmailAlreadyExsistAlert(true);
-
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Catch Error");
         }
-      if(data ===1)
-        {
-          console.log('Registration successfull');
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data === -1) {
+          console.log("Registration failed");
+          setEmailAlreadyExsistAlert(true);
+        }
+        if (data === 1) {
+          console.log("Registration successfull");
           setFirstNameForPopup(data.firstName);
           setRegistrationSuccess(true);
-          navigateTo("/logIn")
+          navigateTo("/logIn");
         }
-    })
-    .catch(error => {
-      console.error('Error during registration:', error);
-    });
+      })
+      .catch((error) => {
+        console.error("Error during registration:", error);
+      });
   };
 
   const isEmailValid = () => {
@@ -128,7 +139,8 @@ const Register = () => {
   };
 
   const isPasswordValid = () => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(formData.password);
   };
 
@@ -142,13 +154,20 @@ const Register = () => {
     return phoneRegex.test(phoneNumber);
   };
 
+  const handleCheckboxChange = (event) => {
+    setFormData(prevState => ({
+      ...prevState,
+      isBusiness: event.target.checked
+    }));
+  };
+
   const isFormValid = () => {
     return (
-      formData.firstName.trim() !== '' &&
-      formData.lastName.trim() !== '' &&
-      formData.email.trim() !== '' &&
-      formData.PhoneNumber.trim() !== '' &&
-      formData.dateOfBirth.trim() !== '' &&
+      formData.firstName.trim() !== "" &&
+      formData.lastName.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      formData.PhoneNumber.trim() !== "" &&
+      formData.dateOfBirth.trim() !== "" &&
       isEmailValid() &&
       isPasswordValid() &&
       isNameValid(formData.firstName) &&
@@ -161,7 +180,10 @@ const Register = () => {
     <div>
       {/* Header Div */}
       <div className="header_reg">
-        <button onClick={() => navigateTo("/")} className="back-button_Register">
+        <button
+          onClick={() => navigateTo("/")}
+          className="back-button_Register"
+        >
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <h2 className="Hadder_register">SIGN UP</h2>
@@ -175,7 +197,7 @@ const Register = () => {
             <p>Welcome Abord {firstNameForPopup}!</p>
           </div>
         )}
-        <form onSubmit={handleRegister} className='CenterDiv'>
+        <form onSubmit={handleRegister} className="CenterDiv">
           {/* Input fields */}
           <div className="InputBlock">
             <label>First Name: *</label>
@@ -185,7 +207,7 @@ const Register = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              onBlur={() => handleInputBlur('firstName')} 
+              onBlur={() => handleInputBlur("firstName")}
             />
             {wrongNameAlert && (
               <Alert severity="error">
@@ -202,7 +224,7 @@ const Register = () => {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              onBlur={() => handleInputBlur('lastName')} 
+              onBlur={() => handleInputBlur("lastName")}
             />
             {wrongNameAlert && (
               <Alert severity="error">
@@ -220,7 +242,7 @@ const Register = () => {
               placeholder="example@example.com"
               value={formData.email}
               onChange={handleChange}
-              onBlur={() => handleInputBlur('email')} 
+              onBlur={() => handleInputBlur("email")}
             />
             {wrongEmailAlert && (
               <Alert severity="error">
@@ -237,7 +259,7 @@ const Register = () => {
               name="PhoneNumber"
               value={formData.PhoneNumber}
               onChange={handleChange}
-              onBlur={() => handleInputBlur('PhoneNumber')} 
+              onBlur={() => handleInputBlur("PhoneNumber")}
             />
             {wrongPhoneNumberAlert && (
               <Alert severity="error">
@@ -262,11 +284,11 @@ const Register = () => {
             <div className="password-input-container">
               <input
                 required
-                type={passwordVisible ? 'text' : 'password'}
+                type={passwordVisible ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                onBlur={() => handleInputBlur('password')} 
+                onBlur={() => handleInputBlur("password")}
               />
               <FontAwesomeIcon
                 icon={passwordVisible ? faEyeSlash : faEye}
@@ -277,7 +299,8 @@ const Register = () => {
             {wrongPasswordAlert && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
-                Password must contain a capital letter, a lowercase letter, a number, and a special character.
+                Password must contain a capital letter, a lowercase letter, a
+                number, and a special character.
               </Alert>
             )}
           </div>
@@ -291,7 +314,7 @@ const Register = () => {
                 id="file-input"
                 onChange={handleFileChange}
                 accept="image/*"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
               />
               <label htmlFor="file-input" className="custom-file-input">
                 <FontAwesomeIcon icon={faPlus} className="file-icon" />
@@ -299,22 +322,46 @@ const Register = () => {
               </label>
             </div>
           </div>
-          <button type="submit" className="submit-button" onClick={isFormValid} disabled={!isFormValid()}>
+          <div className="business-checkbox">
+            <Tooltip title="Business account is an account that manages pop-up events.">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.isBusiness}
+                    onChange={handleCheckboxChange}
+                    color="primary"
+                  />
+                }
+                label="Business account"
+              />
+            </Tooltip>
+          </div>
+          <button
+            type="submit"
+            className="submit-button"
+            onClick={isFormValid}
+            disabled={!isFormValid()}
+          >
             CREATE ACCOUNT
           </button>
         </form>
       </div>
 
       {/* Bottom Div */}
-      <div className="BottomDiv"> 
-      <Stack sx={{ width: '100%' }} spacing={2}>
-      {EmailAlreadyExsist && (
-              <Alert severity="error" onClose={() => {setEmailAlreadyExsistAlert(false);}}>
-                <AlertTitle>Registration failed</AlertTitle>
-                Email already exists!
-                </Alert>
-       )}
-      </Stack>
+      <div className="BottomDiv">
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          {EmailAlreadyExsist && (
+            <Alert
+              severity="error"
+              onClose={() => {
+                setEmailAlreadyExsistAlert(false);
+              }}
+            >
+              <AlertTitle>Registration failed</AlertTitle>
+              Email already exists!
+            </Alert>
+          )}
+        </Stack>
         <h2>LookALike</h2>
       </div>
     </div>

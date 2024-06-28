@@ -9,6 +9,7 @@ using LookALike_Server.Class;
 using static System.Net.Mime.MediaTypeNames;
 using System.Drawing;
 using System.Xml.Linq;
+using System.Data.Common;
 //using RuppinProj.Models;
 
 /// <summary>
@@ -106,6 +107,7 @@ public class DBservices
         cmd.Parameters.AddWithValue("@Phone_Number", user.PhoneNumber);
         cmd.Parameters.AddWithValue("@Date_of_Birth", user.DateOfBirth);
         cmd.Parameters.AddWithValue("@Password", user.Password);
+        cmd.Parameters.AddWithValue("@Is_Business", user.IsBusiness);
 
         return cmd;
     }
@@ -150,6 +152,7 @@ public class DBservices
                 // Convert DateTime to DateOnly
                 u.DateOfBirth = dateOfBirth;
                 u.Password = dataReader["Password"].ToString();
+                u.IsBusiness = Convert.ToBoolean(dataReader["Is_Business"]);
                 UsersList.Add(u);
             }
             return UsersList;
@@ -1672,6 +1675,7 @@ public class DBservices
                 pu.StartDate = (DateTime)dataReader["StartDate"];
                 pu.EndDate = (DateTime)dataReader["EndDate"];
                 pu.Status = Convert.ToBoolean(dataReader["Status"]); // Reading the Status field
+                pu.PopUp_Name = dataReader["PopUp_Name"].ToString();
                 PopUpsList.Add(pu);
 
             }
@@ -1718,6 +1722,146 @@ public class DBservices
     // Create the SqlCommand using a stored procedure
     //---------------------------------------------------------------------------------
     private SqlCommand CreateCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method Inserts Pop up Dtetails to the PopUp Details table 
+    //--------------------------------------------------------------------------------------------------
+    public int InsertNewPopupDetails(PopupDetails popupdetails)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateNewPopupDetailsWithStoredProcedure("sp_LAL_InsertPopUpDetails", con, popupdetails);  // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand for Insert Pop up Dtetails using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateNewPopupDetailsWithStoredProcedure(String spName, SqlConnection con, PopupDetails popupdetails)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@PopUpId", popupdetails.Id);
+        cmd.Parameters.AddWithValue("@UserMail", popupdetails.Email);
+        cmd.Parameters.AddWithValue("@ItemId", popupdetails.ItemId);
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method reads Pop up Dtetails from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<object> ReadAllPopupDetails()
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> PopupDetailsList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadPopupDetailsWithStoredProcedure("sp_LAL_ReadSpecficPopUpDetails", con);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                var pds = new
+                {
+                    Id = Convert.ToInt32(dataReader["PopUpId"]),
+                    Email = dataReader["UserMail"].ToString(),
+                    ItemId = Convert.ToInt32(dataReader["ItemId"])
+                };
+
+                PopupDetailsList.Add(pds);
+            }
+            return PopupDetailsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadPopupDetailsWithStoredProcedure(String spName, SqlConnection con)
     {
 
         SqlCommand cmd = new SqlCommand(); // create the command object

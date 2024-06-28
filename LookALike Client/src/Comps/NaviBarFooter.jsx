@@ -6,6 +6,8 @@ import { IoPersonSharp } from "react-icons/io5";
 import { FaUserGroup } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation from React Router
 import { GrAddCircle } from "react-icons/gr";
+
+
 import "../CSS/NaviBarFooter.css";
 
 export default function NaviBarFooter() {
