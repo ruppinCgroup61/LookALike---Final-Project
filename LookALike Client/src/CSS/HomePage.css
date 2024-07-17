@@ -12,8 +12,10 @@
   justify-content: center;
   width: 100%;
   margin-bottom: 20px;
+  margin-top: 10px;
   text-align: center;
   position: sticky;
+  gap:20px;
 }
 
 .user-circle-container {
@@ -23,7 +25,7 @@
 }
 
 .user-circle {
-  width: 60px;
+  width: 80px;
   height: 60px;
   background-color: transparent;
   border-radius: 50%;
@@ -49,9 +51,12 @@
 }
 
 .welcome-text {
+  font-family: "El Messiri", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
   font-size: 32px;
-  margin: 2px;
   padding: 2px;
+  margin-top: 15px;
 }
 
 .IconDiv {
@@ -83,7 +88,8 @@
   text-align: left;
   background-size: cover;
   background-position: center;
-}
+  border: 1px solid #EEEEEE;
+  }
 
 .overlay {
   position: absolute;
@@ -104,23 +110,23 @@
 }
 
 .block:nth-child(1) {
-  background-image: url('public/Images/wardrobe.jpeg');
-  opacity: 0.8;
+  background-image: url('src/Images/banner4.jpg');
+  opacity: 0.7;
 }
 
 .block:nth-child(2) {
-  background-image: url('public/Images/hangerBanner.jpeg');
-  opacity: 0.8;
+  background-image: url('src/Images/banner2.jpg');
+  opacity: 0.7;
 }
 
 .block:nth-child(3) {
-  background-image: url('public/Images/clothings.jpeg');
-  opacity: 0.8;
+  background-image: url('src/Images/banner3.jpg');
+  opacity: 0.7;
 }
 
 .block:nth-child(4) {
-  background-image: url('public/Images/create look.jpeg');
-  opacity: 0.8;
+  background-image: url('src/Images/banner1.jpg');
+  opacity: 0.7;
 }
 
 .logo img {
@@ -128,7 +134,11 @@
   height: 50px;
 }
 
-
+.LogoBlock img{
+  width: 50px;
+  /* height: 50px; */
+  /* opacity: 0.7; */
+}
 .Loading{
   font-size: 30px;
 }

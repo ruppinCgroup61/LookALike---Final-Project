@@ -175,7 +175,7 @@ body {
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px; /* Added margin top */
+    margin-top: 20px; /* Added margin top */
 }
 
 .submit-button:hover {
@@ -195,6 +195,4 @@ body {
     font-style: normal;
 }
 
-.business-checkbox {
-    text-align: left;
-}
+

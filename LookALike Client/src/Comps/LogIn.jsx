@@ -15,9 +15,6 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 
-//shir@gmail.com
-//Shir111!
-
 //yakirco0412@gmail.com
 //Yc2023!!
 
@@ -65,26 +62,12 @@ const LogIn = () => {
       })
       .then(data => {
         console.log('Login successful:', data);
-
-        const { email, isBusiness, firstName, lastName } = data;
-        const fullName = `${firstName} ${lastName}`.trim();
-        
-        sessionStorage.setItem('email', email);
-        sessionStorage.setItem('isBusiness', isBusiness);
-        sessionStorage.setItem('fullName', fullName);
-
-        setSnackbarMessage(`Welcome ${email}`);
+        sessionStorage.setItem('email', userData.email);
+        setSnackbarMessage(`Welcome ${Email}`);
         setOpenSnackbar(true);
-
         setTimeout(() => {
           setOpenSnackbar(false);
-          
-          // Redirect based on account type
-          if (isBusiness) {
-            navigateTo("/BusinessHomePage");
-          } else {
-            navigateTo("/HomePage");
-          }
+          navigateTo("/HomePage");
         }, 2000);
       })
       .catch(error => {
@@ -190,7 +173,7 @@ const LogIn = () => {
         <h2 className="title">SIGN IN</h2>
       </div>
       <div className='CenterDiv'>
-        <label className='Label'>Email Address:</label>
+        <label className='Label'>Email Address</label>
         <input
           className="input"
           type="text"
@@ -199,7 +182,7 @@ const LogIn = () => {
           onChange={handleEmailChange}
         />
         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
-        <label className='Label'>Password:</label>
+        <label className='Label'>Password</label>
         <div className="password-input-wrapper">
           <input
             className="input"

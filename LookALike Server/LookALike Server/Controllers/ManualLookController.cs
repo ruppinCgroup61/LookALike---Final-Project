@@ -28,7 +28,24 @@ namespace LookALike_Server.Controllers
             // Check if there are popups
             if (manualLookList == null || manualLookList.Count == 0)
             {
-                return NotFound("There are no PopUps for this user");
+                return NotFound("There are no looks for this user");
+            }
+
+            return Ok(manualLookList);
+        }
+
+        // GET api/<ManualLookController>/5
+        [HttpGet("GetLooksDetails/{email}")]
+        public IActionResult GetLooksDetails(string email)
+        {
+            // Create an instance of PopUp to access the method
+            ManualLook manualLook = new ManualLook();
+            List<object> manualLookList = manualLook.ReadLookFullDetails(email);
+
+            // Check if there are popups
+            if (manualLookList == null || manualLookList.Count == 0)
+            {
+                return NotFound("There are no looks for this user");
             }
 
             return Ok(manualLookList);

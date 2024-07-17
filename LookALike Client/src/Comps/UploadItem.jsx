@@ -177,25 +177,25 @@ function UploadItem() {
     };
     const [imageUrl, setImageUrl] = useState('');
 
-    // useEffect(() => {
-    //     const fetchImage = async () => {
-    //         try {
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
 
-    //           // החליפי את ה-URL עם הכתובת של האתר שממנו את רוצה לשלוף את התמונה
-    //           const result = await axios.get('http://www.zara.com/qr/0622449525105');
-    //           const parser = new DOMParser();
-    //           const htmlDocument = parser.parseFromString(result.data, "text/html");
-    //           const imgElement = htmlDocument.querySelector("img"); // הוסיפי מזהה ספציפי אם יש צורך
-    //           setImageUrl(imgElement.src);
-    //         } 
-    //         catch (error) {
-    //           console.error('Error fetching image:', error);
-    //         }
-    //       };
+              // החליפי את ה-URL עם הכתובת של האתר שממנו את רוצה לשלוף את התמונה
+              const result = await axios.get('http://www.zara.com/qr/0622449525105');
+              const parser = new DOMParser();
+              const htmlDocument = parser.parseFromString(result.data, "text/html");
+              const imgElement = htmlDocument.querySelector("img"); // הוסיפי מזהה ספציפי אם יש צורך
+              setImageUrl(imgElement.src);
+            } 
+            catch (error) {
+              console.error('Error fetching image:', error);
+            }
+          };
 
 
-    //     fetchImage();
-    // }, []);
+        fetchImage();
+    }, []);
 
     return (
         <div className="Upload_Container">

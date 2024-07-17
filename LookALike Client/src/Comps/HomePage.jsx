@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../CSS/HomePage.css";
-import NaviBarFooter from "./NaviBarFooter";
+import NaviBarFooter from "../Comps/NaviBarFooter";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
 
@@ -58,6 +58,7 @@ export default function HomePage() {
 
   return (
     <div className="container">
+      
       <div className="top-div">
         <div className="user-circle">
           <img src={u.image} alt="User" />
@@ -74,20 +75,23 @@ export default function HomePage() {
           </div>
         </Link>
         <div className="block">
-          <Link to="/MarketPlace">
+          <Link to="/UploadItem">
             <div className="overlay"></div>
-            <p>Enter Market Place</p>
+            <p>Add New Clothing</p>
           </Link>
         </div>
         <div className="block">
           <div className="overlay"></div>
-          <p>Enter @BarBelisha Wardrobe</p>
+          <p>Enter Social Network</p>
         </div>
         <div className="block">
           <Link to="/FCManualLook">
             <div className="overlay"></div>
             <p>Create New Look</p>
           </Link>
+        </div>
+        <div className="LogoBlock">
+        <img src="src/Images/kolav.png"/>
         </div>
       </div>
       <div className="bottom-div">

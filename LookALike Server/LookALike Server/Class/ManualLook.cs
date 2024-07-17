@@ -63,5 +63,13 @@
             dbs.Insert(this);
             return true;
         }
+
+        public List<object> ReadLookFullDetails(string UserMail)
+        {
+            DBservices dbs = new DBservices();
+            List<object> LooksList = new List<object>();
+            LooksList = dbs.ReadLookFullDetails(UserMail);
+            return LooksList;
+        }
     }
 }

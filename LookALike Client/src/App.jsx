@@ -17,8 +17,7 @@ import FCManualLook from './Comps/FCManualLook'
 import TopSelectionPage from './Comps/TopSelectionPage'
 import ShowDetails from './Comps/ShowDetails'
 import SocialNetwork from './Comps/SocialNetwork'
-import BusinessHomePage from './Comps/BusinessHomePage'
-import CreatePopup from './Comps/CreatePopup'
+import FollowerCloset from './Comps/FollowerCloset'; 
 
 
 function App() {
@@ -43,9 +42,8 @@ function App() {
         <Route path="/select-bottom" element={<BottomSelectionPage setSelectedBottom={setSelectedBottom} />} />
         <Route path="/calendar" element={<CalendarPage selectedTop={selectedTop} selectedBottom={selectedBottom} />} />
         <Route path='/ShowDetails' element={<ShowDetails />}></Route>
-        <Route path='/SocialNetwork' element={<SocialNetwork />}></Route>
-        <Route path='/BusinessHomePage' element={<BusinessHomePage />}></Route>
-        <Route path='/CreatePopup' element={<CreatePopup />}></Route>
+        <Route path="/SocialNetwork" element={<SocialNetwork />} />
+        <Route path="/follower-closet/:email" element={<FollowerCloset />} /> {/* Add the new route */}
       </Routes>
     </>
   )
