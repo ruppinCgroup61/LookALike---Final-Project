@@ -9,12 +9,21 @@ namespace LookALike_Server.Controllers
     [ApiController]
     public class PopupDetailsController : ControllerBase
     {
-        // GET: api/<PopupDetailsController>
-        [HttpGet]
-        public IEnumerable<object> Get()
+        // GET api/<PopUpController>/GetAllPopUpItems/{email}/{popUpId}
+        [HttpGet("GetAllPopUpItems/{email}/{popUpId}")]
+        public IActionResult GetAllPopUpsByEmail(string email, int popUpId)
         {
-            PopupDetails popupdetails = new PopupDetails();
-            return popupdetails.Read();
+            // Create an instance of PopUp to access the method
+            PopupDetails popupInstance = new PopupDetails();
+            List<object> popupList = popupInstance.ReadAllPopUpItems(email, popUpId);
+
+            // Check if there are popups
+            if (popupList == null || popupList.Count == 0)
+            {
+                return NotFound("There are no items in this pop up");
+            }
+
+            return Ok(popupList);
         }
 
         // GET api/<PopupDetailsController>/5
@@ -24,17 +33,27 @@ namespace LookALike_Server.Controllers
             return "value";
         }
 
-        // POST api/<PopupDetailsController>
         [HttpPost]
-        public int Post([FromBody] PopupDetails popupdetails)
+        [Route("InsertItemToPopUp")]
+        public IActionResult InsertItemToPopUp([FromBody] Item item, [FromQuery] int popUpId, [FromQuery] string userMail)
         {
-            int NumberOfInsert = -1;
-            bool insertCheck = popupdetails.Insert();
-            if (insertCheck)
+            if (item == null)
             {
-                NumberOfInsert = 1;
+                return BadRequest("Item is null");
             }
-            return NumberOfInsert;
+
+            PopupDetails popupDetails = new PopupDetails();
+
+            bool success = popupDetails.InsertItemToPopUp(item, popUpId, userMail);
+
+            if (success)
+            {
+                return Ok("Item successfully inserted into the popup.");
+            }
+            else
+            {
+                return StatusCode(500, "Failed to insert item into the popup.");
+            }
         }
 
         // PUT api/<PopupDetailsController>/5

@@ -9,7 +9,6 @@ using LookALike_Server.Class;
 using static System.Net.Mime.MediaTypeNames;
 using System.Drawing;
 using System.Xml.Linq;
-using System.Data.Common;
 //using RuppinProj.Models;
 
 /// <summary>
@@ -107,7 +106,6 @@ public class DBservices
         cmd.Parameters.AddWithValue("@Phone_Number", user.PhoneNumber);
         cmd.Parameters.AddWithValue("@Date_of_Birth", user.DateOfBirth);
         cmd.Parameters.AddWithValue("@Password", user.Password);
-        cmd.Parameters.AddWithValue("@Is_Business", user.IsBusiness);
 
         return cmd;
     }
@@ -152,7 +150,6 @@ public class DBservices
                 // Convert DateTime to DateOnly
                 u.DateOfBirth = dateOfBirth;
                 u.Password = dataReader["Password"].ToString();
-                u.IsBusiness = Convert.ToBoolean(dataReader["Is_Business"]);
                 UsersList.Add(u);
             }
             return UsersList;
@@ -1026,6 +1023,80 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
+    // This method read all bottom items from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<object> SearchUserFollowers(string email)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> UserFollowers_List = new List<object>();
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadAllUserFollowersByEmailWithStoredProcedureWithParameters("sp_LAL_ReadTheFollowersWithFullName", con, email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                var FollowerObj = new
+                {
+                    Following_Email = dataReader["Following_Email"].ToString(),
+                    Follower_Email = dataReader["Follower_Email"].ToString(),
+                    UserYouFollow_Full_Name = dataReader["Following_Full_Name"].ToString(),
+                };
+                UserFollowers_List.Add(FollowerObj);
+
+            }
+            return UserFollowers_List;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the command with stored procedure and parameters
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadAllUserFollowersByEmailWithStoredProcedureWithParameters(string spName, SqlConnection con, string email)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;          // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        // Add parameters
+        cmd.Parameters.AddWithValue("@Follower_Email", email);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
     // This method reads ClothingAds from the database 
     //--------------------------------------------------------------------------------------------------
     public List<ClothingAd> ReadClothingAds()
@@ -1331,6 +1402,90 @@ public class DBservices
         cmd.Parameters.AddWithValue("@CalendarDateDateTime", manualLook.CalendarDate);
         cmd.Parameters.AddWithValue("@UserEmail", manualLook.UserEmail);
 
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method reads ClothingAds from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<object> ReadLookFullDetails(string UserMail)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> LooksList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreatelooksListCommandWithStoredProcedureWithoutParameters("sp_LAL_ReadFullLookDetails", con , UserMail);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+
+                var look = new
+                {
+                    Look_ID = Convert.ToInt32(dataReader["Look_ID"]),
+                    TopSelection_ItemId = Convert.ToInt32(dataReader["TopSelection_ItemId"]),
+                    TopSelection_Image = dataReader["TopSelection_Image"].ToString(),
+                    Top_Item_Name = dataReader["Top_Item_Name"].ToString(),
+                    ButtomSelection_ItemId = Convert.ToInt32(dataReader["ButtomSelection_ItemId"]),
+                    ButtomSelection_Image = dataReader["ButtomSelection_Image"].ToString(),
+                    Bottom_Item_Name = dataReader["Bottom_Item_Name"].ToString(),
+                    CreatedDate = (DateTime)dataReader["CreatedDate"],
+                    CalendarDate = (DateTime)dataReader["CalendarDate"],
+            };
+                LooksList.Add(look);
+
+            }
+            return LooksList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreatelooksListCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con , string UserMail)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@UserEmail", UserMail);
 
         return cmd;
     }
@@ -1675,7 +1830,6 @@ public class DBservices
                 pu.StartDate = (DateTime)dataReader["StartDate"];
                 pu.EndDate = (DateTime)dataReader["EndDate"];
                 pu.Status = Convert.ToBoolean(dataReader["Status"]); // Reading the Status field
-                pu.PopUp_Name = dataReader["PopUp_Name"].ToString();
                 PopUpsList.Add(pu);
 
             }
@@ -1714,25 +1868,6 @@ public class DBservices
 
         // Add parameters
         cmd.Parameters.AddWithValue("@UserMail", email);
-
-        return cmd;
-    }
-
-    //---------------------------------------------------------------------------------
-    // Create the SqlCommand using a stored procedure
-    //---------------------------------------------------------------------------------
-    private SqlCommand CreateCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
-    {
-
-        SqlCommand cmd = new SqlCommand(); // create the command object
-
-        cmd.Connection = con;              // assign the connection to the command object
-
-        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
-
-        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
-
-        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
 
         return cmd;
     }
@@ -1805,7 +1940,7 @@ public class DBservices
     //--------------------------------------------------------------------------------------------------
     // This method reads Pop up Dtetails from the database 
     //--------------------------------------------------------------------------------------------------
-    public List<object> ReadAllPopupDetails()
+    public List<object> ReadAllPopUpItems(string UserMail, int PopUpId)
     {
 
         SqlConnection con;
@@ -1822,7 +1957,7 @@ public class DBservices
             throw (ex);
         }
 
-        cmd = ReadPopupDetailsWithStoredProcedure("sp_LAL_ReadSpecficPopUpDetails", con);   // create the command
+        cmd = ReadPopupDetailsWithStoredProcedure("sp_LAL_ReadSpecficPopUpDetails", con, UserMail, PopUpId);   // create the command
 
         try
         {
@@ -1830,11 +1965,34 @@ public class DBservices
 
             while (dataReader.Read())
             {
+                int Item_CodeCheck = 0;
+                string item_code_flag = dataReader["Item_Code"].ToString();
+                if (item_code_flag == "")
+                {
+                    Item_CodeCheck = 999;
+                }
+                else
+                {
+                    Item_CodeCheck = Convert.ToInt32(dataReader["Item_Code"]);
+                }
+
                 var pds = new
                 {
-                    Id = Convert.ToInt32(dataReader["PopUpId"]),
-                    Email = dataReader["UserMail"].ToString(),
-                    ItemId = Convert.ToInt32(dataReader["ItemId"])
+                    PopUp_Id = Convert.ToInt32(dataReader["PopUpId"]),
+                    ItemId = Convert.ToInt32(dataReader["Item_ID"]),
+                    Item_Code = Item_CodeCheck,
+                    ItemName = dataReader["Name"].ToString(),
+                    ItemImage = Convert.IsDBNull(dataReader["Image"]) ? string.Empty : dataReader["Image"].ToString(),
+                    Color_Code = dataReader["Color_Code"].ToString(),
+                    Season = dataReader["Season"].ToString(),
+                    ItemSize = dataReader["Size"].ToString(),
+                    ItemBrand = dataReader["Brand"].ToString(),
+                    Price = Convert.ToDouble(dataReader["Price"]),
+                    Is_Favorite = dataReader.GetBoolean(dataReader.GetOrdinal("Is_Favorite")),
+                    Status = dataReader["Status"].ToString(),
+                    User_Email = dataReader["Email"].ToString(),
+                    ClothingType = dataReader["Clothing_Type"].ToString(),
+                    UserEmail = dataReader["Email"].ToString(),
                 };
 
                 PopupDetailsList.Add(pds);
@@ -1861,7 +2019,7 @@ public class DBservices
     //---------------------------------------------------------------------------------
     // Create the SqlCommand using a stored procedure
     //---------------------------------------------------------------------------------
-    private SqlCommand ReadPopupDetailsWithStoredProcedure(String spName, SqlConnection con)
+    private SqlCommand ReadPopupDetailsWithStoredProcedure(String spName, SqlConnection con, string UserMail, int PopUpId)
     {
 
         SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1874,7 +2032,95 @@ public class DBservices
 
         cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
 
+        cmd.Parameters.AddWithValue("@UserMail", UserMail);
+
+        cmd.Parameters.AddWithValue("@PopUpId", PopUpId);
+
         return cmd;
     }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method insert item to Pop up
+    //--------------------------------------------------------------------------------------------------
+    public int InsertItemToPopUp(Item item, int popUpId, string userMail)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateInsertItemToPopUpCommand("sp_LAL_AddItemToPopUp", con, item, popUpId, userMail); // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    private SqlCommand CreateInsertItemToPopUpCommand(string spName, SqlConnection con, Item item, int popUpId, string userMail)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+        cmd.Connection = con;              // assign the connection to the command object
+        cmd.CommandText = spName;          // stored procedure name
+        cmd.CommandTimeout = 10;           // timeout in seconds
+        cmd.CommandType = CommandType.StoredProcedure; // the type of the command
+
+        cmd.Parameters.AddWithValue("@item_name", item.Name);
+        cmd.Parameters.AddWithValue("@item_image", item.Image);
+        cmd.Parameters.AddWithValue("@color_code", item.Color_Code);
+        cmd.Parameters.AddWithValue("@season", item.Season);
+        cmd.Parameters.AddWithValue("@size", item.Size);
+        cmd.Parameters.AddWithValue("@brand_id", item.Brand_ID);
+        cmd.Parameters.AddWithValue("@price", item.Price);
+        cmd.Parameters.AddWithValue("@is_favorite", item.Is_Favorite);
+        cmd.Parameters.AddWithValue("@status", item.Status);
+        cmd.Parameters.AddWithValue("@email", item.User_Email);
+        cmd.Parameters.AddWithValue("@clothing_type_id", item.ClothingType_ID);
+        cmd.Parameters.AddWithValue("@pop_up_id", popUpId);
+        cmd.Parameters.AddWithValue("@user_mail", userMail);
+
+        return cmd;
+    }
+
+    ////---------------------------------------------------------------------------------
+    //// Create the SqlCommand using a stored procedure
+    ////---------------------------------------------------------------------------------
+    //private SqlCommand CreateCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con)
+    //{
+
+    //    SqlCommand cmd = new SqlCommand(); // create the command object
+
+    //    cmd.Connection = con;              // assign the connection to the command object
+
+    //    cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+    //    cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+    //    cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+    //    return cmd;
+    //}
 
 }

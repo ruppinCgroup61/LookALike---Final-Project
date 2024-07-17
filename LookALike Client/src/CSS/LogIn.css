@@ -43,9 +43,8 @@ html, body {
   background-color: #fff;
   transition: border-color 0.3s ease;
 }
-.CenterDiv .Label{
+.Label{
   text-align: left;
-  padding-left: 20px;
 }
 
 .input:focus {

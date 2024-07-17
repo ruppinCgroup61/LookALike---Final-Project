@@ -9,7 +9,6 @@
         int phoneNumber;
         DateTime dateOfBirth;
         string password;
-        bool isBusiness;
         static List<User> users = new List<User>();
 
         public User() { }
@@ -21,9 +20,8 @@
         public int PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
         public DateTime DateOfBirth { get => dateOfBirth; set => dateOfBirth = value; }
         public string Password { get => password; set => password = value; }
-        public bool IsBusiness { get => isBusiness; set => isBusiness = value; }
 
-        public User(string email, string firstName, string lastName, string image, int phoneNumber, DateTime dateOfBirth, string password, bool isBusiness)
+        public User(string email, string firstName, string lastName, string image, int phoneNumber, DateTime dateOfBirth, string password)
         {
             this.email = email;
             this.firstName = firstName;
@@ -32,8 +30,8 @@
             this.phoneNumber = phoneNumber;
             this.dateOfBirth = dateOfBirth;
             this.password = password;
-            this.isBusiness = isBusiness;
         }
+
 
         public int Insert()
         {

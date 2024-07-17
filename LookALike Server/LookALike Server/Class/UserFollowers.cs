@@ -23,27 +23,23 @@
             return dbs.ReadAllFollowers();
         }
 
-        public List<string> SearchUserFollowers()
+        public List<object> SearchUserFollowers(string email)
         {
-            List<UserFollowers> allFollowers = ReadAllFollowers();
-            List<string> followerEmails = new List<string>();
-
-            foreach (var follower in allFollowers)
-            {
-                if (follower.Following_Email == this.Following_Email)
-                {
-                    // Add the follower's email to the list
-                    followerEmails.Add(follower.follower_Email);
-                }
-            }
-
-            return followerEmails;
+            DBservices dbs = new DBservices();
+            return dbs.SearchUserFollowers(email);
         }
 
         public int InsertNewFollower()
         {
             DBservices dbs = new DBservices();
             List<UserFollowers> allFollowers = ReadAllFollowers();
+            List<User> AllUsers = new List<User>();
+            AllUsers = dbs.ReadUsers();
+            if (!AllUsers.Exists(user => user.Email == this.Follower_Email))
+            {
+                // Following email does not exist in users list
+                return 0;
+            }
             if (allFollowers.Exists(UserFollow => UserFollow.follower_Email == this.follower_Email && UserFollow.following_Email == this.following_Email)) 
             {
                 //there is allready a conection like this that exsist

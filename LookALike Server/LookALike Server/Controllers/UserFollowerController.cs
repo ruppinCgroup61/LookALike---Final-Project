@@ -18,7 +18,7 @@ namespace LookALike_Server.Controllers
         }
 
         [HttpGet("followers/{followingEmail}")]
-        public ActionResult<List<string>> GetFollowers(string followingEmail)
+        public ActionResult<List<object>> GetFollowers(string followingEmail)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace LookALike_Server.Controllers
                 UserFollowers userFollowers = new UserFollowers("", followingEmail);
 
                 // Call the method to search for followers' emails
-                List<string> followerEmails = userFollowers.SearchUserFollowers();
+                List<object> followerEmails = userFollowers.SearchUserFollowers(followingEmail);
 
                 if (followerEmails.Count > 0)
                 {

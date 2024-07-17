@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { PiTShirtThin, PiPantsThin } from 'react-icons/pi';
-import TopSelectionPage from './TopSelectionPage';
-import BottomSelectionPage from './BottomSelectionPage';
-import CalendarPage from './CalendarPage'; // קומפוננטה של הלוח שנה
 import '../CSS/ManualLook.css';
 import { CiSquarePlus } from "react-icons/ci";
 import NaviBarFooter from "./NaviBarFooter";

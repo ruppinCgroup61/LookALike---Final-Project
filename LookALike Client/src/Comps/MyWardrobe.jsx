@@ -10,7 +10,7 @@ import "../CSS/WardrobeFilters.css";
 import NaviBarFooter from "./NaviBarFooter";
 import WardrobeFilters from "./WardrobeFilters";
 import CircularProgress from "@mui/material/CircularProgress";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 function MyWardrobe() {
   const [selectedItem, setSelectedItem] = useState(null); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
@@ -186,6 +186,9 @@ function MyWardrobe() {
             clothes={dataFromServer}
             setFilteredClothes={setFilteredClothes}
           />
+          <Link to="/UploadItem">
+          <button className="UploadBTNRoute">Upload New Item</button>
+          </Link>          
         </div>
         <div className="clothing-list">
           {filteredClothes.map((item, index) => (
