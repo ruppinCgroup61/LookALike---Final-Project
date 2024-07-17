@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\Copy\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {}
+    "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\LookALike_Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\Copy\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {
+    "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\LookALike_Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\Copy\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
+        "projectUniqueName": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\LookALike_Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
         "projectName": "LookALike Server",
-        "projectPath": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\Copy\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
+        "projectPath": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\LookALike_Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
         "packagesPath": "C:\\Users\\Shir\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\Copy\\LookALike Server\\LookALike Server\\obj\\",
+        "outputPath": "C:\\Users\\Shir\\OneDrive\\שולחן העבודה\\LookALike_Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Shir\\AppData\\Roaming\\NuGet\\NuGet.Config",
