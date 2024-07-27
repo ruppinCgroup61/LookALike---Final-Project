@@ -32,4 +32,46 @@ body {
   .BTNCal{
     padding: 20px;
   }
+  .calendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+  }
   
+  .react-calendar__tile {
+    position: relative;
+  }
+  
+  .dot {
+    height: 10px;
+    width: 10px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    right: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+
+.look-details {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.images {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.images img {
+  width: 130px;
+  height: auto;
+  margin: 0 10px;
+}
+.react-calendar {
+  height: 255px;
+}

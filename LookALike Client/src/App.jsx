@@ -1,23 +1,25 @@
 import { Route, Routes } from 'react-router-dom'
 import React, { useState } from 'react';
 import './App.css'
-import FirstPage from './Comps/FirstPage'
-import LogIn from './Comps/LogIn'
-import Register from './Comps/Register'
-import HomePage from './Comps/HomePage'
-import MyWardrobe from './Comps/MyWardrobe'
-import UploadItem from './Comps/UploadItem'
-import MarketPlace from './Comps/MarketPlace'
-import CreateAd from './Comps/CreateAd'
-import Ad from './Comps/Ad'
-import Map from './Comps/Map'
-import BottomSelectionPage from './Comps/BottomSelectionPage'
-import CalendarPage from './Comps/CalendarPage'
-import FCManualLook from './Comps/FCManualLook'
-import TopSelectionPage from './Comps/TopSelectionPage'
-import ShowDetails from './Comps/ShowDetails'
-import SocialNetwork from './Comps/SocialNetwork'
-import FollowerCloset from './Comps/FollowerCloset'; 
+import FirstPage from '../Comps/FirstPage'
+import LogIn from '../Comps/LogIn'
+import Register from '../Comps/Register'
+import HomePage from '../Comps/HomePage'
+import MyWardrobe from '../Comps/MyWardrobe'
+import UploadItem from '../Comps/UploadItem'
+import MarketPlace from '../Comps/MarketPlace'
+import CreateAd from '../Comps/CreateAd'
+import Ad from '../Comps/Ad'
+import Map from '../Comps/Map'
+import BottomSelectionPage from '../Comps/BottomSelectionPage'
+import CalendarPage from '../Comps/CalendarPage'
+import FCManualLook from '../Comps/FCManualLook'
+import TopSelectionPage from '../Comps/TopSelectionPage'
+import ShowDetails from '../Comps/ShowDetails'
+import SocialNetwork from '../Comps/SocialNetwork'
+import HomeLook from '../Comps/HomeLook'
+import AllLook from '../Comps/AllLook'
+import LookCalendar from '../Comps/LookCalendar'
 
 
 function App() {
@@ -41,9 +43,11 @@ function App() {
         <Route path="/select-top" element={<TopSelectionPage setSelectedTop={setSelectedTop} />} />
         <Route path="/select-bottom" element={<BottomSelectionPage setSelectedBottom={setSelectedBottom} />} />
         <Route path="/calendar" element={<CalendarPage selectedTop={selectedTop} selectedBottom={selectedBottom} />} />
+        <Route path="/HomeLook" element={<HomeLook />} />
+        <Route path="/AllLook" element={<AllLook />} />
+        <Route path="/LookCalendar" element={<LookCalendar />} />
         <Route path='/ShowDetails' element={<ShowDetails />}></Route>
-        <Route path="/SocialNetwork" element={<SocialNetwork />} />
-        <Route path="/follower-closet/:email" element={<FollowerCloset />} /> {/* Add the new route */}
+        <Route path='/SocialNetwork' element={<SocialNetwork />}></Route>
       </Routes>
     </>
   )
