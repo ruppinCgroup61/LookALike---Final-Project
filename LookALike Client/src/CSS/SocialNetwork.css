@@ -86,6 +86,15 @@
   font-size: 20px;
 }
 
+.follower-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+
 .follower-card:hover {
   background: linear-gradient(90deg, rgba(112,99,88,0.25) 0%, rgba(214,190,168,1) 62%);
 }
@@ -127,4 +136,64 @@
   .add-friend span {
     font-size: 1.5rem;
   }
+
+  .liked-items-slider {
+    margin-top: 20px;
+  }
+  
+  .liked-items-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+  }
+  
+  .liked-item {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    text-align: center;
+  }
+  
+  .liked-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .liked-item-name {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .liked-items-slider {
+    margin-top: 20px;
+  }
+  
+  .liked-item {
+    text-align: center;
+  }
+  
+  .liked-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .liked-item-name {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .follower-card {
+    cursor: pointer;
+  }
+  
+  .follower-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  
 }

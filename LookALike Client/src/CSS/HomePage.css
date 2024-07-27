@@ -104,29 +104,29 @@
   font-family: "Tenor Sans", sans-serif;
   position: absolute;
   bottom: 0;
-  left: 0;
+  left:0;
   font-weight: 400;
   color: black;
 }
 
 .block:nth-child(1) {
   background-image: url('src/Images/banner4.jpg');
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .block:nth-child(2) {
   background-image: url('src/Images/banner2.jpg');
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .block:nth-child(3) {
   background-image: url('src/Images/banner3.jpg');
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .block:nth-child(4) {
   background-image: url('src/Images/banner1.jpg');
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .logo img {

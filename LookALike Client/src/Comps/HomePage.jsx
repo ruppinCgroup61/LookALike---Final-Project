@@ -71,23 +71,23 @@ export default function HomePage() {
         <Link to="/MyWardrobe">
           <div className="block">
             <div className="overlay"></div>
-            <p>Enter Your Wardrobe</p>
+            <p className="titleHP">Enter Your Wardrobe</p>
           </div>
         </Link>
         <div className="block">
           <Link to="/UploadItem">
             <div className="overlay"></div>
-            <p>Add New Clothing</p>
+            <p className="titleHP">Add New Clothing</p>
           </Link>
         </div>
         <div className="block">
           <div className="overlay"></div>
-          <p>Enter Social Network</p>
+          <p className="titleHP">Enter Social Network</p>
         </div>
         <div className="block">
           <Link to="/FCManualLook">
             <div className="overlay"></div>
-            <p>Create New Look</p>
+            <p className="titleHP">Create New Look</p>
           </Link>
         </div>
         <div className="LogoBlock">

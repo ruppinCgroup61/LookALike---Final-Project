@@ -9,7 +9,12 @@
   right:100px;
 
   }
-
+  .MP_ALL{
+  position: absolute;
+  width: 90%;
+  top: -50px;
+  left: 20px;
+}
 .clothing-list {
   flex: 1;
   position: absolute;
