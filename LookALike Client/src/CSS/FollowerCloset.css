@@ -46,6 +46,17 @@
     position: relative; /* Set position of the icon relative to the bottom right of the image */
     /* border: 1px solid #252525; */
   }
+
+.fav-icon {
+    position: absolute;
+    bottom: 80px;
+    left: 12%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    font-size: 24px; /* Adjust the size as needed */
+    color: rgb(0, 0, 0); /* Adjust the color as needed */
+}
+
   
   .clothing-image-Follower img {
     width: 100%;

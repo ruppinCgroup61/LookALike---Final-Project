@@ -2,11 +2,24 @@
   height: 100%; /* Set container height to 100% of viewport height */
 }
 
+.UploadBTNRoute{
+  position: absolute;
+  top:50px;
+  left:100px;
+  right:100px;
+
+  }
+  .MP_ALL{
+  position: absolute;
+  width: 90%;
+  top: -50px;
+  left: 20px;
+}
 .clothing-list {
   flex: 1;
   position: absolute;
   width: 90%;
-  top: 50px;
+  top: 120px;
   left: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -96,4 +109,3 @@
 #h_header {
   font-size: 20px;
 } */
- 

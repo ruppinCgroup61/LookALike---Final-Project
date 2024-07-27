@@ -58,6 +58,7 @@ export default function MarketPlace() {
             setFilteredClothes={setFilteredClothes}
           />
         </div>
+        <div className="MP_ALL">
         <div className="clothing-list">
           {filteredClothes.map((item, index) => (
             <div key={index} className="clothing-item">
@@ -70,14 +71,10 @@ export default function MarketPlace() {
               </div>
               <div className="clothing-details">
                 <p>
-                <strong>
                     {item.fullName}
-                  </strong>
                 </p>
                 <p>
-                  <strong>
                     {item.itemName.toUpperCase()} - {item.price}$
-                  </strong>
                 </p>
               </div>
             </div>
@@ -85,6 +82,7 @@ export default function MarketPlace() {
           <div className="Navbar Footer">
             <NaviBarFooter />
           </div>
+        </div>
         </div>
       </div>
     </>

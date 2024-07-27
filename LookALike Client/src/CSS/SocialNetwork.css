@@ -1,79 +1,199 @@
 .SN_Container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 10px;
+}
+
+.SN_Header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  width: 400px;
+  position: relative;
+}
+
+.SN_Header h2 {
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+  font-size: 30px;
+}
+
+.header-icon {
+  font-size: 2.5rem;
+  margin-left: 10px;
+}
+
+.SN_Center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-friend {
+  position: absolute;
+  top: 120px;
+  width: 300px;
+  padding: 20px;
+  background: rgb(238,238,238);
+  background: linear-gradient(90deg, rgba(238,238,238,1) 0%, rgba(112,99,88,0.17708333333333337) 100%);  
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.add-friend:hover {
+  background: linear-gradient(90deg, rgba(112,99,88,0.25) 0%, rgba(214,190,168,1) 62%);
+}
+
+.wardrobe-icon {
+  font-size: 3rem;
+}
+
+.add-friend span {
+  font-size: 1.2rem;
+}
+
+.followers-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 120px;
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.follower-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 28px;
+  width: 300px;
+  padding: 10px;
+  background: rgb(238,238,238);
+  background: linear-gradient(90deg, rgba(238,238,238,1) 0%, rgba(112,99,88,0.17708333333333337) 100%);  
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.follower-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+
+.follower-card:hover {
+  background: linear-gradient(90deg, rgba(112,99,88,0.25) 0%, rgba(214,190,168,1) 62%);
+}
+
+.follower-icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.SN_Footer {
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+@media only screen and (max-width: 430px) {
+  .SN_Container {
+    padding: 5px;
   }
-  
+
   .SN_Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #f8f9fa;
-  }
-  
-  .SN_Header h2 {
-    margin: 0;
-  }
-  
-  .header-icon {
-    font-size: 2rem;
-    padding-left: 10px;
-  }
-  
-  .SN_Center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .add-friend {
-    display: flex;
+    padding: 5px;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: linear-gradient(90deg, rgba(112,99,88,0.18) 0%, rgba(214,190,168,1) 62%);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
   }
-  
-  .add-friend:hover {
-    background: linear-gradient(90deg, rgba(112,99,88,0.25) 0%, rgba(214,190,168,1) 62%);
+
+  .header-icon {
+    font-size: 2.5rem;
+    margin-left: 0;
+    margin-top: 5px;
   }
-  
+
+  .add-friend {
+    padding: 15px;
+  }
+
   .wardrobe-icon {
-    font-size: 3rem;
+    font-size: 2rem;
+  }
+
+  .add-friend span {
+    font-size: 1.5rem;
+  }
+
+  .liked-items-slider {
+    margin-top: 20px;
   }
   
-  .SN_Footer {
+  .liked-items-container {
+    display: flex;
+    overflow-x: auto;
     padding: 10px;
-    background-color: #f8f9fa;
   }
   
-  @media only screen and (max-width: 430px) {
-    .SN_Container {
-      padding: 5px;
-    }
-    
-    .SN_Header {
-      padding: 5px;
-    }
-    
-    .header-icon {
-      font-size: 1.5rem;
-      padding-left: 5px;
-    }
-    
-    .add-friend {
-      padding: 15px;
-    }
-    
-    .wardrobe-icon {
-      font-size: 2rem;
-    }
+  .liked-item {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    text-align: center;
   }
   
+  .liked-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .liked-item-name {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .liked-items-slider {
+    margin-top: 20px;
+  }
+  
+  .liked-item {
+    text-align: center;
+  }
+  
+  .liked-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .liked-item-name {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .follower-card {
+    cursor: pointer;
+  }
+  
+  .follower-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  
+}
