@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '../CSS/Calendar.css';
+import '../src/Calendar.css';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import { useNavigate } from 'react-router-dom';
-
+import NaviBarFooter from './NaviBarFooter';
 // import Modal from './Modal'; // Import the modal component
 
 
@@ -51,7 +52,7 @@ const CalendarPage = ({ selectedTop, selectedBottom }) => {
         setOpenSnackbar(true);
         setTimeout(() => {
           setOpenSnackbar(false);
-          navigateTo("/HomePage");
+          navigateTo("/FCManualLook");
         }, 2000);
       } else {
         alert('Failed to save outfit');
@@ -110,6 +111,9 @@ const CalendarPage = ({ selectedTop, selectedBottom }) => {
           message={snackbarMessage}
         />
       </Snackbar>
+      <div className='bottom-div'>
+        <NaviBarFooter />
+      </div>
     </div>
   );
 };

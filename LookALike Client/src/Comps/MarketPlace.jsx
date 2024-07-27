@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../CSS/WardrobeFilters.css";
+import "../src/WardrobeFilters.css";
 import WardrobeFilters from "./WardrobeFilters";
 import NaviBarFooter from "./NaviBarFooter";
 import CircularProgress from "@mui/material/CircularProgress";

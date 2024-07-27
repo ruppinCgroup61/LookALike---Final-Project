@@ -6,7 +6,9 @@ import { IoPersonSharp } from "react-icons/io5";
 import { FaUserGroup } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation from React Router
 import { GrAddCircle } from "react-icons/gr";
-import "../CSS/NaviBarFooter.css";
+
+
+import "../src/NaviBarFooter.css";
 
 export default function NaviBarFooter() {
   const [activeIcon, setActiveIcon] = useState("profile");
@@ -21,11 +23,11 @@ export default function NaviBarFooter() {
       case "/MyWardrobe":
         setActiveIcon("closet");
         break;
-      case "/FCManualLook":
+      case "/HomeLook":
         setActiveIcon("createLook");
         break;
-      case "/SocialNetwork":
-        setActiveIcon("SocialNetwork");
+      case "/UploadItem":
+        setActiveIcon("createOutfit");
         break;
       case "/MarketPlace":
         setActiveIcon("marketPlace");
@@ -45,14 +47,14 @@ export default function NaviBarFooter() {
         <Link to="/HomePage">
           <IoPersonSharp color={activeIcon === "profile" ? "#242424" : "#999999"} />
         </Link>
-        <Link to="/FCManualLook">
+        <Link to="/HomeLook">
           <FaWandMagicSparkles color={activeIcon === "createLook" ? "#242424" : "#999999"} />
         </Link>
         <Link to="/MyWardrobe">
           <TbHanger color={activeIcon === "closet" ? "#242424" : "#999999"} />
         </Link>
-        <Link to="/SocialNetwork">
-          <FaUserGroup color={activeIcon === "SocialNetwork" ? "#242424" : "#999999"} />
+        <Link to="/UploadItem">
+          <GrAddCircle color={activeIcon === "createOutfit" ? "#242424" : "#999999"} />
         </Link>
         <Link to="/MarketPlace">
           <FaShoppingCart color={activeIcon === "marketPlace" ? "#242424" : "#999999"} />
