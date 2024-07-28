@@ -33,14 +33,16 @@ body {
     justify-content:space-evenly;
     position: sticky;
     top:0;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 1000;
 }
 
-.Hadder_register {
+    .Hadder_register {
     font-size: 38px;
     font-weight: bold; /* Added font weight */
     position: relative;
     right: 20px;
-}
+    }
 
 /* Back button styles */
 .back-button_Register {
@@ -80,10 +82,11 @@ body {
   }
 
 .InputBlock label {
-    font-weight: bold;
     display: block; /* Added to move labels above input */
     margin-bottom: 2px; /* Added margin */
     text-align: left;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 1000;
 }
 
 .error {

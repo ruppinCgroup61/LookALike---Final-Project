@@ -187,7 +187,7 @@ const LogIn = () => {
   return (
     <div className="container">
       <div className="tit">
-        <button onClick={() => navigateTo("/FirstPage")} className="back-button2">
+        <button onClick={() => navigateTo("/")} className="back-button2">
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <h2 className="title">SIGN IN</h2>

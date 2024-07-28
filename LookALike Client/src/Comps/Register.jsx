@@ -34,10 +34,7 @@ const Register = () => {
   const [firstNameForPopup, setFirstNameForPopup] = useState("");
   const [selectedFileName, setSelectedFileName] = useState("");
   const [imageAdded, setImageAdded] = useState(false);
-  const [wrongPasswordAlert, setWrongPasswordAlert] = useState(false);
-  const [wrongEmailAlert, setWrongEmailAlert] = useState(false);
-  const [wrongNameAlert, setWrongNameAlert] = useState(false);
-  const [wrongPhoneNumberAlert, setWrongPhoneNumberAlert] = useState(false);
+  const [activeError, setActiveError] = useState(null);
   const [EmailAlreadyExsist, setEmailAlreadyExsistAlert] = useState(false);
   const api =
     location.hostname === "localhost" || location.hostname === "127.0.0.1"
@@ -52,10 +49,7 @@ const Register = () => {
       [name]: value,
     }));
     // Clear error message when user starts typing
-    setWrongPasswordAlert(false);
-    setWrongEmailAlert(false);
-    setWrongNameAlert(false);
-    setWrongPhoneNumberAlert(false);
+    setActiveError(null);
   };
 
   const togglePasswordVisibility = () => {
@@ -80,22 +74,20 @@ const Register = () => {
   };
 
   const handleInputBlur = (name) => {
-    // Show error message when input field loses focus and is empty or when password is invalid
-    if (name === "password" && !isPasswordValid()) {
-      setWrongPasswordAlert(true);
+    let errorType = null;
+    if (name === 'password' && !isPasswordValid()) {
+      errorType = 'password';
     }
-    if (name === "email" && !isEmailValid()) {
-      setWrongEmailAlert(true);
+    if (name === 'email' && !isEmailValid()) {
+      errorType = 'email';
     }
-    if (
-      (name === "firstName" || name === "lastName") &&
-      !isNameValid(formData[name])
-    ) {
-      setWrongNameAlert(true);
+    if ((name === 'firstName' || name === 'lastName') && !isNameValid(formData[name])) {
+      errorType = name;
     }
-    if (name === "PhoneNumber" && !isPhoneNumberValid(formData[name])) {
-      setWrongPhoneNumberAlert(true);
+    if (name === 'PhoneNumber' && !isPhoneNumberValid(formData[name])) {
+      errorType = 'PhoneNumber';
     }
+    setActiveError(errorType);
   };
 
   const handleRegister = (e) => {
@@ -139,19 +131,13 @@ const Register = () => {
   };
 
   const isPasswordValid = () => {
-    const passwordRegex =
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(formData.password);
   };
 
   const isNameValid = (name) => {
     const nameRegex = /^[A-Za-z]+$/;
     return nameRegex.test(name);
-  };
-
-  const isPhoneNumberValid = (phoneNumber) => {
-    const phoneRegex = /^(050|052|058|055|051)\d{7}$/;
-    return phoneRegex.test(phoneNumber);
   };
 
   const handleCheckboxChange = (event) => {
@@ -161,13 +147,20 @@ const Register = () => {
     }));
   };
 
+  const isPhoneNumberValid = (phoneNumber) => {
+    const phoneRegex = /^(050|052|058|055|051)\d{7}$/;
+    return phoneRegex.test(phoneNumber);
+  };
+
+  
+
   const isFormValid = () => {
     return (
-      formData.firstName.trim() !== "" &&
-      formData.lastName.trim() !== "" &&
-      formData.email.trim() !== "" &&
-      formData.PhoneNumber.trim() !== "" &&
-      formData.dateOfBirth.trim() !== "" &&
+      formData.firstName.trim() !== '' &&
+      formData.lastName.trim() !== '' &&
+      formData.email.trim() !== '' &&
+      formData.PhoneNumber.trim() !== '' &&
+      formData.dateOfBirth.trim() !== '' &&
       isEmailValid() &&
       isPasswordValid() &&
       isNameValid(formData.firstName) &&
@@ -209,7 +202,7 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("firstName")}
             />
-            {wrongNameAlert && (
+            {activeError === 'firstName' && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid first name.
@@ -226,7 +219,7 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("lastName")}
             />
-            {wrongNameAlert && (
+            {activeError === 'lastName' && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid last name.
@@ -244,7 +237,7 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("email")}
             />
-            {wrongEmailAlert && (
+            {activeError === 'email' && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid email address.
@@ -261,7 +254,7 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("PhoneNumber")}
             />
-            {wrongPhoneNumberAlert && (
+            {activeError === 'PhoneNumber' && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid phone number.
@@ -296,7 +289,7 @@ const Register = () => {
                 className="password-toggle-icon"
               />
             </div>
-            {wrongPasswordAlert && (
+            {activeError === 'password' && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
                 Password must contain a capital letter, a lowercase letter, a
