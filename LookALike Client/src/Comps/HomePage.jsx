@@ -85,7 +85,7 @@ export default function HomePage() {
           <p className="titleHP">Enter Social Network</p>
         </div>
         <div className="block">
-          <Link to="/FCManualLook">
+          <Link to="/HomeLook">
             <div className="overlay"></div>
             <p className="titleHP">Create New Look</p>
           </Link>

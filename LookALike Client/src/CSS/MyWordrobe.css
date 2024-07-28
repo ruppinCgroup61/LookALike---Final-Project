@@ -4,9 +4,17 @@
 
 .UploadBTNRoute{
   position: absolute;
-  top:50px;
+  top:60px;
   left:100px;
   right:100px;
+  background-image: linear-gradient(to right, #485563 0%, #29323c  51%, #485563  100%);
+  margin: 1px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: rgb(224, 224, 224);            
+  box-shadow: 0 0 20px #eee;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 400;
 
   }
   .MP_ALL{

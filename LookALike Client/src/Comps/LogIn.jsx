@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import '../src/LogIn.css';
+import '../CSS/LogIn.css';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
@@ -15,11 +15,17 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 
+//shir@gmail.com
+//Shir111!
+
 //yakirco0412@gmail.com
 //Yc2023!!
 
 //shirturg@gmail.com
 //Shir11!!
+
+//bar@gmail.com
+//Bb2023!!
 
 const LogIn = () => {
   const [Email, setUsername] = useState('');
@@ -62,12 +68,26 @@ const LogIn = () => {
       })
       .then(data => {
         console.log('Login successful:', data);
-        sessionStorage.setItem('email', userData.email);
-        setSnackbarMessage(`Welcome ${Email}`);
+
+        const { email, isBusiness, firstName, lastName } = data;
+        const fullName = `${firstName} ${lastName}`.trim();
+        
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('isBusiness', isBusiness);
+        sessionStorage.setItem('fullName', fullName);
+
+        setSnackbarMessage(`Welcome ${email}`);
         setOpenSnackbar(true);
+
         setTimeout(() => {
           setOpenSnackbar(false);
-          navigateTo("/HomePage");
+          
+          // Redirect based on account type
+          if (isBusiness) {
+            navigateTo("/BusinessHomePage");
+          } else {
+            navigateTo("/HomePage");
+          }
         }, 2000);
       })
       .catch(error => {
@@ -173,7 +193,7 @@ const LogIn = () => {
         <h2 className="title">SIGN IN</h2>
       </div>
       <div className='CenterDiv'>
-        <label className='Label'>Email Address</label>
+        <label className='Label'>Email Address:</label>
         <input
           className="input"
           type="text"
@@ -182,7 +202,7 @@ const LogIn = () => {
           onChange={handleEmailChange}
         />
         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
-        <label className='Label'>Password</label>
+        <label className='Label'>Password:</label>
         <div className="password-input-wrapper">
           <input
             className="input"

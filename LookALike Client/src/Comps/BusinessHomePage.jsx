@@ -23,10 +23,12 @@ const BusinessHomePage = () => {
   };
 
   const handleAddItem = () => {
+    sessionStorage.setItem('from', "addnewitem");
     fetchUserPopups();
   };
 
   const handleShowPopups = () => {
+    sessionStorage.setItem('from', "showmypopups");
     fetchUserPopups();
   };
 

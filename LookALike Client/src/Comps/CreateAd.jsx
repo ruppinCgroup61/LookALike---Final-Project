@@ -6,7 +6,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';
-import "../src/CreateAd.css";
+import "../CSS/CreateAd.css";
 import NaviBarFooter from "./NaviBarFooter";
 
 function CreateAd() {

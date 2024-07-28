@@ -18,6 +18,12 @@ import TopSelectionPage from './Comps/TopSelectionPage'
 import ShowDetails from './Comps/ShowDetails'
 import SocialNetwork from './Comps/SocialNetwork'
 import FollowerCloset from './Comps/FollowerCloset'; 
+import LookCalendar from './Comps/LookCalendar'; 
+import AllLook from './Comps/AllLook'; 
+import HomeLook from './Comps/HomeLook'; 
+import BusinessHomePage from './Comps/BusinessHomePage'
+import CreatePopup from './Comps/CreatePopup'
+import ItemsInPopup from './Comps/ItemsInPopup'
 
 
 function App() {
@@ -44,6 +50,13 @@ function App() {
         <Route path='/ShowDetails' element={<ShowDetails />}></Route>
         <Route path="/SocialNetwork" element={<SocialNetwork />} />
         <Route path="/follower-closet/:email" element={<FollowerCloset />} /> {/* Add the new route */}
+        <Route path="/calendar" element={<CalendarPage selectedTop={selectedTop} selectedBottom={selectedBottom} />} />
+        <Route path="/HomeLook" element={<HomeLook />} />
+        <Route path="/AllLook" element={<AllLook />} />
+        <Route path="/LookCalendar" element={<LookCalendar />} />
+        <Route path='/BusinessHomePage' element={<BusinessHomePage />}></Route>
+        <Route path='/CreatePopup' element={<CreatePopup />}></Route>
+        <Route path='/ItemsInPopup' element={<ItemsInPopup />}></Route>
       </Routes>
     </>
   )

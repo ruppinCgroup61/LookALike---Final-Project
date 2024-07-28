@@ -78,6 +78,36 @@ namespace LookALike_Server.Controllers
             return u.UpdateUser();
         }
 
+        // PUT api/<UserController>/AddOrUpdateEntry
+        [HttpPut("AddOrUpdateEntry")]
+        public IActionResult AddOrUpdateEntry([FromQuery] string adminUserMail, [FromQuery] string closetMail)
+        {
+            if (string.IsNullOrEmpty(adminUserMail) || string.IsNullOrEmpty(closetMail))
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            DBservices dbs = new DBservices();
+
+            try
+            {
+                int result = dbs.AddOrUpdateEntry(adminUserMail, closetMail);
+                if (result ==-1)
+                {
+                    return Ok("Entry added or updated successfully.");
+                }
+                else
+                {
+                    return StatusCode(500, "An error occurred while adding or updating the entry.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)

@@ -5,7 +5,7 @@ import { CiExport } from 'react-icons/ci';
 import { MdDeleteForever } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import NaviBarFooter from './NaviBarFooter';
-import "../src/AllLook.css"; // קובץ CSS חדש
+import "../CSS/AllLook.css"; // קובץ CSS חדש
 
 const AllLook = (props) => {
   const userEmail = sessionStorage.getItem("email");

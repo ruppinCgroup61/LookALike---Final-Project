@@ -26,9 +26,13 @@
   border-bottom: 1px solid rgb(222, 213, 213);
 }
   #ButtonHomeLook{
-    background-color: #EEEE;
-    color: black;
-    border: none;
+    background-image: linear-gradient(to right, #485563 0%, #29323c  51%, #485563  100%);
+    margin: 10px;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: rgb(224, 224, 224);            
+    box-shadow: 0 0 20px #eee;
     padding: 10px;
     width:100px;
     margin-top: 20px;
@@ -36,10 +40,14 @@
     margin-right: 30px;
     
   }
-  #ADD_Look_home{
+  .ADD_Look_home{
     display: flex;
-   
+    margin-block: 5px;
   }
+  .LastOutfitBlock{
+    margin-top: 20px;
+  }
+
   #h3{
     border-bottom: 1px solid rgb(222, 213, 213);
     margin-top: 30px;

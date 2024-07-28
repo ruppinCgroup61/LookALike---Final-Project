@@ -175,7 +175,7 @@ export default function SocialNetwork() {
           <span>Add New Friend</span>
         </div>
         <div className="followers-slider">
-          <h2>Enter Friend Wardrobe:</h2>
+          <h2 className='H2inSN'>Enter Friend Wardrobe:</h2>
           {followers.map((follower, index) => (
             <div
               key={index}
@@ -192,7 +192,7 @@ export default function SocialNetwork() {
           ))}
         </div>
         <div className="liked-items-slider">
-          <h2>Liked Items:</h2>
+          <h2 className='H2inSN'>Liked Items:</h2>
           <Carousel indicators={false} interval={null}>
             {likedItems.length > 0 ? (
               likedItems.reduce((acc, item, index) => {

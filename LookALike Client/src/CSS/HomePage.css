@@ -109,6 +109,11 @@
   color: black;
 }
 
+.titleHP{
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
 .block:nth-child(1) {
   background-image: url('src/Images/banner4.jpg');
   opacity: 1;

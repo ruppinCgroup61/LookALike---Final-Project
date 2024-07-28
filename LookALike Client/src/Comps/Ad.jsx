@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 import Map from "./Map";
 import NaviBarFooter from "./NaviBarFooter";
-import "../src/Ad.css";
+import "../CSS/Ad.css";
 
 export default function Ad() {
   const { itemID } = useParams();

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiTShirtThin, PiPantsThin } from 'react-icons/pi';
 import { CiSquarePlus } from 'react-icons/ci';
-import '../src/ManualLook.css';
+import '../CSS/ManualLook.css';
 import NaviBarFooter from "./NaviBarFooter";
 
 const FCManualLook = (props) => {

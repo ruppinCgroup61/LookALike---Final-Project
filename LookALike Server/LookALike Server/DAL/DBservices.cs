@@ -9,6 +9,7 @@ using LookALike_Server.Class;
 using static System.Net.Mime.MediaTypeNames;
 using System.Drawing;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Mvc;
 //using RuppinProj.Models;
 
 /// <summary>
@@ -106,6 +107,7 @@ public class DBservices
         cmd.Parameters.AddWithValue("@Phone_Number", user.PhoneNumber);
         cmd.Parameters.AddWithValue("@Date_of_Birth", user.DateOfBirth);
         cmd.Parameters.AddWithValue("@Password", user.Password);
+        cmd.Parameters.AddWithValue("@Is_Business", user.IsBusiness);
 
         return cmd;
     }
@@ -150,6 +152,7 @@ public class DBservices
                 // Convert DateTime to DateOnly
                 u.DateOfBirth = dateOfBirth;
                 u.Password = dataReader["Password"].ToString();
+                u.IsBusiness = Convert.ToBoolean(dataReader["Is_Business"]);
                 UsersList.Add(u);
             }
             return UsersList;
@@ -1830,6 +1833,7 @@ public class DBservices
                 pu.StartDate = (DateTime)dataReader["StartDate"];
                 pu.EndDate = (DateTime)dataReader["EndDate"];
                 pu.Status = Convert.ToBoolean(dataReader["Status"]); // Reading the Status field
+                pu.PopUp_Name = dataReader["PopUp_Name"].ToString();
                 PopUpsList.Add(pu);
 
             }
@@ -2100,6 +2104,282 @@ public class DBservices
         cmd.Parameters.AddWithValue("@clothing_type_id", item.ClothingType_ID);
         cmd.Parameters.AddWithValue("@pop_up_id", popUpId);
         cmd.Parameters.AddWithValue("@user_mail", userMail);
+
+        return cmd;
+    }   
+    
+    public int AddOrUpdateEntry(string adminUserMail, string closetMail)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateAddOrUpdateEntryCommand("LAl_AddOrUpdateEntryInside_CountEntriesTable", con, adminUserMail, closetMail); // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    private SqlCommand CreateAddOrUpdateEntryCommand(string spName, SqlConnection con, string adminUserMail, string closetMail)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+        cmd.Connection = con; // connect the command to the connection
+        cmd.CommandText = spName; // set the stored procedure name
+        cmd.CommandType = CommandType.StoredProcedure; // set the command type to stored procedure
+
+        // Add the parameters to the command
+        cmd.Parameters.AddWithValue("@AdminUserMail", adminUserMail);
+        cmd.Parameters.AddWithValue("@ClosetMail", closetMail);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method insert like to likes_table
+    //--------------------------------------------------------------------------------------------------
+    public int InsertlikeToLikesTable(string Liker_Email , string Liked_Email, int Item_ID)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateInsertlikeToLikesTableCommand("sp_LAL_AddLike", con, Liker_Email, Liked_Email, Item_ID); // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    private SqlCommand CreateInsertlikeToLikesTableCommand(string spName, SqlConnection con, string Liker_Email, string Liked_Email, int Item_ID)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+        cmd.Connection = con;              // assign the connection to the command object
+        cmd.CommandText = spName;          // stored procedure name
+        cmd.CommandTimeout = 10;           // timeout in seconds
+        cmd.CommandType = CommandType.StoredProcedure; // the type of the command
+
+        cmd.Parameters.AddWithValue("@Liker_Email", Liker_Email);
+        cmd.Parameters.AddWithValue("@Liked_Email", Liked_Email);
+        cmd.Parameters.AddWithValue("@Item_ID", Item_ID);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method reads All friend itmes with likes
+    //--------------------------------------------------------------------------------------------------
+    public List<object> GetAllItemsByUserClosetWithLikesDB (string AdminUserMail, string ClosetOwnerMail)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> ItemsWithLikesList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadAllItemsWithLikesWithStoredProcedure("sp_LAL_ReadAllFriendItemsWithLikes", con, AdminUserMail, ClosetOwnerMail);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+
+
+                var ItemToRead = new
+                {
+                    ItemId = Convert.ToInt32(dataReader["Item_ID"]),
+                    ItemName = dataReader["Name"].ToString(),
+                    ItemImage = Convert.IsDBNull(dataReader["Image"]) ? string.Empty : dataReader["Image"].ToString(),
+                    Color_Code = dataReader["Color_Code"].ToString(),
+                    Season = dataReader["Season"].ToString(),
+                    ItemSize = dataReader["Size"].ToString(),
+                    ItemBrand = dataReader["Brand_Name"].ToString(),
+                    Price = Convert.ToDouble(dataReader["Price"]),
+                    User_Email = dataReader["Email"].ToString(),
+                    ClothingType = dataReader["Clothing_Type"].ToString(),
+                    IsLiked = Convert.ToInt32(dataReader["IsLiked"])
+                };
+
+                ItemsWithLikesList.Add(ItemToRead);
+            }
+            return ItemsWithLikesList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadAllItemsWithLikesWithStoredProcedure(String spName, SqlConnection con, string AdminUserMail, string ClosetOwnerMail)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@UserMail", AdminUserMail);
+
+        cmd.Parameters.AddWithValue("@ClosetOwnerMail", ClosetOwnerMail);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method reads All friend itmes with likes
+    //--------------------------------------------------------------------------------------------------
+    public List<object> GetLikedItemsForHomePageDB(string AdminUserMail)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> ItemsWithLikesList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadLikedItemsByUserMail("sp_LAL_GetLikedItemsForHomePage", con, AdminUserMail);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+
+
+                var LikedItem = new
+                {
+                    AdminMail = dataReader["Liker_Email"].ToString(),
+                    TheItemMail = dataReader["Liked_Email"].ToString(),
+                    ItemId = Convert.ToInt32(dataReader["Item_ID"]),
+                    ItemImage = Convert.IsDBNull(dataReader["Image"]) ? string.Empty : dataReader["Image"].ToString(),
+                    ItemName = dataReader["Name"].ToString(),
+                };
+
+                ItemsWithLikesList.Add(LikedItem);
+            }
+            return ItemsWithLikesList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadLikedItemsByUserMail(String spName, SqlConnection con,string AdminUserMail)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@AdminUserMail", AdminUserMail);
 
         return cmd;
     }

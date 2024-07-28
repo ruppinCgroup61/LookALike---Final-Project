@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '../src/Calendar.css';
+import '../CSS/Calendar.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import SnackbarContent from '@mui/material/SnackbarContent';

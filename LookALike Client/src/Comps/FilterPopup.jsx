@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer, Button, Checkbox, FormControlLabel } from "@mui/material";
-import "../src/FilterPopup.css";
+import "../CSS/FilterPopup.css";
 
 const FilterPopup = ({ open, onClose, clothes, setFilteredClothes }) => {
   const [filters, setFilters] = React.useState({

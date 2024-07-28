@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import axios from "axios";
 import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
-import "../src/App.css";
+import "../App.css";
 
 const Map = (props) => {
   const [position, setPosition] = useState(null);
