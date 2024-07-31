@@ -10,7 +10,7 @@
 
 .Upload_Header3 {
   flex: 0 0 auto;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -29,12 +29,19 @@
   font-style: normal;
 }
 
+.manual_h2 {
+  position: relative;
+  top: 25px;
+}
+
 .icon-section {
+  position: relative;
+  top: 30px;
   display: flex;
   flex-direction: column;
   /* שינוי לכיוון אנכי */
   align-items: center;
-  margin-top: 20px;
+  padding-bottom: 10px;
 }
 
 .icon-container {
@@ -66,10 +73,101 @@
 }
 
 .icon {
-  font-size: 150px;
+  font-size: 140px;
   /* margin-top: 40px; */
   color: #000;
   /* הגדרת הצבע לשחור */
+}
+
+.btn_manual_look {
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+  margin: 5px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  font-family: "Urbanist", sans-serif;
+  margin-top: 10px;
+  height: 45px;
+}
+
+.btn_no_manual_look {
+  background-color: #676464;
+  margin: 1px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  font-family: "Urbanist", sans-serif;
+  margin-top: 10px;
+  height: 45px;
+}
+
+.icon_ML {
+  position: relative;
+  bottom: 2px;
+  right: 5px;
+}
+
+.btn_my_closet {
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+  margin: 1px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 400;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  width: 120px;
+}
+
+.ADD_Look {
+  margin-top: 30px;
+}
+
+.sorry_selTop_icon {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 20px;
+}
+
+.selTop_h2 {
+  position: absolute;
+  top: 85px;
+  left: 10px;
+  right: 10px;
+}
+
+.list-tops {
+  flex: 1;
+  position: absolute;
+  width: 90%;
+  top: 80px;
+  left: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 0px;
+  /* פחות מרווחים בין הפריטים */
+  margin-top: 40px;
+  padding-bottom: 50px;
+}
+
+#selPart_img {
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+  /* שמירה על הפרופורציות של התמונה */
+  max-width: 100%;
+  /* גודל מקסימלי לרוחב */
+  max-height: 200px;
+  /* גודל מקסימלי לגובה, לדוגמה */
+  display: block;
+  margin-bottom: 10px;
+  object-fit: contain;
+  /* שמירה על הפרופורציות בתוך הגודל המוגדר */
 }
 
 .selected-outfit {
@@ -111,13 +209,8 @@ img.icon {
   width: 100px;
 }
 
-.ADD_Look{
-  padding: 5px;
-}
-
 .Calendar {
   background-color: grey;
-
 }
 
 .react-calendar__navigation button,

@@ -85,7 +85,6 @@ const CalendarPage = ({ selectedTop, selectedBottom }) => {
       <div className='BTNCal'>
         <button onClick={handleAddToCalendar}>Add Outfit to Calendar</button>
       </div>
-      {/* <Modal show={showModal} onClose={() => setShowModal(false)} message="The look was added successfully!" /> */}
       <Snackbar
         anchorOrigin={{
           vertical: 'top',

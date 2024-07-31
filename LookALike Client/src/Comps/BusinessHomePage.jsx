@@ -4,13 +4,13 @@ import PopupModal from "./PopupsModal";
 import "../CSS/BusinessHomePage.css";
 
 const BusinessHomePage = () => {
-    const storedFullName = sessionStorage.getItem("fullName");
-    const storedEmail = sessionStorage.getItem("email");
-    const [fullName, setFullName] = useState("");
-    const navigateTo = useNavigate();
-  
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [userPopups, setUserPopups] = useState([]);
+  const storedFullName = sessionStorage.getItem("fullName");
+  const storedEmail = sessionStorage.getItem("email");
+  const [fullName, setFullName] = useState("");
+  const navigateTo = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userPopups, setUserPopups] = useState([]);
 
   useEffect(() => {
     if (storedFullName) {
@@ -23,12 +23,12 @@ const BusinessHomePage = () => {
   };
 
   const handleAddItem = () => {
-    sessionStorage.setItem('from', "addnewitem");
+    sessionStorage.setItem("from", "addnewitem");
     fetchUserPopups();
   };
 
   const handleShowPopups = () => {
-    sessionStorage.setItem('from', "showmypopups");
+    sessionStorage.setItem("from", "showmypopups");
     fetchUserPopups();
   };
 
@@ -58,36 +58,46 @@ const BusinessHomePage = () => {
       });
   };
 
-    return (
-      <div>
+  return (
+    <div>
+      <div id="businessHP">
+        <img style={{ width: 60 }} src="src/Images/kolav.png" alt="lookalike" />
+        <img
+          style={{ width: 280, marginBottom: 50 }}
+          src="src/Images/lookalike.png"
+          alt="lookalike"
+        />
+      </div>
+      <div id="businessHP2">
         <h3 id="hbusinessaccount">Business account</h3>
         <h2 id="hellobusinessaccount">Hello, {fullName} !</h2>
-        <div>
-          <button className="popup-buttons" onClick={handleCreatePopup}>
-            Create New Popup
-          </button>
-
-          <button className="popup-buttons" onClick={handleAddItem}>
-            Add New Item
-          </button>
-          <PopupModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            popups={userPopups}
-          />
-
-          <button className="popup-buttons" onClick={handleShowPopups}>
-            Show My Popups
-          </button>
-
-          <PopupModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            popups={userPopups}
-          />
-        </div>
       </div>
-    );
+      <div id="businessHPbuttons">
+        <button className="popup-buttons" onClick={handleCreatePopup}>
+          Create New Popup
+        </button>
+
+        <button className="popup-buttons" onClick={handleAddItem}>
+          Add New Item
+        </button>
+        <PopupModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          popups={userPopups}
+        />
+
+        <button className="popup-buttons" onClick={handleShowPopups}>
+          Show My Popups
+        </button>
+
+        <PopupModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          popups={userPopups}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default BusinessHomePage;

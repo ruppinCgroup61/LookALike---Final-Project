@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export default function ItemsInPopup() {
   const storedEmail = sessionStorage.getItem("email");
   const storedID = sessionStorage.getItem("PopupID");
   const [dataFromServer, setDataFromServer] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,16 +48,39 @@ export default function ItemsInPopup() {
   }
 
   if (!dataFromServer || dataFromServer.length === 0) {
-    return <div>No items found.</div>;
+    return (
+      <>
+        <div className="header">
+          <button
+            onClick={() => {
+              navigate("/BusinessHomePage");
+            }}
+            className="PUup-button"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <h2 id="PUh2header">{sessionStorage.getItem("PopupName")}</h2>
+        </div>
+        <div>No items found.</div>
+      </>
+    );
   }
 
   return (
     <>
       <div className="containerW">
         <div className="header">
-            <h2>{sessionStorage.getItem("PopupName")}</h2>
+          <button
+            onClick={() => {
+              navigate("/BusinessHomePage");
+            }}
+            className="PUup-button"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <h2 id="PUh2header">{sessionStorage.getItem("PopupName")}</h2>
         </div>
-        <div className="clothing-list">
+        <div className="PUclothing-list">
           {dataFromServer.map((item, index) => (
             <div key={index} className="clothing-item">
               <div className="clothing-image">

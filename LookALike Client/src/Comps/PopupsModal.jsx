@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../CSS/PopupModal.css";
 
 const PopupModal = ({ isOpen, onClose, popups }) => {
   const navigate = useNavigate();
@@ -26,18 +27,25 @@ const PopupModal = ({ isOpen, onClose, popups }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h3 className="modal-title">Choose Popup:</h3>
+        <h3 className="modal-title">Choose a Popup:</h3>
         <div className="popup-list-container">
           {popups.length > 0 ? (
             <ul className="popup-list">
-              {popups.map(popup => (
+              {popups.sort((a, b) => {
+              // ממיין את הפעילים (status: true) לפני הלא פעילים (status: false)
+              if (a.status && !b.status) return -1;
+              if (!a.status && b.status) return 1;
+              return 0;
+            }).map(popup => (
                 <li 
                   key={popup.popUpId} 
                   className="popup-item"
                   onClick={() => handlePopupClick(popup.popUpId, popup.popUp_Name)}
                   style={{ cursor: 'pointer' }}
                 >
-                  {popup.popUp_Name}
+                  {popup.popUp_Name}  <span 
+                className={`status-dot ${popup.status ? 'green' : 'red'}`}
+              ></span>
                 </li>
               ))}
             </ul>

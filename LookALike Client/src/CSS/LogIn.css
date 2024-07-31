@@ -17,6 +17,7 @@ html, body {
   justify-content: center;
   align-items: center;
   height: 100%; /* Set container height to fill the viewport */
+  font-family: "Urbanist", sans-serif;
 }
 
 .tit {

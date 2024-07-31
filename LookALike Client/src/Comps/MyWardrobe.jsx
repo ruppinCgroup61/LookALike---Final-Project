@@ -11,7 +11,6 @@ import NaviBarFooter from "./NaviBarFooter";
 import WardrobeFilters from "./WardrobeFilters";
 import CircularProgress from "@mui/material/CircularProgress";
 
-
 function MyWardrobe() {
   const [selectedItem, setSelectedItem] = useState(null); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
   const [dataFromServer, setDataFromServer] = useState(null);
@@ -177,9 +176,6 @@ function MyWardrobe() {
 
   return (
     <>
-      {/* <div className="wardrobe_Header" id="w_header">
-        <h3 className="LogoFont" id="h_header">My Wardrobe</h3>
-      </div> */}
       <div className="containerW">
         <div className="header">
           <WardrobeFilters
@@ -187,8 +183,8 @@ function MyWardrobe() {
             setFilteredClothes={setFilteredClothes}
           />
           <Link to="/UploadItem">
-          <button className="UploadBTNRoute">Upload New Item</button>
-          </Link>          
+            <button className="UploadBTNRoute">Upload New Item</button>
+          </Link>
         </div>
         <div className="clothing-list">
           {filteredClothes.map((item, index) => (

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "../CSS/CreatePopup.css";
 
 const CreatePopup = () => {
@@ -23,7 +25,7 @@ const CreatePopup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     // Basic validation
     if (!popupName || !startDate || !endDate) {
@@ -80,7 +82,7 @@ const CreatePopup = () => {
         }
         if (data === 1) {
           console.log("create popup successful");
-          setSuccessMessage('Popup created successfully!');
+          setSuccessMessage("Popup created successfully!");
         }
       })
       .catch((error) => {
@@ -92,6 +94,15 @@ const CreatePopup = () => {
 
   return (
     <div className="create-popup-container">
+      <div className="Upload_Header">
+        <button
+          onClick={() => {navigate("/BusinessHomePage");}}
+          className="up-button"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <h1 className="LogoFont">LookALike</h1>
+      </div>
       <h2 id="hcreatenewpopup">Create New Popup</h2>
       {successMessage && (
         <div className="success-message">{successMessage}</div>

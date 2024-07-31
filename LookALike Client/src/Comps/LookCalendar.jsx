@@ -3,6 +3,9 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import NaviBarFooter from './NaviBarFooter';
 import '../CSS/Calendar.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const LookCalendar = () => {
   const userEmail = sessionStorage.getItem("email");
@@ -52,6 +55,11 @@ const LookCalendar = () => {
     <>
        <div className="app-container">
         <div className="Upload_Header3">
+        <Link to="/HomeLook">
+            <button className="PUup-button">
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+          </Link>
           <h1 className='LogoFont3'>LookALike</h1>
         </div>
         

@@ -22,16 +22,6 @@
   grid-gap: 20px; /* Space between items */
 }
 
-.clothing-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #ddd; /* Optional: border around items */
-  border-radius: 8px; /* Optional: rounded corners */
-  padding: 10px; /* Optional: space inside item */
-  background-color: #fff; /* Optional: background color */
-}
-
 .clothing-image img {
   width: 100%;
   height: auto;

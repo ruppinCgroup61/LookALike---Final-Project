@@ -9,6 +9,7 @@
 
 #hcreatenewpopup {
     margin: 20px;
+    font-family: "Urbanist", sans-serif;
 }
 
 .create-popup-form {
@@ -50,11 +51,12 @@ input {
     transition: background-color 0.3s;
     margin: 20px;
     align-self: center;
+    font-family: "Urbanist", sans-serif;
 }
 
-.create-button:hover {
+/* .create-button:hover {
     background-color: #816c62;
-}
+} */
 
 .success-message {
     background-color: #4CAF50;

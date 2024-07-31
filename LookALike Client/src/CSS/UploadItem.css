@@ -41,6 +41,7 @@ body {
 
 .Upload_Header .up-button {
     position: absolute;
+    bottom: 22px;
     left: 0;
     background: none;
     border: none;

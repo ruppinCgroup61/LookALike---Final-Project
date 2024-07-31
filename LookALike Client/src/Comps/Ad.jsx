@@ -47,12 +47,12 @@ export default function Ad() {
   // Function to open WhatsApp when the link is clicked
   const openWhatsApp = () => {
     window.open(`whatsapp://send?phone=+972${foundAd.phone_Number}`, "_blank");
-    navigateTo("/marketplace");
+    navigateTo("/MarketPlace");
   };
 
   // Function to navigate to MyWardrobe when the close button is clicked
   const closeAd = () => {
-    navigateTo("/marketplace");
+    navigateTo("/MarketPlace");
   };
 
   return (

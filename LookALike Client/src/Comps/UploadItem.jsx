@@ -86,7 +86,7 @@ function UploadItem() {
     event.preventDefault();
     console.log(formDataUpload);
 
-    if (!isBusi) {
+    if (isBusi == "false") {
       fetch("https://localhost:7215/api/Item", {
         method: "POST",
         headers: {
@@ -111,7 +111,7 @@ function UploadItem() {
             setOpenSnackbar(true);
             setTimeout(() => {
               setOpenSnackbar(false);
-              if (sessionStorage.getItem("isBusiness") == false)
+              if (sessionStorage.getItem("isBusiness") == "false")
                 navigateTo("/MyWardrobe");
               else navigateTo("/BusinessHomePage");
             }, 2000);
@@ -243,7 +243,7 @@ function UploadItem() {
       <div className="Upload_Header">
         <button
           onClick={() => {
-            if (sessionStorage.getItem("isBusiness") == false)
+            if (sessionStorage.getItem("isBusiness") == "false")
               navigateTo("/HomePage");
             else navigateTo("/BusinessHomePage");
           }}
@@ -401,9 +401,11 @@ function UploadItem() {
             </button>
           </div>
         </form>
-      </div>
-      <div className="Navbar Footer">
-        <NaviBarFooter />
+        {sessionStorage.getItem("isBusiness") == "false" ? (
+          <div className="Navbar Footer">
+            <NaviBarFooter />
+          </div>
+        ) : null}
       </div>
       <Snackbar
         anchorOrigin={{

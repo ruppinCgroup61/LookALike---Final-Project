@@ -5,7 +5,6 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
 import { FaUserGroup } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation from React Router
-import { GrAddCircle } from "react-icons/gr";
 import "../CSS/NaviBarFooter.css";
 
 export default function NaviBarFooter() {
@@ -17,21 +16,31 @@ export default function NaviBarFooter() {
     const pathname = location.pathname;
 
     // Set active icon based on the pathname
-    switch (pathname) {
-      case "/MyWardrobe":
+    switch (true) {
+      case /^\/MyWardrobe/.test(pathname):
+      case /^\/UploadItem/.test(pathname):
         setActiveIcon("closet");
         break;
-      case "/HomeLook":
+      case /^\/HomeLook/.test(pathname):
+      case /^\/FCManualLook/.test(pathname):
+      case /^\/select-top/.test(pathname):
+      case /^\/select-bottom/.test(pathname):
+      case /^\/AllLook/.test(pathname):
+      case /^\/LookCalendar/.test(pathname):
         setActiveIcon("createLook");
         break;
-      case "/SocialNetwork":
+      case /^\/SocialNetwork/.test(pathname):
         setActiveIcon("SocialNetwork");
         break;
-      case "/MarketPlace":
-        setActiveIcon("marketPlace");
+      case /^\/MarketPlace/.test(pathname):
+        setActiveIcon("MarketPlace");
         break;
-      default:
+      case /^\/HomePage/.test(pathname):
         setActiveIcon("profile");
+        break;
+      case /^\/Ad\/\d+/.test(pathname):
+        setActiveIcon("MarketPlace");
+        break;
     }
   }, [location.pathname]); // Re-run effect when pathname changes
 
@@ -43,19 +52,27 @@ export default function NaviBarFooter() {
     <div className="footer">
       <div className="footer-container">
         <Link to="/HomePage">
-          <IoPersonSharp color={activeIcon === "profile" ? "#242424" : "#999999"} />
+          <IoPersonSharp
+            color={activeIcon === "profile" ? "#242424" : "#999999"}
+          />
         </Link>
         <Link to="/HomeLook">
-          <FaWandMagicSparkles color={activeIcon === "createLook" ? "#242424" : "#999999"} />
+          <FaWandMagicSparkles
+            color={activeIcon === "createLook" ? "#242424" : "#999999"}
+          />
         </Link>
         <Link to="/MyWardrobe">
           <TbHanger color={activeIcon === "closet" ? "#242424" : "#999999"} />
         </Link>
         <Link to="/SocialNetwork">
-          <FaUserGroup color={activeIcon === "SocialNetwork" ? "#242424" : "#999999"} />
+          <FaUserGroup
+            color={activeIcon === "SocialNetwork" ? "#242424" : "#999999"}
+          />
         </Link>
         <Link to="/MarketPlace">
-          <FaShoppingCart color={activeIcon === "marketPlace" ? "#242424" : "#999999"} />
+          <FaShoppingCart
+            color={activeIcon === "MarketPlace" ? "#242424" : "#999999"}
+          />
         </Link>
       </div>
     </div>
