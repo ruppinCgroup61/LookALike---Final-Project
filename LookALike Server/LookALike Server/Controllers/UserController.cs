@@ -1,6 +1,8 @@
 ﻿using LookALike_Server.Class;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Mail;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -69,7 +71,6 @@ namespace LookALike_Server.Controllers
 
             return Ok(fullName);
         }
-
 
         // PUT api/<UserController>/5
         [HttpPut("{Email}")]
