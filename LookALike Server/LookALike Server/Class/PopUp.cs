@@ -48,12 +48,5 @@
             EmailPopUpList = dbs.ReadPopUpsByEmail(UserMail);
             return EmailPopUpList;
         }
-
-        public List<object> GetAllPopsUpsThatAreActive()
-        {
-            DBservices dbs = new DBservices();
-            List<object> PopUpList = new List<object>();
-            return PopUpList = dbs.GetAllPopsUpsThatAreActive();
-        }
     }
 }

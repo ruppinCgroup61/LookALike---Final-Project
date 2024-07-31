@@ -17,23 +17,6 @@ namespace LookALike_Server.Controllers
             return popupList.ReadAllPopUps();
         }
 
-        // GET: api/<PopUpController>
-        [HttpGet("GetActivePopUps")]
-        public IActionResult GetAllActivePopUps()
-        {
-            // Create an instance of PopUp to access the method
-            PopUp popupInstance = new PopUp();
-            List<object> popupList = popupInstance.GetAllPopsUpsThatAreActive();
-
-            // Check if there are popups
-            if (popupList == null || popupList.Count == 0)
-            {
-                return NotFound("There are no Active PopUps in the system");
-            }
-
-            return Ok(popupList);
-        }
-
         // GET api/<PopUpController>/GetAllPopUpsByEmail/{email}
         [HttpGet("GetAllPopUpsByEmail/{email}")]
         public IActionResult GetAllPopUpsByEmail(string email)
