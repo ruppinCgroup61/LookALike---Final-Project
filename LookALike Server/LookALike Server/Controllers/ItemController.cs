@@ -24,11 +24,11 @@ namespace LookALike_Server.Controllers
             // Call the method and get the list of items
             List<Item> items = item.GetAllTopItems(email);
 
-            // Check if the list is null or empty and return appropriate response
-            if (items == null || items.Count == 0)
-            {
-                return NotFound();
-            }
+            //// Check if the list is null or empty and return appropriate response
+            //if (items == null || items.Count == 0)
+            //{
+            //    return NotFound();
+            //}
 
             return Ok(items);
         }
@@ -41,11 +41,11 @@ namespace LookALike_Server.Controllers
             // Call the method and get the list of items
             List<Item> items = item.GetAllBottomItems(email);
 
-            // Check if the list is null or empty and return appropriate response
-            if (items == null || items.Count == 0)
-            {
-                return NotFound();
-            }
+            //// Check if the list is null or empty and return appropriate response
+            //if (items == null || items.Count == 0)
+            //{
+            //    return NotFound();
+            //}
 
             return Ok(items);
         }
@@ -59,11 +59,11 @@ namespace LookALike_Server.Controllers
             // Call the method and get the list of items
             List<object> items = item.GetAllItemsByUser(email);
 
-            // Check if the list is null or empty and return appropriate response
-            if (items == null || items.Count == 0)
-            {
-                return NotFound();
-            }
+            //// Check if the list is null or empty and return appropriate response
+            //if (items == null || items.Count == 0)
+            //{
+            //    return NotFound();
+            //}
 
             return Ok(items);
         }
