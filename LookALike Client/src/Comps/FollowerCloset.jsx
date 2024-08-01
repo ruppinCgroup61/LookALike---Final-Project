@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate} from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { IoArrowBack } from 'react-icons/io5';
-import { IoIosHeartEmpty } from "react-icons/io";
-import '../CSS/FollowerCloset.css'; // Import the new CSS file
+import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
+import '../CSS/FollowerCloset.css';
 import NaviBarFooter from '../Comps/NaviBarFooter';
 
 function FollowerCloset() {
@@ -14,49 +14,64 @@ function FollowerCloset() {
     const likerEmail = sessionStorage.getItem("email");
 
     useEffect(() => {
-        fetch(`https://localhost:7215/api/Item/GetAllItemsByUser${email}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            setItems(data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('Error fetching items:', error);
-            setLoading(false);
-        });
+        fetchItems();
     }, [email]);
 
-    const handleLike = (itemId) => {
-        console.log(itemId,likerEmail,email);
-        fetch("https://localhost:7215/api/Algorithm/LikeItemFromFriendCloset", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                adminUserMail: likerEmail,  // Assuming likerEmail is the admin user's email
-                closetUserMail: email,      // Assuming email is the closet owner's email
-                itemId: itemId,
-            }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok",response);
+    const fetchItems = async () => {
+        try {
+            const itemsResponse = await fetch(`https://localhost:7215/api/Item/GetAllItemsByUser${email}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const itemsData = await itemsResponse.json();
+
+            const likesResponse = await fetch(`https://localhost:7215/api/Algorithm/GetAllLikedItemsByFriend?AdminUserMail=${likerEmail}&ClosetOwnerMail=${email}`);
+            const likesData = await likesResponse.json();
+
+            const itemsWithLikes = itemsData.map(item => ({
+                ...item,
+                isLiked: likesData.some(likedItem => likedItem.id === item.item_ID && likedItem.isLiked === 1)
+            }));
+
+            setItems(itemsWithLikes);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
+    const handleLikeToggle = async (itemId, isCurrentlyLiked) => {
+        try {
+            if (isCurrentlyLiked) {
+                // Remove like
+                await fetch(`https://localhost:7215/api/Algorithm/RemoveLike?adminUserMail=${likerEmail}&closetUserMail=${email}&itemId=${itemId}`, {
+                    method: 'DELETE',
+                });
+            } else {
+                // Add like
+                await fetch("https://localhost:7215/api/Algorithm/LikeItemFromFriendCloset", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        adminUserMail: likerEmail,
+                        closetUserMail: email,
+                        itemId: itemId,
+                    }),
+                });
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            // Optionally, update the state or UI to reflect the like action
-        })
-        .catch(error => {
-            console.error('Error liking item:', error);
-        });
+
+            // Update local state
+            setItems(prevItems => prevItems.map(item => 
+                item.item_ID === itemId ? { ...item, isLiked: !isCurrentlyLiked } : item
+            ));
+        } catch (error) {
+            console.error('Error toggling like:', error);
+        }
     };
 
     if (loading) {
@@ -83,10 +98,18 @@ function FollowerCloset() {
                             <p>Type: {item.clothing_Type}</p>
                             <p>Brand: {item.brand}</p>
                         </div>
-                        <IoIosHeartEmpty
-                            className="fav-icon"
-                            onClick={() => handleLike(item.item_ID)}
-                        />
+                        {item.isLiked ? (
+                            <IoIosHeart
+                                className="fav-icon liked"
+                                onClick={() => handleLikeToggle(item.item_ID, true)}
+                                style={{ color: 'black' }}
+                            />
+                        ) : (
+                            <IoIosHeartEmpty
+                                className="fav-icon"
+                                onClick={() => handleLikeToggle(item.item_ID, false)}
+                            />
+                        )}
                     </div>
                 ))}
             </div>

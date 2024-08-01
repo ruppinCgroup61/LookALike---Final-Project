@@ -1,0 +1,103 @@
+.all-friends-container {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.all-friends-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.AF_Header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #fefefe;
+    position: relative;
+    top: -50px;
+    gap: 30px;
+}
+
+.AF-button {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    background: none;
+    border: none;
+    font-size: 20px;
+}
+
+.AF_Header h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 35px;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 1000;
+}
+
+.all-friend-card-container {
+    position: relative;
+}
+
+.all-friend-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+    width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: rgb(224, 224, 224);
+    box-shadow: 0 0 20px #eee;
+    margin: 10px;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.all-friend-card:hover {
+    transform: scale(1.05);
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.all-friend-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.all-friend-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.all-friend-name {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.all-friend-delete-button {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: #ff4d4d;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}

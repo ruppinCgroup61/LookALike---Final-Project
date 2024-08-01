@@ -15,17 +15,18 @@
   margin-top: 10px;
   text-align: center;
   position: sticky;
-  gap:20px;
+  gap: 20px;
 }
 
 .user-circle-container {
-  flex: 0 0 auto; /* Prevent flex-grow and keep size fixed */
+  flex: 0 0 auto;
+  /* Prevent flex-grow and keep size fixed */
   display: flex;
   justify-content: flex-start;
 }
 
 .user-circle {
-  width: 80px;
+  width: 90px;
   height: 60px;
   background-color: transparent;
   border-radius: 50%;
@@ -43,10 +44,12 @@
 }
 
 .welcome-container {
-  flex: 1; /* Take remaining space */
+  flex: 1;
+  /* Take remaining space */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items vertically */
+  align-items: center;
+  /* Center items vertically */
   text-align: center;
 }
 
@@ -89,7 +92,7 @@
   background-size: cover;
   background-position: center;
   border: 1px solid #EEEEEE;
-  }
+}
 
 .overlay {
   position: absolute;
@@ -104,12 +107,12 @@
   font-family: "Tenor Sans", sans-serif;
   position: absolute;
   bottom: 0;
-  left:0;
+  left: 0;
   font-weight: 400;
   color: black;
 }
 
-.titleHP{
+.titleHP {
   margin-top: auto;
   margin-bottom: 0;
 }
@@ -139,16 +142,67 @@
   height: 50px;
 }
 
-.LogoBlock img{
+.LogoBlock img {
   width: 50px;
   /* height: 50px; */
   /* opacity: 0.7; */
 }
-.Loading{
+
+.Loading {
   font-size: 30px;
 }
 
-.imageBTN{
+.imageBTN {
   background-color: #fff;
-  
+
+}
+
+.popupInHP {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin: 5px;
+}
+
+.PopUpBtn {
+  margin: 5px;
+}
+
+.InputEditUser {
+  /* width: calc(100% - 20px); Adjusted width */
+  width: 300px;
+  /* Adjusted width */
+  height: 50px;
+  /* Adjusted height */
+  padding: 20px;
+  border: 2px solid #D2D2D2;
+  /* Adjusted border color */
+  background-color: #ffffff;
+  /* Added white background */
+  border-radius: 2px;
+  margin-top: 5px;
+  /* Added margin top */
+  margin: 5px;
+}
+
+.EditUserBtn {
+  margin: 10px;
+  padding-top: 10px;
+}
+
+.popup button {
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.popup button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

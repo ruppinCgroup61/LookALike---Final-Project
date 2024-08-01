@@ -12,6 +12,8 @@ import SnackbarContent from '@mui/material/SnackbarContent';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from "@mui/material/CircularProgress";
 import Carousel from 'react-bootstrap/Carousel';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import '../CSS/SocialNetwork.css';
 
@@ -163,6 +165,20 @@ export default function SocialNetwork() {
     );
   }
 
+  const getRandomFriends = () => {
+    if (followers.length <= 2) return followers;
+    const randomFriends = [];
+    while (randomFriends.length < 2) {
+      const randomIndex = Math.floor(Math.random() * followers.length);
+      if (!randomFriends.includes(followers[randomIndex])) {
+        randomFriends.push(followers[randomIndex]);
+      }
+    }
+    return randomFriends;
+  };
+
+  const displayedFriends = getRandomFriends();
+
   return (
     <div className="SN_Container">
       <div className="SN_Header">
@@ -176,20 +192,25 @@ export default function SocialNetwork() {
         </div>
         <div className="followers-slider">
           <h2 className='H2inSN'>Enter Friend Wardrobe:</h2>
-          {followers.map((follower, index) => (
-            <div
-              key={index}
-              className="follower-card"
-              onClick={() => goToFollowerCloset(follower.following_Email)}
-            >
-              <img
-                src={getUserImage(follower.following_Email)}
-                alt={`Profile of ${follower.userYouFollow_Full_Name}`}
-                className="follower-image"
-              />
-              <span>@{follower.userYouFollow_Full_Name}</span>
-            </div>
-          ))}
+          <div className="follower-cards">
+            {displayedFriends.map((follower, index) => (
+              <div
+                key={index}
+                className="follower-card"
+                onClick={() => goToFollowerCloset(follower.following_Email)}
+              >
+                <img
+                  src={getUserImage(follower.following_Email)}
+                  alt={`Profile of ${follower.userYouFollow_Full_Name}`}
+                  className="follower-image"
+                />
+                <span>@{follower.userYouFollow_Full_Name}</span>
+              </div>
+            ))}
+          </div>
+          <button className="next-button" onClick={() => navigate('/all-friends')}>
+            <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+          </button>
         </div>
         <div className="liked-items-slider">
           <h2 className='H2inSN'>Liked Items:</h2>
@@ -226,38 +247,37 @@ export default function SocialNetwork() {
           </Carousel>
         </div>
       </div>
-      <div className="SN_Footer">
-        <NaviBarFooter />
-      </div>
-
+      <NaviBarFooter />
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add New Friend</DialogTitle>
+        <DialogTitle>Add a Friend</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            id="friend-email"
-            label="Friend's Email Address"
+            id="friendEmail"
+            label="Friend Email"
             type="email"
             fullWidth
             value={friendEmail}
             onChange={handleEmailChange}
-            error={friendEmail !== '' && !validEmail}
-            helperText={friendEmail !== '' && !validEmail ? 'Invalid email address' : ''}
+            error={!validEmail && friendEmail.length > 0}
+            helperText={!validEmail && friendEmail.length > 0 ? 'Invalid email address' : ''}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
           <Button
             onClick={handleAddFriend}
+            color="primary"
             disabled={!validEmail}
           >
             Add
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={() => setOpenSnackbar(false)}>
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={() => setOpenSnackbar(false)}>
         <SnackbarContent message={snackbarMessage} />
       </Snackbar>
     </div>

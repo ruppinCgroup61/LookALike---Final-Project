@@ -13,7 +13,6 @@
   background-color: #fefefe;
   width: 400px;
   position: relative;
-  border-bottom: 1px solid grey;
 }
 
 .SN_Header h2 {
@@ -50,12 +49,11 @@
   padding: 20px;
   border-radius: 10px;
   font-size: 20px;
-  background-image: linear-gradient(to right, #485563 0%, #29323c  51%, #485563  100%);
-  margin: 10px;
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
   text-transform: uppercase;
   transition: 0.5s;
   background-size: 200% auto;
-  color: rgb(224, 224, 224);            
+  color: rgb(224, 224, 224);
   box-shadow: 0 0 20px #eee;
   cursor: pointer;
   transition: background 0.3s;
@@ -100,13 +98,13 @@
   padding: 10px;
   border-radius: 10px;
   font-size: 20px;
-  background-image: linear-gradient(to right, #485563 0%, #29323c  51%, #485563  100%);
-  margin: 10px;
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
   text-transform: uppercase;
   transition: 0.5s;
   background-size: 200% auto;
-  color: rgb(224, 224, 224);            
+  color: rgb(224, 224, 224);
   box-shadow: 0 0 20px #eee;
+  margin:10px;
   font-family: "Urbanist", sans-serif;
   font-weight: 400;
 }
@@ -146,8 +144,14 @@
   opacity: 2; /* Ensure visibility */
   width: 30px; /* Set width for better click area */
   height: 30px; /* Set height for better click area */
-  background-color: rgb(0, 0, 0); /* Background color for contrast */
-  border-radius: 50%; /* Round shape */
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: rgb(224, 224, 224);
+  box-shadow: 0 0 20px #eee;     
+  border: 1px solid #ffffff;
+  border-radius: 30%;
 }
 
 .carousel-control-prev {
@@ -159,6 +163,27 @@
   top:30px;
   right: -30px; /* Position right arrow outside */
 }
+
+.next-button{
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: rgb(224, 224, 224);
+  box-shadow: 0 0 20px #eee;  
+  border: 1px solid #ffffff;
+  border-radius: 30%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 
 @media only screen and (max-width: 430px) {
   .SN_Container {
