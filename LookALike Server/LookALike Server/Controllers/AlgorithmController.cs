@@ -13,13 +13,14 @@ namespace LookALike_Server.Controllers
     {
 
         private readonly WebSocketManager _webSocketManager;
+        private readonly DBservices _dbServices;
 
-        public AlgorithmController(WebSocketManager webSocketManager)
+
+        public AlgorithmController(WebSocketManager webSocketManager, DBservices dbServices)
         {
             _webSocketManager = webSocketManager;
+            _dbServices = dbServices;
         }
-
-
 
         // GET: api/<AlgorithmController>
         [HttpGet]
@@ -156,6 +157,31 @@ namespace LookALike_Server.Controllers
             catch (Exception ex)
             {
                 // write to log
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("GetTopThreeLooks")]
+        public IActionResult GetTopThreeLooks([FromQuery] string userEmail, [FromQuery] DateTime? date)
+        {
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            try
+            {
+                var topThreeLooks = _dbServices.GetTopThreeLooks(userEmail, date);
+                if (topThreeLooks == null || topThreeLooks.Count == 0)
+                {
+                    return NotFound("No looks found for the specified user.");
+                }
+
+                return Ok(topThreeLooks);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }

@@ -1269,6 +1269,92 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
+    // This method reads ClothingAds belong to the user himself
+    //--------------------------------------------------------------------------------------------------
+    public List<object> ReadAllUserAds(string UserMail)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> ClothingAdsList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd =ReadAllItemsForSaleCommandWithStoredProcedureWithoutParameters("sp_LAL_ReadAllMyItemsForSales", con,UserMail);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+
+                var ca = new
+                {
+                    Ad_ID = Convert.ToInt32(dataReader["Ad_ID"]),
+                    User_Email = dataReader["User_Email"].ToString(),
+                    Item_ID = Convert.ToInt32(dataReader["Item_ID"]),
+                    Price = Convert.ToDouble(dataReader["Price"]),
+                    Address = dataReader["Address"].ToString(),
+                    Ad_Status1 = dataReader["Ad_Status"].ToString(),
+                    Condition1 = dataReader["Condition"].ToString(),
+                    Item_Image = dataReader["Image"].ToString(),
+                    ItemName = dataReader["Name"].ToString(),
+                    BrandName = dataReader["Brand_Name"].ToString(),
+
+                };
+                ClothingAdsList.Add(ca);
+
+            }
+            return ClothingAdsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadAllItemsForSaleCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con,string UserMail)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@User_Email", UserMail);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
     // This method Inserts a ClothingAd to the Items table 
     //--------------------------------------------------------------------------------------------------
     public int Insert(ClothingAd clothingAd)
@@ -2568,6 +2654,9 @@ public class DBservices
         }
     }
 
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand to delete like from likesTable
+    //---------------------------------------------------------------------------------
     private SqlCommand CreateDeleteLikeCommand(string adminUserMail, string closetUserMail, int itemId, SqlConnection con)
     {
         string query = "DELETE FROM LAL_LikesTable WHERE Liker_Email = @AdminUserMail AND Liked_Email = @ClosetUserMail AND Item_ID = @ItemId";
@@ -2575,6 +2664,198 @@ public class DBservices
         cmd.Parameters.AddWithValue("@AdminUserMail", adminUserMail);
         cmd.Parameters.AddWithValue("@ClosetUserMail", closetUserMail);
         cmd.Parameters.AddWithValue("@ItemId", itemId);
+        return cmd;
+    }
+
+    //---------------------------------------------------------------------------------
+    // This method deletes friend data from tables
+    //---------------------------------------------------------------------------------
+    public bool DeleteFriendFromData(string AdminMail, string FriendMail)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw new Exception($"Error connecting to database: {ex.Message}");
+        }
+
+        cmd = CreateDeleteFriendCommandWithStoredProcedure("sp_LAL_DeleteFriend", con, AdminMail, FriendMail); // create the command
+
+        try
+        {
+            int rowsAffected = cmd.ExecuteNonQuery();
+            return rowsAffected > 0;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw new Exception($"Error deleting friend data: {ex.Message}");
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure with parameters
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateDeleteFriendCommandWithStoredProcedure(string spName, SqlConnection con, string AdminMail, string FriendMail)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;          // can be Select, Insert, Update, Delete
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution, the default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@AdminUserMail", AdminMail);
+        cmd.Parameters.AddWithValue("@FriendMail", FriendMail);
+
+        return cmd;
+    }
+
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand to Update The Weater
+    //---------------------------------------------------------------------------------
+    public int UpdateWeatherData(WeatherData data)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // Your connection string name
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("failed to connect to the server", ex);
+        }
+
+        var query = @"
+                MERGE INTO LAL_WeatherData AS target
+                USING (VALUES (@Date, @Season, @Temperature, @IsRainy)) AS source (Date, Season, Temperature, IsRainy)
+                ON target.Date = source.Date
+                WHEN MATCHED THEN 
+                    UPDATE SET Season = source.Season, Temperature = source.Temperature, IsRainy = source.IsRainy
+                WHEN NOT MATCHED THEN
+                    INSERT (Date, Season, Temperature, IsRainy)
+                    VALUES (source.Date, source.Season, source.Temperature, source.IsRainy);";
+
+        cmd = new SqlCommand(query, con);
+
+        cmd.Parameters.AddWithValue("@Date", data.Date);
+        cmd.Parameters.AddWithValue("@Season", data.Season);
+        cmd.Parameters.AddWithValue("@Temperature", data.Temperature);
+        cmd.Parameters.AddWithValue("@IsRainy", data.IsRainy);
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery();
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Failed to update weather data", ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // This method retrieves the top three looks for a user
+    //---------------------------------------------------------------------------------
+    public List<TopThreeLooksResult> GetTopThreeLooks(string userEmail, DateTime? date)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw new Exception($"Error connecting to database: {ex.Message}");
+        }
+
+        cmd = CreateGetTopThreeLooksCommandWithStoredProcedure("sp_LAL_GetTopThreeLooks", con, userEmail, date); // create the command
+
+        List<TopThreeLooksResult> results = new List<TopThreeLooksResult>();
+
+        try
+        {
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                TopThreeLooksResult look = new TopThreeLooksResult
+                {
+                    TopItemID = reader.GetInt32(0),
+                    TopName = reader.GetString(1),
+                    TopImage = reader.GetString(2),
+                    BottomItemID = reader.GetInt32(3),
+                    BottomName = reader.GetString(4),
+                    BottomImage = reader.GetString(5)
+                };
+                results.Add(look);
+            }
+
+            return results;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw new Exception($"Error retrieving top three looks: {ex.Message}");
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure with parameters
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateGetTopThreeLooksCommandWithStoredProcedure(string spName, SqlConnection con, string userEmail, DateTime? date)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;          // can be Select, Insert, Update, Delete
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution, the default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@UserEmail", userEmail);
+        cmd.Parameters.AddWithValue("@Date", date.HasValue ? (object)date.Value : DBNull.Value);
+
         return cmd;
     }
 

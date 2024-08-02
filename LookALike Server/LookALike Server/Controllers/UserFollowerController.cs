@@ -1,7 +1,6 @@
 ﻿using LookALike_Server.Class;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Collections.Generic;
 
 namespace LookALike_Server.Controllers
 {
@@ -67,10 +66,21 @@ namespace LookALike_Server.Controllers
         {
         }
 
-        // DELETE api/<UserFollowerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<UserFollowerController>/deleteFriend
+        [HttpDelete("deleteFriend")]
+        public IActionResult DeleteFriend(string adminMail, string friendMail)
         {
+            UserFollowers userf = new UserFollowers();
+            int result = userf.DeleteFriend(adminMail, friendMail);
+
+            if (result == 1)
+            {
+                return Ok("The user deleted successfully");
+            }
+            else
+            {
+                return StatusCode(500, "The user is not in the system");
+            }
         }
     }
 }

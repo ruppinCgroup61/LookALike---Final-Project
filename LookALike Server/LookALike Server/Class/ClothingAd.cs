@@ -72,5 +72,11 @@
             DBservices dbs = new DBservices();
             return dbs.ReadWithFullName();
         }
+
+        public List<object> ReadAllUserAds(string UserMail)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.ReadAllUserAds(UserMail);
+        }
     }
 }

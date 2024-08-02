@@ -47,5 +47,12 @@
             }
             return dbs.InsertNewFollower(this);
         }
+
+        public int DeleteFriend(string AdminMail, string FriendMail)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.DeleteFriendFromData(AdminMail, FriendMail) ? 1 : 0;
+        }
+
     }
 }
