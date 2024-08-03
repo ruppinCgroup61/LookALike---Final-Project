@@ -2690,7 +2690,7 @@ public class DBservices
         try
         {
             int rowsAffected = cmd.ExecuteNonQuery();
-            return rowsAffected > 0;
+            return rowsAffected <0;
         }
         catch (Exception ex)
         {

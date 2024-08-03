@@ -1,29 +1,36 @@
 .all-friends-container {
-    padding: 20px;
-    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 10px;
 }
 
-.all-friends-list {
+.AF_Center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* .all-friends-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
+} */
 
 .AF_Header {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
     background-color: #fefefe;
-    position: relative;
-    top: -50px;
-    gap: 30px;
+    width: 400px;
 }
 
 .AF-button {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
+    position: relative;
+    left: -30px;
     background: none;
     border: none;
     font-size: 20px;
@@ -56,10 +63,10 @@
     background-size: 200% auto;
     color: rgb(224, 224, 224);
     box-shadow: 0 0 20px #eee;
-    margin: 10px;
     font-family: "Urbanist", sans-serif;
     font-weight: 400;
     cursor: pointer;
+    margin: 13px;
 }
 
 .all-friend-card:hover {
@@ -90,14 +97,21 @@
     margin-bottom: 5px;
 }
 
-.all-friend-delete-button {
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    color: #ff4d4d;
-    border: none;
-    font-size: 24px;
+.delete-friend-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#eeee, #ffff);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
+    position: absolute;
+    top: 20px; /* Adjust position as needed */
+    right: 30px; /* Adjust position as needed */
+}
+
+.delete-friend-icon {
+    color: rgb(0, 0, 0);
+    font-size: 12px;
 }

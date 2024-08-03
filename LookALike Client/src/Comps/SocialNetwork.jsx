@@ -78,7 +78,6 @@ export default function SocialNetwork() {
         return response.json();
       })
       .then(data => {
-        console.log(data);
         setLikedItems(data);
       })
       .catch(error => {
@@ -115,10 +114,10 @@ export default function SocialNetwork() {
       .then(data => {
         if (data === 1) {
           setSnackbarMessage(`Friend added successfully`);
-        } if (data === -1) {
+        } if (data === 0) {
           setSnackbarMessage(`Friend already exists`);
         }
-        if (data === 0) {
+        if (data === -1) {
           setSnackbarMessage(`Email does not exist in the system`);
         }
         setOpenSnackbar(true);
@@ -140,7 +139,28 @@ export default function SocialNetwork() {
     setValidEmail(isValidEmail);
   };
 
+  const countEntriesForFriendCloset = async (adminUserMail, closetMail) => {
+    try {
+      const response = await fetch(`https://localhost:7215/api/Algorithm/AddOrUpdateEntry?adminUserMail=${adminUserMail}&closetMail=${closetMail}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update entry count');
+      }
+
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      console.error('Error counting entries:', error);
+    }
+  };
+
   const goToFollowerCloset = (email) => {
+    countEntriesForFriendCloset(userEmail, email); // Call the function to update entry count
     const user = userList.find(user => user.email === email);
     if (user) {
       navigate(`/follower-closet/${email}`, { state: { fullName: `${user.firstName} ${user.lastName}` } });

@@ -37,13 +37,13 @@
             AllUsers = dbs.ReadUsers();
             if (!AllUsers.Exists(user => user.Email == this.Follower_Email))
             {
-                // Following email does not exist in users list
-                return 0;
+                // המייל לא קיים בטבלת החברים, או שמדובר במשתמש עסקי
+                return -1;
             }
             if (allFollowers.Exists(UserFollow => UserFollow.follower_Email == this.follower_Email && UserFollow.following_Email == this.following_Email)) 
             {
-                //there is allready a conection like this that exsist
-                return -1;
+                //יש חבר כזה כבר בטבלה
+                return 0;
             }
             return dbs.InsertNewFollower(this);
         }
