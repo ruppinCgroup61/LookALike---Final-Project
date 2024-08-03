@@ -230,7 +230,7 @@ function MyWardrobe() {
                           marginBottom: 10,
                         }}
                       >
-                        <CiExport className="del_sale_icon" /> For sale
+                        <CiExport id="del_sale_icon" /> For sale
                       </button>
                     </Link>
                     <button
@@ -240,7 +240,7 @@ function MyWardrobe() {
                         marginBottom: 10,
                       }}
                     >
-                      <MdDeleteForever className="del_sale_icon" /> Delete
+                      <MdDeleteForever id="del_sale_icon" /> Delete
                     </button>
                   </div>
                 )}

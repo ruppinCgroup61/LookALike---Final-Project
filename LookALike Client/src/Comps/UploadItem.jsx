@@ -34,11 +34,13 @@ function UploadItem() {
   const userEmail = sessionStorage.getItem("email"); // Retrieve email from session storage
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [colors, setColors] = useState([]);
 
   useEffect(() => {
     // Fetch all brands and clothing types when the component mounts
     GetAllBrands();
     GetAllClothingTypes();
+    GetAllColors();
   }, []);
 
   const Change = (event) => {
@@ -49,6 +51,27 @@ function UploadItem() {
       user_Email: userEmail,
     }));
   };
+
+  const GetAllColors = () => {
+    fetch("https://localhost:7215/api/Colors", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Catch Error");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setColors(data);
+      })
+      .catch((error) => {
+        console.error("Error during fetching colors:", error);
+      });
+  };
 
   // Function to handle size selection
   const handleSizeSelection = (size) => {
@@ -351,14 +374,22 @@ function UploadItem() {
             </label>
           </div>
           <div className="form-group">
-            <label>Color:</label>
-            <input
-              type="color"
-              name="color_Code"
-              value={formDataUpload.color_Code}
-              onChange={Change}
-            />
-          </div>
+            <label>
+              Color:
+              <select
+                name="color_Code"
+                value={formDataUpload.color_Code}
+                onChange={Change}
+              >
+                <option value="">Select a color</option>
+                {colors.map((color) => (
+                  <option key={color.color_name} value={color.color_name}>
+                    {color.color_name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
           <div className="form-group">
             <label>size:</label>
             <div className="size-buttons">

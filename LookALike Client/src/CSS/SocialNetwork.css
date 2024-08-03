@@ -1,24 +1,16 @@
 .SN_Container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  padding: 10px;
-}
-
-.SN_Header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  background-color: #fefefe;
-  width: 400px;
-  position: relative;
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  right: 0px;
 }
 
 .SN_Header h2 {
   margin: 0;
   text-align: center;
-  font-size: 35px;
+  font-size: 34px;
   font-family: "Urbanist", sans-serif;
   font-weight: 1000;
 }
@@ -30,9 +22,15 @@
   font-weight: 1000;
 }
 
+#H2inSN {
+  margin-bottom: 15px;
+}
+
 .header-icon {
-  font-size: 2.5rem;
-  margin-left: 10px;
+  /* font-size: 2.5rem;
+  margin-left: 10px; */
+  width: 30px;
+  margin: 0;
 }
 
 .SN_Center {
@@ -40,15 +38,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  top: 10px;
 }
 
 .add-friend {
-  position: absolute;
-  top: 120px;
+  position: relative;
+  top: 0px;
   width: 300px;
-  padding: 20px;
+  height: 55px;
   border-radius: 10px;
-  font-size: 20px;
   background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
   text-transform: uppercase;
   transition: 0.5s;
@@ -60,7 +59,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 15px;
   font-family: "Urbanist", sans-serif;
   font-weight: 400;
 }
@@ -83,7 +82,7 @@
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  margin-top: 110px;
+  margin-top: 20px;
   width: 100%;
   max-height: 400px;
   overflow-y: auto;
@@ -95,6 +94,7 @@
   justify-content: flex-start;
   gap: 28px;
   width: 300px;
+  height: 60px;
   padding: 10px;
   border-radius: 10px;
   font-size: 20px;
@@ -104,12 +104,10 @@
   background-size: 200% auto;
   color: rgb(224, 224, 224);
   box-shadow: 0 0 20px #eee;
-  margin:10px;
+  margin: 10px;
   font-family: "Urbanist", sans-serif;
   font-weight: 400;
 }
- 
-
 
 .follower-image {
   width: 50px;
@@ -118,7 +116,6 @@
   object-fit: cover;
   border: 2px solid #ccc;
 }
-
 
 .follower-card:hover {
   background-position: right center; /* change the direction of the change here */
@@ -135,8 +132,10 @@
   padding: 10px;
   background-color: #f8f9fa;
 }
-.liked-items-slider {
-  margin: 5px;
+
+#liked-items-slider {
+  margin-top: 10px;
+  padding: 0;
 }
 
 .carousel-control-prev, .carousel-control-next {
@@ -152,16 +151,17 @@
   box-shadow: 0 0 20px #eee;     
   border: 1px solid #ffffff;
   border-radius: 30%;
+  padding: 5px;
 }
 
 .carousel-control-prev {
-  top:30px;
-  left: -30px; /* Position left arrow outside */
+  top: 35px;
+  left: -40px; /* Position left arrow outside */
 }
 
 .carousel-control-next {
-  top:30px;
-  right: -30px; /* Position right arrow outside */
+  top: 35px;
+  right: -40px; /* Position right arrow outside */
 }
 
 .next-button{
@@ -179,11 +179,9 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 0;
   font-size: 16px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 
 @media only screen and (max-width: 430px) {
   .SN_Container {
@@ -206,7 +204,9 @@
   }
 
   .wardrobe-icon {
-    font-size: 2rem;
+    position: relative;
+    bottom: 1px;
+    font-size: 1.5rem;
   }
 
   .add-friend span {
@@ -238,7 +238,7 @@
   
   .liked-item-name {
     margin-top: 5px;
-    font-size: 14px;
+    font-size: 16px;
   }
   
   .liked-items-slider {
@@ -270,6 +270,4 @@
     height: 50px;
     border-radius: 50%;
   }
-  
-  
 }

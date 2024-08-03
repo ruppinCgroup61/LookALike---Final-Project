@@ -5,11 +5,12 @@ import NaviBarFooter from "./NaviBarFooter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const HomeLook = (props) => {
+const HomeLook = () => {
   const userEmail = sessionStorage.getItem("email");
   const [looks, setLooks] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch(
       `https://localhost:7215/api/ManualLook/GetLooksDetails/${userEmail}`,
@@ -28,9 +29,11 @@ const HomeLook = (props) => {
       })
       .then((data) => {
         setLooks(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("There was a problem with fetch operation:", error);
+        setLoading(false);
       });
   }, []);
 
@@ -38,7 +41,7 @@ const HomeLook = (props) => {
     <>
       <div className="app-container">
         <div className="Upload_Header3">
-        <button
+          <button
             onClick={() => {
               navigate("/HomePage");
             }}
@@ -62,10 +65,12 @@ const HomeLook = (props) => {
           {/* {filteredClothes.slice(0, 3).map((item, index) => ( */}
           <div id="bb">
             <div id="clothing-list-home">
-              {looks.length === 0 ? (
+              {loading ? (
+                <div id="loading-message">Loading looks...</div>
+              ) : looks.length === 0 ? (
                 <div id="no-looks-message">You don't have any look yet</div>
               ) : (
-                looks.slice(0, 3).map((look, index) => (
+                looks.slice(-3).map((look, index) => (
                   <div key={index} id="clothing-item">
                     <div id="clothing-image">
                       <img src={look.topSelection_Image} alt="Top" />

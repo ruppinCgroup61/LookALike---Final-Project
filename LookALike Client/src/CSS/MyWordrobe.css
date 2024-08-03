@@ -117,9 +117,10 @@
   z-index: 1;
 }
 
-.del_sale_icon {
+#del_sale_icon {
   position: relative;
-  top: 2.5px;
+  bottom: 2px;
+  right: 2px;
   /* הזזת האייקונים למטה */
 }
 

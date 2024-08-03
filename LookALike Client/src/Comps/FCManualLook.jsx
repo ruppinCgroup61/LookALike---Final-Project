@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PiTShirtThin, PiPantsThin } from "react-icons/pi";
 import { CiSquarePlus } from "react-icons/ci";
@@ -11,15 +11,33 @@ import NaviBarFooter from "./NaviBarFooter";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import SnackbarContent from "@mui/material/SnackbarContent";
 
 const FCManualLook = (props) => {
   const { selectedTop, selectedBottom, setSelectedTop, setSelectedBottom } =
     props;
   const userEmail = sessionStorage.getItem("email");
   const navigate = useNavigate();
-  const [showAlert, setAlert] = useState(false);
+  const [showAlert1, setAlert1] = useState(false);
+  const [showAlert2, setAlert2] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   console.log("Props received:", { selectedTop, selectedBottom });
+
+  useEffect(() => {
+    let timer;
+    if (openSnackbar) {
+      timer = setTimeout(() => {
+        setOpenSnackbar(false);
+        setSelectedTop(null);
+        setSelectedBottom(null);
+        navigate("/HomeLook");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [openSnackbar, navigate]);
 
   const saveLook = async () => {
     const outfitToSave = {
@@ -49,12 +67,15 @@ const FCManualLook = (props) => {
 
       if (response.ok) {
         if (responseText == -1) {
-          setAlert(true);
+          setAlert2(true);
           console.log("Outfit already exists");
         }
 
-        if (responseText == 1) console.log("Outfit saved successfully");
-        // alert("Outfit saved successfully");
+        if (responseText == 1) {
+          setSnackbarMessage(`Your Outfit was saved successfully`);
+          setOpenSnackbar(true);
+          console.log("Outfit saved successfully");
+        }
       } else {
         console.log(
           "Failed to save outfit:",
@@ -94,7 +115,8 @@ const FCManualLook = (props) => {
               ) : (
                 <CiSquarePlus
                   className="icon-button"
-                  onClick={() => setSelectedTop(/* ערך חדש של selectedTop */)}
+                  onClick={() => 
+                    setSelectedTop(/* ערך חדש של selectedTop */)}
                 />
               )}
               {!selectedTop && <PiTShirtThin className="icon" />}
@@ -127,7 +149,7 @@ const FCManualLook = (props) => {
               <Link to="/calendar">
                 <button className="btn_manual_look">
                   <h5>
-                    <IoCalendarClearOutline className="icon_ML" /> Add to
+                    <IoCalendarClearOutline className="icon_ML" /> Save to
                     Calendar
                   </h5>
                 </button>
@@ -137,15 +159,40 @@ const FCManualLook = (props) => {
                   <MdOutlineSaveAlt className="icon_ML" /> Save Look
                 </h5>
               </button>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                open={openSnackbar}
+                autoHideDuration={2000}
+                onClose={() => setOpenSnackbar(false)}
+              >
+                <SnackbarContent
+                  sx={{
+                    backgroundColor: "#fff",
+                    boxShadow: "0 3px 5px rgba(0, 0, 0, 0.2)",
+                    borderRadius: "4px",
+                    border: "1px solid #d2d2d2",
+                    textAlign: "center",
+                    fontFamily: "Urbanist, sans-serif",
+                    fontSize: "20px",
+                    color: "#333",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
+                  }}
+                  message={snackbarMessage}
+                />
+              </Snackbar>
               <Stack
                 sx={{
                   position: "fixed",
-                  top: "60%",
+                  top: "50%",
                 }}
                 spacing={2}
               >
-                {showAlert && (
-                  <Alert severity="error" onClose={() => setAlert(false)}>
+                {showAlert2 && (
+                  <Alert severity="error" onClose={() => setAlert2(false)}>
                     <AlertTitle>save failed</AlertTitle>
                     This look already exists
                   </Alert>
@@ -154,7 +201,7 @@ const FCManualLook = (props) => {
             </div>
           ) : (
             <div>
-              <button className="btn_no_manual_look">Add to Calendar</button>
+              <button className="btn_no_manual_look">Save to Calendar</button>
               <button className="btn_no_manual_look">Save Look</button>
             </div>
           )}

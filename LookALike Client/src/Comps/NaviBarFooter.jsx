@@ -8,41 +8,45 @@ import { Link, useLocation } from "react-router-dom"; // Import Link and useLoca
 import "../CSS/NaviBarFooter.css";
 
 export default function NaviBarFooter() {
-  const [activeIcon, setActiveIcon] = useState("profile");
   const location = useLocation();
 
-  useEffect(() => {
-    // Get the pathname from location object
-    const pathname = location.pathname;
-
-    // Set active icon based on the pathname
+  const getActiveIcon = (pathname) => {
     switch (true) {
       case /^\/MyWardrobe/.test(pathname):
       case /^\/UploadItem/.test(pathname):
-        setActiveIcon("closet");
-        break;
+        return "closet";
       case /^\/HomeLook/.test(pathname):
       case /^\/FCManualLook/.test(pathname):
       case /^\/select-top/.test(pathname):
       case /^\/select-bottom/.test(pathname):
       case /^\/AllLook/.test(pathname):
       case /^\/LookCalendar/.test(pathname):
-        setActiveIcon("createLook");
-        break;
+      case /^\/calendar/.test(pathname):
+        return "createLook";
       case /^\/SocialNetwork/.test(pathname):
-        setActiveIcon("SocialNetwork");
-        break;
+      case /^\/follower-closet\/.+/.test(pathname):
+        return "SocialNetwork";
       case /^\/MarketPlace/.test(pathname):
-        setActiveIcon("MarketPlace");
-        break;
-      case /^\/HomePage/.test(pathname):
-        setActiveIcon("profile");
-        break;
       case /^\/Ad\/\d+/.test(pathname):
-        setActiveIcon("MarketPlace");
-        break;
+      case /^\/MainPopUpC/.test(pathname):
+      case /^\/AllPopUp/.test(pathname):
+      case /^\/popup-details/.test(pathname):
+      case /^\/MySales/.test(pathname):
+        return "MainPopUpC";
+      case /^\/HomePage/.test(pathname):
+        return "profile";
+      default:
+        return "profile";
     }
-  }, [location.pathname]); // Re-run effect when pathname changes
+  };
+
+  const [activeIcon, setActiveIcon] = useState(
+    getActiveIcon(location.pathname)
+  );
+
+  useEffect(() => {
+    setActiveIcon(getActiveIcon(location.pathname));
+  }, [location.pathname]);
 
   const handleClick = (icon) => {
     setActiveIcon(icon);
@@ -69,9 +73,9 @@ export default function NaviBarFooter() {
             color={activeIcon === "SocialNetwork" ? "#242424" : "#999999"}
           />
         </Link>
-        <Link to="/MarketPlace">
+        <Link to="/MainPopUpC">
           <FaShoppingCart
-            color={activeIcon === "MarketPlace" ? "#242424" : "#999999"}
+            color={activeIcon === "MainPopUpC" ? "#242424" : "#999999"}
           />
         </Link>
       </div>
