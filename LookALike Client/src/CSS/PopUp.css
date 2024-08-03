@@ -1,0 +1,182 @@
+#list-home-pop {
+    display: flex;
+    flex-direction: column; /* מוודא שכל פופ אפ יהיה בשורה נפרדת */
+    align-items: center; /* מרכז את הפופ אפים באמצע */
+    margin-top: 60px;
+   
+  }
+  #list-All-pop {
+    display: flex;
+    flex-direction: column; /* מוודא שכל פופ אפ יהיה בשורה נפרדת */
+    align-items: center; /* מרכז את הפופ אפים באמצע */
+    margin-top: 10px;
+  }
+  #userpopup {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: rgb(224, 224, 224);
+    box-shadow: 0 0 50px #eee;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    width: 370px;
+    max-width: 800px; /* מוודא שהפופ אפ לא יהיה רחב מדי */
+    box-sizing: border-box;
+    height: 80px;
+  }
+  
+  #userpopup img {
+    width: 70px; /* התאימי לפי הגודל הרצוי */
+    height: 70px; /* התאימי לפי הגודל הרצוי */
+    border-radius: 15px; /* הופך את הפינות לעגולות */
+    margin-right: 15px;
+    box-shadow: 0 4px 8px rgba(252, 252, 252, 0.247);
+  }
+  
+  #userpopup div {
+    flex: 1; /* מאפשר לטקסט לתפוס את שאר רוחב השורה */
+  }
+  
+  #no-looks-message{
+    margin-top: -200px;
+  }
+  #userpopup p {
+    margin: 0;
+    white-space: nowrap; /* מוודא שהטקסט לא יגלוש לשורות נוספות */
+    overflow: hidden; /* מונע גלישה מחוץ לגבולות השורה */
+    text-overflow: ellipsis; /* מוסיף ... במידה והטקסט ארוך מדי */
+  }
+  .popupback{
+    position: absolute;
+    left: -20px;
+    border: white;
+    top: -5px;
+    
+  }
+  .cc{
+    
+    font-size: 30px;
+  }
+  .ss{
+    margin-left: 20px;
+    font-size: 30px;
+  }
+    .cart-button{
+        position: absolute;
+        left: 290px;
+        border: white;
+        font-size: 22px;
+        top: -10px;
+    }
+  .popupbutton{
+    right: 100px;
+    background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: rgb(224, 224, 224);
+    box-shadow: 0 0 50px #eee;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    margin-bottom: 20px;
+    width: 150px;
+    height: 40px;
+  }
+
+
+  #popupdetailes{
+    box-shadow: 0 2px 8px rgb(0 0 0 / 20%); 
+  }
+
+  .add-to-cart-button {
+    position: absolute;
+    top: 200px;
+    right: 0px;
+    background-color: rgb(255 255 255 / 0%);
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .add-to-bin-button{
+    position: absolute;
+    top: 200px;
+    right: 0px;
+    background-color: rgb(255 255 255 / 0%);
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .add-to-cart-button:hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
+  
+  .add-to-cart-button svg {
+    color: #000; /* ניתן לשנות את הצבע של האייקון */
+    font-size: 20px;
+  }
+  .items-for-sale-popup {
+    width: 100%;
+    height: 120px; /* גובה מותאם כדי להכיל את הכותרת והתמונות */
+    display: flex;
+    flex-direction: column; /* סידור אנכי של הכותרת והתמונות */
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: linear-gradient(#eeee, #ffff); /* צבע רקע */
+    box-shadow: 0 0 10px #eee;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .items-for-sale-popup h2 {
+    margin: 0 0 10px 0; /* רווח מתחת לכותרת */
+    font-size: 20px;
+  }
+  
+  .items-images-popup {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .small-item-image-popup {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 5px; /* פינות מעוגלות */
+    box-shadow: 0 4px 8px rgba(252, 252, 252, 0.247);
+
+  }
+  #headerP{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color:#fefefe;
+    
+    
+    border-bottom: 1px solid white;
+  }
+  .Upload_Header3{
+    border-bottom: 1px solid white;
+  }
+.p_{
+    margin-bottom: 1px;
+}
