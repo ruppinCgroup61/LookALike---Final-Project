@@ -497,6 +497,94 @@ public class DBservices
         return cmd;
     }
 
+    //--------------------------------------------------------------------------------------------------
+    // This method reads Items by User from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<object> GetAllItemsByUser(string email)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> ItemsList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateReadItemsByUserCommandWithStoredProcedureWithoutParameters("sp_LAL_GetAllItemByUser", con,email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                var itemInList = new
+                {
+                    Item_ID = Convert.ToInt32(dataReader["Item_ID"]),
+                    Item_Code = dataReader["Item_Code"] != DBNull.Value ? Convert.ToInt32(dataReader["Item_Code"]) : -999,
+                    Name = dataReader["Name"].ToString(),
+                    Image = dataReader["Image"].ToString(),
+                    ClothingType_ID = Convert.ToInt32(dataReader["Clothing_Type_ID"]),
+                    Clothing_Type = dataReader["Clothing_Type"].ToString(),
+                    Color_Code = dataReader["Color_Code"].ToString(),
+                    Season = dataReader["Season"].ToString(),
+                    Size = dataReader["Size"].ToString(),
+                    Brand_ID = Convert.ToInt32(dataReader["Brand_ID"]),
+                    Brand = dataReader["Brand"].ToString(),
+                    Price = Convert.ToDouble(dataReader["Price"]),
+                    Is_Favorite = dataReader.GetBoolean(dataReader.GetOrdinal("Is_Favorite")),
+                    Status = dataReader["Status"].ToString(),
+                    User_Email = dataReader["Email"].ToString()
+                };
+                ItemsList.Add(itemInList);
+            }
+            return ItemsList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the Read using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateReadItemsByUserCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con,string email)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@Email", email);
+
+
+        return cmd;
+    }
 
     //--------------------------------------------------------------------------------------------------
     // This method Update item from the database 
