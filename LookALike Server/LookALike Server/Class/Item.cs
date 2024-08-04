@@ -103,5 +103,16 @@ namespace LookALike_Server.Class
             return dbs.GetAllItemsByUser(email);
         }
 
+        public bool UpdateItemStatusAndDeleteAd(int itemId, int statusCheck)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.UpdateItemStatusAndDeleteAd(itemId, statusCheck);
+        }
+
+        public bool DeleteItem(int itemId)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.DeleteItemFromDatabase(itemId);
+        }
     }
 }

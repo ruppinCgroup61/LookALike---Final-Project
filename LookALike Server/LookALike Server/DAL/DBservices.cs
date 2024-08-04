@@ -2361,8 +2361,102 @@ public class DBservices
         cmd.Parameters.AddWithValue("@user_mail", userMail);
 
         return cmd;
-    }   
-    
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method update Item Status And DeleteAd
+    //----------------------------------------------------------------------------------------------
+    public bool UpdateItemStatusAndDeleteAd(int itemId, int statusCheck)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = new SqlCommand("UpdateItemStatusAndDeleteAd", con)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+
+        cmd.Parameters.AddWithValue("@Item_ID", itemId);
+        cmd.Parameters.AddWithValue("@StatusCheck", statusCheck);
+
+        try
+        {
+            cmd.ExecuteNonQuery(); // execute the command
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method update Item Status to deleted
+    //----------------------------------------------------------------------------------------------
+    public bool DeleteItemFromDatabase(int itemId)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = new SqlCommand("sp_LAL_DeleteItem", con)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+
+        cmd.Parameters.AddWithValue("@ItemID", itemId);
+
+        try
+        {
+            cmd.ExecuteNonQuery(); // execute the command
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method Update the number of enteris into friend closet
+    //--------------------------------------------------------------------------------------------------
     public int AddOrUpdateEntry(string adminUserMail, string closetMail)
     {
         SqlConnection con;

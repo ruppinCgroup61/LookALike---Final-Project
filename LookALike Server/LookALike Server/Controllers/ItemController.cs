@@ -88,6 +88,40 @@ namespace LookALike_Server.Controllers
             return i.UpdateItem();
         }
 
+        // PUT api/<ItemController>/UpdateItemStatusAndDeleteAd
+        [HttpPut("UpdateItemStatusAndDeleteAd")]
+        public IActionResult UpdateItemStatusAndDeleteAd([FromQuery] int itemId, [FromQuery] int statusCheck)
+        {
+            Item item = new Item();
+            bool result = item.UpdateItemStatusAndDeleteAd(itemId, statusCheck);
+
+            if (result)
+            {
+                return Ok(new { message = "Item status updated and ad deleted successfully." });
+            }
+            else
+            {
+                return BadRequest(new { message = "Failed to update item status and delete ad." });
+            }
+        }
+
+        // PUT api/<ItemController>/UpdateItemStatusAndDeleteAd
+        [HttpPut("DeleteItem")]
+        public IActionResult DeleteItemFromDatabase([FromQuery] int itemId)
+        {
+            Item item = new Item();
+            bool result = item.DeleteItem(itemId);
+
+            if (result)
+            {
+                return Ok(new { message = "Item deleted successfully." });
+            }
+            else
+            {
+                return BadRequest(new { message = "Failed to delete Item." });
+            }
+        }
+
         // DELETE api/<ItemController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
