@@ -6,11 +6,14 @@ import NaviBarFooter from "./NaviBarFooter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const MainPopUpC = (props) => {
+const MainPopUpC = () => {
   const userEmail = sessionStorage.getItem("email");
   const [pops, setPop] = useState([]);
   const [userItemsForSale, setUserItemsForSale] = useState([]);
   const [marketPlaceItems, setMarketPlaceItems] = useState([]);
+  const [loadingPops, setLoadingPops] = useState(true); // Loading state for popups
+  const [loadingUserItems, setLoadingUserItems] = useState(true); // Loading state for user items
+  const [loadingMarketPlace, setLoadingMarketPlace] = useState(true); // Loading state for marketplace
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,17 +24,14 @@ const MainPopUpC = (props) => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         setPop(data);
+        setLoadingPops(false); // Set loading to false when data is fetched
       })
       .catch((error) => {
         console.error("There was a problem with fetch operation:", error);
+        setLoadingPops(false); // Ensure loading is stopped even on error
       });
 
     // Fetch user items for sale
@@ -41,17 +41,14 @@ const MainPopUpC = (props) => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        setUserItemsForSale(data.slice(0, 5)); // Limiting to 5 items
+        setUserItemsForSale(data.slice(0, 5));
+        setLoadingUserItems(false); // Set loading to false when data is fetched
       })
       .catch((error) => {
         console.error("There was a problem with fetch operation:", error);
+        setLoadingUserItems(false); // Ensure loading is stopped even on error
       });
 
     // Fetch marketplace items
@@ -61,17 +58,14 @@ const MainPopUpC = (props) => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        setMarketPlaceItems(data.slice(0, 5)); // Limiting to 5 items
+        setMarketPlaceItems(data.slice(0, 5));
+        setLoadingMarketPlace(false); // Set loading to false when data is fetched
       })
       .catch((error) => {
         console.error("There was a problem with fetch operation:", error);
+        setLoadingMarketPlace(false); // Ensure loading is stopped even on error
       });
   }, [userEmail]);
 
@@ -101,19 +95,27 @@ const MainPopUpC = (props) => {
         </div>
 
         <div id="list-home-pop">
-          {pops.length === 0 ? (
-            <div id="no-looks-message">You don't have any pop up yet</div>
+          {loadingPops ? (
+            <div className="" >
+              <div className="skeleton skeleton-popup"></div>
+              <div className="skeleton skeleton-popup"></div>
+            </div>
+            
           ) : (
-            pops.slice(0, 2).map((pop, index) => (
-              <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}>
-                <img src={pop.userImage} alt="PopUp" />
-                <div>
-                  <p>{pop.popUp_Name}</p>
-                  <p>{pop.fullUserName} </p>
-                  <p>{formatDate(pop.startDate)} - {formatDate(pop.endDate)}</p>
+            pops.length === 0 ? (
+              <div id="no-looks-message">You don't have any pop up yet</div>
+            ) : (
+              pops.slice(0, 2).map((pop, index) => (
+                <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}>
+                  <img src={pop.userImage} alt="PopUp" />
+                  <div>
+                    <p>{pop.popUp_Name}</p>
+                    <p>{pop.fullUserName}</p>
+                    <p>{formatDate(pop.startDate)} - {formatDate(pop.endDate)}</p>
+                  </div>
                 </div>
-              </div>
-            ))
+              ))
+            )
           )}
         </div>
 
@@ -123,26 +125,31 @@ const MainPopUpC = (props) => {
           </Link>
         </div>
 
-        {/* My Items for Sale */}
         <div className="items-for-sale-popup" onClick={() => navigate("/MySales")}>
           <h2>Your Items For Sale:</h2>
           <div className="items-images-popup">
-          {userItemsForSale.length === 0 ? (
-            <div>You don't have any item for sale yet</div>
-          ) : (
-            userItemsForSale.map((item, index) => (
-              <img key={index} src={item.item_Image} alt={item.itemName} className="small-item-image-popup" />
-            )))}
+            {loadingUserItems ? (
+              <div className="skeleton skeleton-items"></div>
+            ) : userItemsForSale.length === 0 ? (
+              <div>You don't have any item for sale yet</div>
+            ) : (
+              userItemsForSale.map((item, index) => (
+                <img key={index} src={item.item_Image} alt={item.itemName} className="small-item-image-popup" />
+              ))
+            )}
           </div>
         </div>
 
-        {/* Market Place */}
         <div className="items-for-sale-popup" onClick={() => navigate("/MarketPlace")}>
           <h2>Enter Market Place:</h2>
           <div className="items-images-popup">
-            {marketPlaceItems.map((item, index) => (
-              <img key={index} src={item.item_Image} alt={item.itemName} className="small-item-image-popup" />
-            ))}
+            {loadingMarketPlace ? (
+              <div className="skeleton skeleton-items"></div>
+            ) : (
+              marketPlaceItems.map((item, index) => (
+                <img key={index} src={item.item_Image} alt={item.itemName} className="small-item-image-popup" />
+              ))
+            )}
           </div>
         </div>
 

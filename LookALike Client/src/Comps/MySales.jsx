@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import NaviBarFooter from "./NaviBarFooter";
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { GoTrash } from "react-icons/go";
-
+import { MdDeleteForever } from "react-icons/md";
+import { IoBagCheckOutline } from "react-icons/io5";
 
 const MySales = () => {
   const [items, setItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [message, setMessage] = useState(""); // State for feedback message
   const navigate = useNavigate();
   const email = sessionStorage.getItem("email");
 
@@ -33,36 +35,64 @@ const MySales = () => {
       });
   }, [email]);
 
-  const deleteItem = (id) => {
-    fetch(`https://localhost:7215/api/ClothingAd/${id}`, {
-      method: "DELETE",
+  const updateItemStatus = (id, statusCheck) => {
+    fetch(`https://localhost:7215/api/Item/UpdateItemStatusAndDeleteAd?itemId=${id}&statusCheck=${statusCheck}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to delete item");
+          throw new Error("Failed to update item status");
         }
-        // לאחר מחיקה מוצלחת, עדכן את המצב על ידי הסרת הפריט מהמערך
-        setItems(items.filter(item => item.ad_ID !== id));
+        return response.json();
+      })
+      .then(() => {
+        // Set feedback message based on the action
+        const action = statusCheck === 2 ? "sold" : "deleted";
+        setMessage(`Item ${action} successfully!`);
+        // Clear the feedback message after 3 seconds
+        setTimeout(() => setMessage(""), 3000);
+
+        // Re-fetch the updated items list to re-render the page
+        fetch(`https://localhost:7215/api/ClothingAd/GetAllUserItemsForSale${email}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setItems(data))
+          .catch((error) => console.error("There was a problem with fetch operation:", error));
       })
       .catch((error) => {
-        console.error("There was a problem with the delete operation:", error);
+        console.error("There was a problem with the update operation:", error);
       });
+  };
+
+  const deleteItem = (id) => {
+    updateItemStatus(id, 1);
+  };
+
+  const markAsSold = (id) => {
+    updateItemStatus(id, 2);
   };
 
   return (
     <div className="app-container">
+       {/* Feedback Message */}
+       {message && <div className="notification">{message}</div>}
       <div className="Upload_Header3">
         <button onClick={() => navigate("/MainPopUpC")} className="popupback">
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <h4 className="ss" id="LogoFont3">My Item For Sale</h4>
       </div>
+
       <div className="clothing-list">
         {items.length === 0 ? (
-          <p>No items available for this pop-up.</p>
+          <p>You dont have items for sale</p>
         ) : (
           items.map((item, index) => (
             <div key={index} className="clothing-item" id="popupdetailes">
@@ -72,12 +102,33 @@ const MySales = () => {
                   <p className="p_">{item.itemName}</p>
                   <p>{item.price} $</p>
                 </div>
-                <button
-                  className="add-to-bin-button"
-                  onClick={() => deleteItem(item.ad_ID)} // קריאה לפונקציית המחיקה בלחיצה
-                >
-                  <GoTrash />
-                </button>
+                <div>
+                  <button
+                    className="add-to-bin-button"
+                    onClick={() => setSelectedItem(selectedItem === item.item_ID ? null : item.item_ID)}
+                  >
+                    <GoTrash />
+                  </button>
+                  {selectedItem === item.item_ID && (
+                    <div className="popup">
+                      <button
+                        style={{
+                          paddingLeft: 15,
+                          paddingRight: 15,
+                          marginBottom: 10,
+                        }}
+                        onClick={() => markAsSold(item.item_ID)}
+                      >
+                        <IoBagCheckOutline id="del_sale_icon" /> Sold
+                      </button>
+                      <button
+                        onClick={() => deleteItem(item.item_ID)}
+                      >
+                        <MdDeleteForever id="del_sale_icon" /> Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ))
