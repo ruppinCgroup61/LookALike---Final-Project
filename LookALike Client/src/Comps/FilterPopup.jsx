@@ -1,73 +1,74 @@
 import React from "react";
-import { Drawer, Button, Checkbox, FormControlLabel } from "@mui/material";
+import {
+  Drawer,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Button,
+} from "@mui/material";
 import "../CSS/FilterPopup.css";
 
 const FilterPopup = ({ open, onClose, clothes, setFilteredClothes }) => {
-  const [filters, setFilters] = React.useState({
-    option1: false,
-    option2: false,
-    option3: false,
-  });
+  const [selectedOption, setSelectedOption] = React.useState("");
 
   const handleFilterChange = (event) => {
-    setFilters({
-      ...filters,
-      [event.target.name]: event.target.checked,
-    });
+    const value = event.target.value;
+    setSelectedOption(value);
 
-    if (event.target.name === "option1") {
-      handleFavoritesChange(event.target.checked);
+    let filteredClothes = clothes;
+
+    if (value === "option1") {
+      filteredClothes = clothes.filter((item) => item.is_Favorite === true);
+    } else if (value === "option2") {
+      filteredClothes = clothes.filter(
+        (item) => item.status === "pending for sell"
+      );
     }
+
+    setFilteredClothes(filteredClothes);
   };
 
-  const handleFavoritesChange = (isChecked) => {
-    console.log("Favorites clicked");
-    if (isChecked) {
-      // קבלת מערך של כל הפריטים המועדפים
-      const favs = clothes.filter((item) => item.is_Favorite == true);
-      setFilteredClothes(favs);
-    }
-    // אם ביטלו את הבחירה במועדפים נחזיר לתצוגה רגילה
-    else {
-      setFilteredClothes(clothes);
-    }
+  const handleClearFilter = () => {
+    setSelectedOption(""); // מסיר את הבחירה הנוכחית
+    setFilteredClothes(clothes); // מחזיר את כל הפריטים
   };
 
   return (
     <Drawer anchor="left" open={open} onClose={onClose}>
       <div className="filter-sidebar">
-        <h2>Filter Options</h2>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={filters.option1}
-              onChange={handleFilterChange}
-              name="option1"
-              sx={{
-                "&.Mui-checked": {
-                  color: "rgb(143, 104, 92)", // צבע של הסימון עצמו כשהוא מסומן
-                },
-              }}
-            />
-          }
-          label="Favorites"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={filters.option2}
-              onChange={handleFilterChange}
-              name="option2"
-              sx={{
-                "&.Mui-checked": {
-                  color: "rgb(143, 104, 92)", // צבע של הסימון עצמו כשהוא מסומן
-                },
-              }}
-            />
-          }
-          label="Option 2"
-        />
-        <FormControlLabel
+        <h2>Filters</h2>
+        <RadioGroup
+          name="filters"
+          value={selectedOption}
+          onChange={handleFilterChange}
+        >
+          <FormControlLabel
+            value="option1"
+            control={
+              <Radio
+                sx={{
+                  "&.Mui-checked": {
+                    color: "rgb(143, 104, 92)", // צבע של הסימון עצמו כשהוא מסומן
+                  },
+                }}
+              />
+            }
+            label="Favorites"
+          />
+          <FormControlLabel
+            value="option2"
+            control={
+              <Radio
+                sx={{
+                  "&.Mui-checked": {
+                    color: "rgb(143, 104, 92)", // צבע של הסימון עצמו כשהוא מסומן
+                  },
+                }}
+              />
+            }
+            label="For sale"
+          />
+          {/* <FormControlLabel
           control={
             <Checkbox
               checked={filters.option3}
@@ -81,14 +82,15 @@ const FilterPopup = ({ open, onClose, clothes, setFilteredClothes }) => {
             />
           }
           label="Option 3"
-        />
+        /> */}
+        </RadioGroup>
         <div className="filter-sidebar-actions">
           <Button
-            onClick={onClose}
+            onClick={handleClearFilter}
             className="filter-sidebar-button"
             style={{ color: "rgb(143, 104, 92)" }}
           >
-            Cancel
+            Clear
           </Button>
           <Button
             onClick={() => {

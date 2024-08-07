@@ -14,6 +14,7 @@ export default function NaviBarFooter() {
     switch (true) {
       case /^\/MyWardrobe/.test(pathname):
       case /^\/UploadItem/.test(pathname):
+      case /^\/CreateAd/.test(pathname):
         return "closet";
       case /^\/HomeLook/.test(pathname):
       case /^\/FCManualLook/.test(pathname):
@@ -25,6 +26,7 @@ export default function NaviBarFooter() {
         return "createLook";
       case /^\/SocialNetwork/.test(pathname):
       case /^\/follower-closet\/.+/.test(pathname):
+      case /^\/all-friends/.test(pathname):
         return "SocialNetwork";
       case /^\/MarketPlace/.test(pathname):
       case /^\/Ad\/\d+/.test(pathname):

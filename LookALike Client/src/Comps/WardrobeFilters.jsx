@@ -68,11 +68,11 @@ export default function WardrobeFilters({ clothes, setFilteredClothes }) {
       </span>
       <span
         className={`menu_filters ${
-          activeFilter === "Dress" ? "active_filter" : ""
+          activeFilter === "Hoodie" ? "active_filter" : ""
         }`}
-        onClick={() => handleFilterClick("Dress")}
+        onClick={() => handleFilterClick("Hoodie")}
       >
-        Dress
+        Hoodies
       </span>
     </>
   );

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
+import Modal from "react-modal";
 
 function UploadItem() {
   const [formDataUpload, setFormData] = useState({
@@ -20,7 +21,7 @@ function UploadItem() {
     brand_ID: 0,
     price: 0,
     is_Favorite: false,
-    status: "live",
+    status: "in closet",
     user_Email: "",
     clothingType_ID: 0,
   });
@@ -35,6 +36,8 @@ function UploadItem() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [colors, setColors] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Fetch all brands and clothing types when the component mounts
@@ -42,6 +45,29 @@ function UploadItem() {
     GetAllClothingTypes();
     GetAllColors();
   }, []);
+
+  useEffect(() => {
+    // Check if all required fields are filled
+    const requiredFields = [
+      "name",
+      "color_Code",
+      "season",
+      "size",
+      "brand_ID",
+      "price",
+      "clothingType_ID",
+      "image",
+    ];
+
+    const isValid = requiredFields.every((field) => {
+      if (field === "image") {
+        return formDataUpload[field] !== "null";
+      }
+      return formDataUpload[field] !== "" && formDataUpload[field] !== 0;
+    });
+
+    setIsFormValid(isValid);
+  }, [formDataUpload]);
 
   const Change = (event) => {
     const { name, value } = event.target;
@@ -70,8 +96,8 @@ function UploadItem() {
       })
       .catch((error) => {
         console.error("Error during fetching colors:", error);
-      });
-  };
+      });
+  };
 
   // Function to handle size selection
   const handleSizeSelection = (size) => {
@@ -107,6 +133,11 @@ function UploadItem() {
 
   const SubmitUpload = (event) => {
     event.preventDefault();
+    if (!isFormValid) {
+      setSnackbarMessage("Please fill all required fields");
+      setOpenSnackbar(true);
+      return;
+    }
     console.log(formDataUpload);
 
     if (isBusi == "false") {
@@ -261,6 +292,13 @@ function UploadItem() {
   //     fetchImage();
   // }, []);
 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const ChangeColor = (color_Code) => {
+    setFormData((prev) => ({ ...prev, color_Code }));
+  };
+
   return (
     <div className="Upload_Container">
       <div className="Upload_Header">
@@ -280,20 +318,20 @@ function UploadItem() {
         <h2>ADD NEW CLOTHING</h2>
         <hr className="Header_Separator" />
       </div>
-      <div className="form-centerDiv">
+      <div className="item_form-centerDiv">
         <form onSubmit={SubmitUpload}>
-          <div className="button-group">
+          {/* <div className="button-group"> */}
             <button onClick={openCamera} type="button" className="takephoto">
               Take Photo
             </button>
-            <button
+            {/* <button
               type="button"
               className="takephoto"
               onClick={() => setIsActive(!isActive)}
             >
               {isActive ? "Stop Scanning" : "Start Scanning"}
-            </button>
-          </div>
+            </button> */}
+          {/* </div> */}
           {imagePreviewUrl && (
             <img
               src={imagePreviewUrl}
@@ -373,7 +411,7 @@ function UploadItem() {
               </select>
             </label>
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>
               Color:
               <select
@@ -389,9 +427,46 @@ function UploadItem() {
                 ))}
               </select>
             </label>
-          </div>
+          </div> */}
+
           <div className="form-group">
-            <label>size:</label>
+            <label>
+              COLOR:
+              <button type="button" id="color_list" onClick={openModal}>
+                {formDataUpload.color_Code || "Select a color"}
+              </button>
+            </label>
+          </div>
+
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="Select Color"
+            className="color_modal"
+            overlayClassName="color_modal-overlay"
+          >
+            <h2>Select a Color</h2>
+            <div className="color-list-container">
+            <ul className="color-list">
+              {colors.map((color) => (
+                <li
+                  key={color.color_name}
+                  className="color-item"
+                  onClick={() => {
+                    ChangeColor(color.color_name);
+                    closeModal();
+                  }}
+                >
+                  {color.color_name}
+                </li>
+              ))}
+            </ul>
+            </div>
+            <button className="color_close-button" onClick={closeModal}>Close</button>
+          </Modal>
+
+          <div className="form-group">
+            <label>SIZE:</label>
             <div className="size-buttons">
               {sizes.map((size, index) => (
                 <button
@@ -409,7 +484,7 @@ function UploadItem() {
             </div>
           </div>
           <div className="form-group">
-            <label>Name:</label>
+            <label>NAME:</label>
             <input
               type="text"
               name="name"
@@ -418,7 +493,7 @@ function UploadItem() {
             />
           </div>
           <div className="form-group">
-            <label>Price:</label>
+            <label>PRICE:</label>
             <input
               type="number"
               name="price"
@@ -427,7 +502,11 @@ function UploadItem() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="submit_item">
+            <button
+              type="submit"
+              className={`submit_item ${!isFormValid ? "disabled" : ""}`}
+              disabled={!isFormValid}
+            >
               Add Item
             </button>
           </div>

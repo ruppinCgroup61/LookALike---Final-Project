@@ -25,7 +25,7 @@ const Register = () => {
     lastName: "",
     password: "",
     PhoneNumber: "",
-    isBusiness: false
+    isBusiness: false,
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -36,6 +36,7 @@ const Register = () => {
   const [imageAdded, setImageAdded] = useState(false);
   const [activeError, setActiveError] = useState(null);
   const [EmailAlreadyExsist, setEmailAlreadyExsistAlert] = useState(false);
+  const [imageUploaded, setImageUploaded] = useState(false);
   const api =
     location.hostname === "localhost" || location.hostname === "127.0.0.1"
       ? `https://localhost:7215/api/User`
@@ -70,22 +71,26 @@ const Register = () => {
       reader.readAsDataURL(file);
       setSelectedFileName(file.name);
       setImageAdded(true);
+      setImageUploaded(true); 
     }
   };
 
   const handleInputBlur = (name) => {
     let errorType = null;
-    if (name === 'password' && !isPasswordValid()) {
-      errorType = 'password';
+    if (name === "password" && !isPasswordValid()) {
+      errorType = "password";
     }
-    if (name === 'email' && !isEmailValid()) {
-      errorType = 'email';
+    if (name === "email" && !isEmailValid()) {
+      errorType = "email";
     }
-    if ((name === 'firstName' || name === 'lastName') && !isNameValid(formData[name])) {
+    if (
+      (name === "firstName" || name === "lastName") &&
+      !isNameValid(formData[name])
+    ) {
       errorType = name;
     }
-    if (name === 'PhoneNumber' && !isPhoneNumberValid(formData[name])) {
-      errorType = 'PhoneNumber';
+    if (name === "PhoneNumber" && !isPhoneNumberValid(formData[name])) {
+      errorType = "PhoneNumber";
     }
     setActiveError(errorType);
   };
@@ -131,7 +136,8 @@ const Register = () => {
   };
 
   const isPasswordValid = () => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(formData.password);
   };
 
@@ -141,9 +147,9 @@ const Register = () => {
   };
 
   const handleCheckboxChange = (event) => {
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      isBusiness: event.target.checked
+      isBusiness: event.target.checked,
     }));
   };
 
@@ -152,27 +158,26 @@ const Register = () => {
     return phoneRegex.test(phoneNumber);
   };
 
-  
-
   const isFormValid = () => {
     return (
-      formData.firstName.trim() !== '' &&
-      formData.lastName.trim() !== '' &&
-      formData.email.trim() !== '' &&
-      formData.PhoneNumber.trim() !== '' &&
-      formData.dateOfBirth.trim() !== '' &&
+      formData.firstName.trim() !== "" &&
+      formData.lastName.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      formData.PhoneNumber.trim() !== "" &&
+      formData.dateOfBirth.trim() !== "" &&
       isEmailValid() &&
       isPasswordValid() &&
       isNameValid(formData.firstName) &&
       isNameValid(formData.lastName) &&
-      isPhoneNumberValid(formData.PhoneNumber)
+      isPhoneNumberValid(formData.PhoneNumber) &&
+      imageUploaded
     );
   };
 
   return (
-    <div>
+    <div id="reg_container">
       {/* Header Div */}
-      <div className="header_reg">
+      <div id="header_reg">
         <button
           onClick={() => navigateTo("/")}
           className="back-button_Register"
@@ -190,7 +195,7 @@ const Register = () => {
             <p>Welcome Abord {firstNameForPopup}!</p>
           </div>
         )}
-        <form onSubmit={handleRegister} className="CenterDiv">
+        <form onSubmit={handleRegister} id="sp_form">
           {/* Input fields */}
           <div className="InputBlock">
             <label>First Name: *</label>
@@ -202,8 +207,8 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("firstName")}
             />
-            {activeError === 'firstName' && (
-              <Alert severity="error">
+            {activeError === "firstName" && (
+              <Alert severity="error" style={{ textAlign: "center" }}>
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid first name.
               </Alert>
@@ -219,8 +224,8 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("lastName")}
             />
-            {activeError === 'lastName' && (
-              <Alert severity="error">
+            {activeError === "lastName" && (
+              <Alert severity="error" style={{ textAlign: "center" }}>
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid last name.
               </Alert>
@@ -237,8 +242,8 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("email")}
             />
-            {activeError === 'email' && (
-              <Alert severity="error">
+            {activeError === "email" && (
+              <Alert severity="error" style={{ textAlign: "center" }}>
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid email address.
               </Alert>
@@ -254,8 +259,8 @@ const Register = () => {
               onChange={handleChange}
               onBlur={() => handleInputBlur("PhoneNumber")}
             />
-            {activeError === 'PhoneNumber' && (
-              <Alert severity="error">
+            {activeError === "PhoneNumber" && (
+              <Alert severity="error" style={{ textAlign: "center" }}>
                 <AlertTitle>Error</AlertTitle>
                 Please enter a valid phone number.
               </Alert>
@@ -289,8 +294,8 @@ const Register = () => {
                 className="password-toggle-icon"
               />
             </div>
-            {activeError === 'password' && (
-              <Alert severity="error">
+            {activeError === "password" && (
+              <Alert severity="error" style={{ textAlign: "center" }}>
                 <AlertTitle>Error</AlertTitle>
                 Password must contain a capital letter, a lowercase letter, a
                 number, and a special character.
@@ -316,7 +321,13 @@ const Register = () => {
             </div>
           </div>
           <div className="business-checkbox">
-            <Tooltip title="Business account is an account that manages pop-up events.">
+            <Tooltip
+              title={
+                <span style={{ fontSize: "1.5em" }}>
+                  Business account is an account that manages pop-up events.
+                </span>
+              }
+            >
               <FormControlLabel
                 control={
                   <Checkbox
@@ -332,30 +343,40 @@ const Register = () => {
           <button
             type="submit"
             className="submit-button"
-            onClick={isFormValid}
+            onClick={handleRegister}
             disabled={!isFormValid()}
           >
             CREATE ACCOUNT
           </button>
         </form>
       </div>
-
+      <h2 id="reg_logo">LookALike</h2>
       {/* Bottom Div */}
       <div className="BottomDiv">
         <Stack sx={{ width: "100%" }} spacing={2}>
           {EmailAlreadyExsist && (
             <Alert
-              severity="error"
-              onClose={() => {
-                setEmailAlreadyExsistAlert(false);
-              }}
-            >
-              <AlertTitle>Registration failed</AlertTitle>
+            severity="error"
+            style={{ 
+              position: 'absolute', 
+              top: '450px',
+              left: '20px',
+              right: '20px',
+              display: 'flex',
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              textAlign: 'center' }}
+            onClose={() => {
+              setEmailAlreadyExsistAlert(false);
+            }}
+          >
+            <AlertTitle style={{ width: '100%' }}>Registration failed</AlertTitle>
+            <span style={{ width: '100%' }}>
               Email already exists!
-            </Alert>
+            </span>
+          </Alert>
           )}
         </Stack>
-        <h2>LookALike</h2>
       </div>
     </div>
   );

@@ -55,6 +55,7 @@ html, body {
 
 .back-button2 {
   position: relative;
+  z-index: 10;
   top:10px;
   right:10px;
   background: #fff;

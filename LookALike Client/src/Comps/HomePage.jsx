@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { IoCloseOutline } from "react-icons/io5";
 
 export default function HomePage() {
   const [userList, setUserList] = useState([]);
@@ -59,10 +60,10 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:7215/ws');
+    const ws = new WebSocket("ws://localhost:7215/ws");
 
     ws.onopen = () => {
-      console.log('Connected to WebSocket server');
+      console.log("Connected to WebSocket server");
     };
 
     ws.onmessage = (event) => {
@@ -71,7 +72,7 @@ export default function HomePage() {
     };
 
     ws.onclose = () => {
-      console.log('Disconnected from WebSocket server');
+      console.log("Disconnected from WebSocket server");
     };
 
     return () => {
@@ -103,22 +104,25 @@ export default function HomePage() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://localhost:7215/api/User/${userEmail}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedUser),
-      });
+      const response = await fetch(
+        `https://localhost:7215/api/User/${userEmail}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editedUser),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to update user data');
+        throw new Error("Failed to update user data");
       }
 
       fetchUserDetails(); // Refresh user data
       setShowEditForm(false);
     } catch (error) {
-      console.error('Error updating user details:', error);
+      console.error("Error updating user details:", error);
     }
   };
 
@@ -162,35 +166,69 @@ export default function HomePage() {
         </h1>
       </div>
       {showPopup && (
-        <div className="popupInHP" style={{
-          position: 'absolute',
-          // left: 'calc(100% + 10px)',
-          top: '160px',
-          border: '1px solid grey',
-          boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          padding: '10px',
-          backgroundColor: 'white',
-          zIndex: 1000
-        }}>
-          <button className="PopUpBtn" onClick={handleLogout}>Log Out</button>
-          <button  className="PopUpBtn"onClick={handleEditClick}>Edit User</button>
-          <button className="PopUpBtn" onClick={() => setShowPopup(false)}>Close</button>
+        <div
+          className="popupInHP"
+          style={{
+            position: "absolute",
+            // left: 'calc(100% + 10px)',
+            top: "170px",
+            border: "1px solid grey",
+            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+            padding: "10px",
+            // backgroundColor: "rgb(238, 232, 230)",
+            background: "linear-gradient(#eeee, #ffff)",
+            // backgroundImage: "linear-gradient(to left, #c1b1a7 0%, #c39b8b 51%, #b89587 100%)",
+            zIndex: 1000,
+          }}
+        >
+          <button className="picPopUpBtn" onClick={handleLogout}>
+            Log out
+          </button>
+          <button className="picPopUpBtn" onClick={handleEditClick}>
+            Edit user
+          </button>
+          {/* <button className="picPopUpBtn" onClick={() => setShowPopup(false)}>
+            Close
+          </button> */}
+          <IoCloseOutline className="ClosepicPopUpBtn" onClick={() => setShowPopup(false)}/>
         </div>
       )}
       {showEditForm && (
-        <div className="edit-form" style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: 'white',
-          padding: '60px',
-          boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          zIndex: 1000
-        }}>
-          <input type="email" name="email" className="InputEditUser" value={editedUser.email} disabled placeholder={editedUser.email} />
-          <input type="text" name="firstName" className="InputEditUser" onChange={handleInputChange} placeholder={editedUser.firstName} />
-          <input type="text" name="lastName" className="InputEditUser" onChange={handleInputChange} placeholder={editedUser.lastName} />
+        <div
+          className="edit-form"
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "white",
+            padding: "60px",
+            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+            zIndex: 1000,
+          }}
+        >
+          <input
+            type="email"
+            name="email"
+            className="InputEditUser"
+            value={editedUser.email}
+            disabled
+            placeholder={editedUser.email}
+          />
+          <input
+            type="text"
+            name="firstName"
+            className="InputEditUser"
+            onChange={handleInputChange}
+            placeholder={editedUser.firstName}
+          />
+          <input
+            type="text"
+            name="lastName"
+            className="InputEditUser"
+            onChange={handleInputChange}
+            placeholder={editedUser.lastName}
+          />
           <input
             type="file"
             name="image"
@@ -207,36 +245,67 @@ export default function HomePage() {
               }
             }}
           />
-          <input type="tel" name="phoneNumber" className="InputEditUser" onChange={handleInputChange} placeholder={editedUser.phoneNumber} />
-          <input type="date" name="dateOfBirth" className="InputEditUser" onChange={handleInputChange} placeholder={editedUser.dateOfBirth} />
-          <input type="password" name="password" className="InputEditUser" onChange={handleInputChange} placeholder="New Password" />
-          <button className="EditUserBtn" onClick={handleSave}>Save</button>
-          <button className="EditUserBtn" onClick={() => setShowEditForm(false)}>Cancel</button>
+          <input
+            type="tel"
+            name="phoneNumber"
+            className="InputEditUser"
+            onChange={handleInputChange}
+            placeholder={editedUser.phoneNumber}
+          />
+          <input
+            type="date"
+            name="dateOfBirth"
+            className="InputEditUser"
+            onChange={handleInputChange}
+            placeholder={editedUser.dateOfBirth}
+          />
+          <input
+            type="password"
+            name="password"
+            className="InputEditUser"
+            onChange={handleInputChange}
+            placeholder="New Password"
+          />
+          <button className="EditUserBtn" onClick={handleSave}>
+            Save
+          </button>
+          <button
+            className="EditUserBtn"
+            onClick={() => setShowEditForm(false)}
+          >
+            Cancel
+          </button>
         </div>
       )}
       <div className="center-div">
         <Link to="/MyWardrobe">
-          <div className="block">
+          <div className="block" id="b_one">
             <div className="overlay"></div>
             <p className="titleHP">Enter Your Wardrobe</p>
           </div>
         </Link>
-        <div className="block">
-          <Link to="/UploadItem">
+
+        <Link to="/UploadItem">
+          <div className="block" id="b_two">
             <div className="overlay"></div>
             <p className="titleHP">Add New Clothing</p>
-          </Link>
-        </div>
-        <div className="block">
-          <div className="overlay"></div>
-          <p className="titleHP">Enter Social Network</p>
-        </div>
-        <div className="block">
-          <Link to="/HomeLook">
+          </div>
+        </Link>
+
+        <Link to="/SocialNetwork">
+          <div className="block" id="b_three">
+            <div className="overlay"></div>
+            <p className="titleHP">Enter Social Network</p>
+          </div>
+        </Link>
+
+        <Link to="/HomeLook">
+          <div className="block" id="b_four">
             <div className="overlay"></div>
             <p className="titleHP">Create New Look</p>
-          </Link>
-        </div>
+          </div>
+        </Link>
+
         <div className="LogoBlock">
           <img src="src/Images/kolav.png" />
         </div>

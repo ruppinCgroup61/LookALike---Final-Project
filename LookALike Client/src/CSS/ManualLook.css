@@ -31,12 +31,12 @@
 
 .manual_h2 {
   position: relative;
-  top: 25px;
+  top: 10px;
 }
 
 .icon-section {
   position: relative;
-  top: 30px;
+  top: 20px;
   display: flex;
   flex-direction: column;
   /* שינוי לכיוון אנכי */

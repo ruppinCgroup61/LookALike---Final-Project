@@ -24,6 +24,12 @@ import HomeLook from './Comps/HomeLook';
 import BusinessHomePage from './Comps/BusinessHomePage'
 import CreatePopup from './Comps/CreatePopup'
 import ItemsInPopup from './Comps/ItemsInPopup'
+import AllFriends from './Comps/AllFriends'
+import ProgressComponent from './Comps/ProgressComponent'
+import MainPopUpC from './Comps/MainPopUpC'
+import AllPopUp from './Comps/AllPopUp'
+import PopUpDetails from './Comps/PopUpDetails'
+import MySales from './Comps/MySales'
 
 
 function App() {
@@ -46,17 +52,22 @@ function App() {
         <Route path="/FCManualLook" element={<FCManualLook selectedTop={selectedTop} selectedBottom={selectedBottom} setSelectedTop={setSelectedTop} setSelectedBottom={setSelectedBottom} />} />
         <Route path="/select-top" element={<TopSelectionPage setSelectedTop={setSelectedTop} />} />
         <Route path="/select-bottom" element={<BottomSelectionPage setSelectedBottom={setSelectedBottom} />} />
-        <Route path="/calendar" element={<CalendarPage selectedTop={selectedTop} selectedBottom={selectedBottom} />} />
+        <Route path="/calendar" element={<CalendarPage selectedTop={selectedTop} selectedBottom={selectedBottom} setSelectedTop={setSelectedTop} setSelectedBottom={setSelectedBottom} />} />
         <Route path='/ShowDetails' element={<ShowDetails />}></Route>
         <Route path="/SocialNetwork" element={<SocialNetwork />} />
-        <Route path="/follower-closet/:email" element={<FollowerCloset />} /> {/* Add the new route */}
-        <Route path="/calendar" element={<CalendarPage selectedTop={selectedTop} selectedBottom={selectedBottom} />} />
+        <Route path="/follower-closet/:email" element={<FollowerCloset />} />
         <Route path="/HomeLook" element={<HomeLook />} />
         <Route path="/AllLook" element={<AllLook />} />
         <Route path="/LookCalendar" element={<LookCalendar />} />
         <Route path='/BusinessHomePage' element={<BusinessHomePage />}></Route>
         <Route path='/CreatePopup' element={<CreatePopup />}></Route>
         <Route path='/ItemsInPopup' element={<ItemsInPopup />}></Route>
+        <Route path='/all-friends' element={<AllFriends />}></Route>
+        <Route path='/ProgressComponent' element={<ProgressComponent />}></Route>
+        <Route path='/MainPopUpC' element={<MainPopUpC />}></Route>
+        <Route path='/AllPopUp' element={<AllPopUp />}></Route>
+        <Route path='/popup-details/:email/:popUpId' element={<PopUpDetails />}></Route>
+        <Route path='/MySales' element={<MySales />}></Route>
       </Routes>
     </>
   )

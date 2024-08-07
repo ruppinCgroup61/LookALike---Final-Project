@@ -1,10 +1,11 @@
 .ad-form {
-    position: relative;
-    bottom: 40px;
+    /* position: relative; */
     max-width: 100%;
     padding: 40px 25px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .ad-form h1 {
@@ -34,7 +35,7 @@
 
 .ad-form .ad-content h2 {
     font-size: 20px;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .ad-form .input-group {
@@ -44,7 +45,21 @@
     margin-bottom: 15px;
 }
 
+.ad-form .ad-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
 .ad-form .input-group label {
+    flex: 1;
+    text-align: right;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.ad-form .ad-input-group label {
     flex: 1;
     text-align: right;
     margin-right: 10px;
@@ -62,7 +77,23 @@
     transition: border-bottom-color 0.3s ease;
 }
 
+.ad-form .ad-input-group input {
+    flex: 2;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+    background-color: transparent;
+    transition: border-bottom-color 0.3s ease;
+}
+
 .ad-form .input-group input:focus {
+    border-bottom-color: #f5dede;
+    outline: none;
+}
+
+.ad-form .ad-input-group input:focus {
     border-bottom-color: #f5dede;
     outline: none;
 }
@@ -86,7 +117,6 @@
 
 .ad-form select:focus {
     outline: none;
-    border-color: #007bff;
 }
 
 .ad-form select option {
@@ -95,7 +125,7 @@
 
 .ad-form button {
     width: 40%;
-    background-color: black;
+    background-image: linear-gradient(to left, #c1b1a7 0%, #997364 51%, #b89587 100%);
     color: #fff;
     border: none;
     border-radius: 20px;
@@ -154,4 +184,57 @@
     top: 42px;
     width: 70%;
     right: 42px;
+}
+
+.ad-input-group {
+    margin-bottom: 16px;
+}
+
+.ad-input-group label {
+    display: block;
+    margin-bottom: 0px;
+}
+
+.ad-input-group .MuiTextField-root {
+    width: 100%;
+}
+
+.MuiListItem-root {
+    border-bottom: 1px solid #ddd;
+}
+
+.MuiDialogTitle-root {
+    background-color: #f5f5f5;
+}
+
+.ad_modal_er {
+    text-align: center;
+}
+
+#ad_modal_btn {
+    background-color: #caaa9d;
+}
+
+#ad_modal_title {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#ad_btn_dialog {
+    background-color: #caaa9d;
+    border: none;
+    /* Remove the border */
+}
+
+.condition-input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: black;
+    /* Change the border color to purple */
+}
+
+.ad_cond:hover {
+    background-color: #f0f0f0;
+    /* Change the background color on hover */
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
 }

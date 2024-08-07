@@ -10,15 +10,19 @@ import "../CSS/WardrobeFilters.css";
 import NaviBarFooter from "./NaviBarFooter";
 import WardrobeFilters from "./WardrobeFilters";
 import CircularProgress from "@mui/material/CircularProgress";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyWardrobe() {
   const [selectedItem, setSelectedItem] = useState(null); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
   const [dataFromServer, setDataFromServer] = useState(null);
   const [filteredClothes, setFilteredClothes] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [clothingTypes, setClothingTypes] = useState([]);
+  // const [brands, setBrands] = useState([]);
+  // const [clothingTypes, setClothingTypes] = useState([]);
   const userEmail = sessionStorage.getItem("email");
   const navigateTo = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   console.log(userEmail);
   // קבלת הפריטים של המשתמש מהשרת
@@ -45,58 +49,58 @@ function MyWardrobe() {
       });
   }, []); // [] מועבר כאן כדי להראות שה-fetch צריך להתרחש רק פעם אחת בטעינה הראשונית של המרכיב
 
-  useEffect(() => {
-    // Fetch all brands and clothing types when the component mounts
-    GetAllBrands();
-    GetAllClothingTypes();
-  }, []);
+  // useEffect(() => {
+  //   // Fetch all brands and clothing types when the component mounts
+  //   GetAllBrands();
+  //   GetAllClothingTypes();
+  // }, []);
 
-  const GetAllBrands = () => {
-    fetch("https://localhost:7215/api/Brand", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Catch Error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setBrands(data);
-        console.log(brands);
-      })
-      .catch((error) => {
-        console.error("Error during fetching brands:", error);
-      });
-  };
+  // const GetAllBrands = () => {
+  //   fetch("https://localhost:7215/api/Brand", {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Catch Error");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setBrands(data);
+  //       console.log(brands);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error during fetching brands:", error);
+  //     });
+  // };
 
-  const GetAllClothingTypes = () => {
-    fetch("https://localhost:7215/api/ClothingType", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Catch Error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setClothingTypes(data);
-        console.log(clothingTypes);
-      })
-      .catch((error) => {
-        console.error("Error during fetching clothing types:", error);
-      });
-  };
+  // const GetAllClothingTypes = () => {
+  //   fetch("https://localhost:7215/api/ClothingType", {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Catch Error");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setClothingTypes(data);
+  //       console.log(clothingTypes);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error during fetching clothing types:", error);
+  //     });
+  // };
 
   // Render the circular loader if still loading
-  if (!(dataFromServer && clothingTypes && brands)) {
+  if (!dataFromServer) {
     return (
       <div className="loading-container">
         <CircularProgress color="inherit" />
@@ -126,20 +130,20 @@ function MyWardrobe() {
     updatedItem.is_Favorite = !selectedItem.is_Favorite;
 
     // מציאת brand_ID התואם מתוך המותגים
-    const matchedBrand = brands.find(
-      (brand) => brand.brandName === selectedItem.brand
-    );
-    if (matchedBrand) {
-      updatedItem.brand_ID = matchedBrand.id;
-    }
+    // const matchedBrand = brands.find(
+    //   (brand) => brand.brandName === selectedItem.brand
+    // );
+    // if (matchedBrand) {
+    //   updatedItem.brand_ID = matchedBrand.id;
+    // }
 
-    // מציאת clothingType_ID התואם מתוך סוגי הבגדים
-    const matchedClothingType = clothingTypes.find(
-      (type) => type.clothing_Type === selectedItem.clothing_Type
-    );
-    if (matchedClothingType) {
-      updatedItem.clothingType_ID = matchedClothingType.id;
-    }
+    // // מציאת clothingType_ID התואם מתוך סוגי הבגדים
+    // const matchedClothingType = clothingTypes.find(
+    //   (type) => type.clothing_Type === selectedItem.clothing_Type
+    // );
+    // if (matchedClothingType) {
+    //   updatedItem.clothingType_ID = matchedClothingType.id;
+    // }
 
     // ביצוע בקשת API לעדכון הפריט בשרת
     let api = `https://localhost:7215/api/Item/${selectedItem.item_ID}`;
@@ -174,6 +178,48 @@ function MyWardrobe() {
     navigateTo("/ShowDetails", { state: { item } });
   };
 
+  const handleConfirmDelete = async (item) => {
+    console.log(`Deleting: ${item.item_ID}`);
+    await handleDelete(item);
+    closeModal();
+  };
+
+  const handleDelete = async (item) => {
+    try {
+      const response = await fetch(
+        `https://localhost:7215/api/Item/DeleteItem?itemId=${item.item_ID}`,
+        {
+          method: "PUT",
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("delete succeed");
+        // עדכון ה-state כדי לגרום לרינדור מחדש
+      const updatedFilteredClothes = filteredClothes.filter(
+        (clothingItem) => clothingItem.item_ID !== item.item_ID
+      );
+      setFilteredClothes(updatedFilteredClothes);
+      setDataFromServer(updatedFilteredClothes);
+
+      } else {
+        console.log("delete error");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <div className="containerW">
@@ -195,7 +241,9 @@ function MyWardrobe() {
                   alt={item.name}
                   onClick={() => ShowDetails(item)}
                 />
-
+                {item.status === "pending for sell" && (
+                  <div className="item-status">IN MARKET</div>
+                )}
                 {/*לחיצה על הפלוס*/}
                 <BsPlusLg className="opt" onClick={() => togglePopup(index)} />
 
@@ -229,6 +277,7 @@ function MyWardrobe() {
                           paddingRight: 15,
                           marginBottom: 10,
                         }}
+                        disabled={item.status === "pending for sell"}
                       >
                         <CiExport id="del_sale_icon" /> For sale
                       </button>
@@ -239,9 +288,52 @@ function MyWardrobe() {
                         paddingRight: 19,
                         marginBottom: 10,
                       }}
+                      disabled={item.status === "pending for sell"}
+                      onClick={openModal}
                     >
                       <MdDeleteForever id="del_sale_icon" /> Delete
                     </button>
+                    <Modal
+                      show={isModalOpen}
+                      onHide={closeModal}
+                      className="delete-confirm-modal"
+                    >
+                      <Modal.Dialog>
+                        <Modal.Header
+                          closeButton
+                          className="delete-confirm-header"
+                        >
+                          <Modal.Title className="delete-confirm-title">
+                            Delete
+                          </Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body className="delete-confirm-body">
+                          <p className="delete-confirm-message">
+                            Are you sure ?
+                          </p>
+                        </Modal.Body>
+
+                        <Modal.Footer className="delete-confirm-footer">
+                          <Button
+                            variant="secondary"
+                            onClick={closeModal}
+                            className="delete-confirm-cancel-btn"
+                          >
+                            Cancle
+                          </Button>
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              handleConfirmDelete(item);
+                            }}
+                            className="delete-confirm-delete-btn"
+                          >
+                            Delete
+                          </Button>
+                        </Modal.Footer>
+                      </Modal.Dialog>
+                    </Modal>
                   </div>
                 )}
               </div>

@@ -22,33 +22,48 @@ body {
     max-width: 340px;
     margin: 0 auto;
     padding: 20px;
-    flex:1;
+    flex: 1;
+}
+
+#reg_container {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    right: 20px;
 }
 
 /* Header styles */
-.header_reg {
+#header_reg {
+    /* position: absolute;
+    top: 10px;
+    left: 20px;
+    right: 20px; */
     display: flex;
-     align-items: center;
-    margin-bottom: 20px;
+    align-items: center;
+    /* margin-bottom: 20px; */
     text-align: center;
-    justify-content:space-evenly;
+    justify-content: space-evenly;
     position: sticky;
-    top:0;
+    top: 0;
     font-family: "Urbanist", sans-serif;
     font-weight: 1000;
 }
 
-    .Hadder_register {
+.Hadder_register {
     font-size: 38px;
-    font-weight: bold; /* Added font weight */
-    position: relative;
-    right: 20px;
-    }
+    font-weight: bold;
+    /* Added font weight */
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    margin: 0;
+}
 
 /* Back button styles */
 .back-button_Register {
+    z-index: 10;
     position: relative;
-    right:40px;
+    right:150px;
     background: #fff;
     border: 2px solid #000;
     border-radius: 50%;
@@ -72,35 +87,57 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#sp_form {
+    position: relative;
+    top: 25px;
+    /* left: 20px;
+    right: 20px; */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .form-group {
     margin-bottom: 20px;
 }
 
 .submit-button[disabled] {
-    background-color: #CCCCCC; /* Grey background color */
-    color: #666666; /* Dark grey text color */
-    cursor: not-allowed; /* Change cursor to not-allowed */
-  }
+    background-color: #CCCCCC;
+    /* Grey background color */
+    color: #666666;
+    /* Dark grey text color */
+    cursor: not-allowed;
+    /* Change cursor to not-allowed */
+}
 
 .InputBlock label {
-    display: block; /* Added to move labels above input */
-    margin-bottom: 2px; /* Added margin */
+    position: relative;
+    left: 7px;
+    display: block;
+    /* Added to move labels above input */
+    margin-bottom: 2px;
+    /* Added margin */
     text-align: left;
     font-family: "Urbanist", sans-serif;
     font-weight: 1000;
 }
 
 .error {
-    font-size: 12px; /* Reduced font size */
-    color: red; /* Changed color to red */
+    font-size: 12px;
+    /* Reduced font size */
+    color: red;
+    /* Changed color to red */
     position: absolute;
-    bottom: -20px; /* Adjusted position */
+    bottom: -20px;
+    /* Adjusted position */
     left: 0;
 }
 
 /* Modified InputBlock styles */
 .InputBlock {
     position: relative;
+    margin-bottom: 10px;
 }
 
 .InputBlock input[type="text"],
@@ -109,14 +146,20 @@ body {
 .InputBlock input[type="tel"],
 .InputBlock input[type="date"],
 .InputBlock input[type="file"] {
-    width: calc(100% - 20px); /* Adjusted width */
-    width: 300px; /* Adjusted width */
-    height: 30px; /* Adjusted height */
+    width: calc(100% - 20px);
+    /* Adjusted width */
+    width: 300px;
+    /* Adjusted width */
+    height: 30px;
+    /* Adjusted height */
     padding: 8px;
-    border: 2px solid #D2D2D2; /* Adjusted border color */
-    background-color: #ffffff; /* Added white background */
+    border: 2px solid #D2D2D2;
+    /* Adjusted border color */
+    background-color: #ffffff;
+    /* Added white background */
     border-radius: 2px;
-    margin-top: 5px; /* Added margin top */
+    margin-top: 5px;
+    /* Added margin top */
 }
 
 .file-input-container {
@@ -127,17 +170,19 @@ body {
 
 .file-icon {
     margin-right: 6px;
-    color:#242424;
+    color: #242424;
 
 }
 
 .custom-file-input {
-    width: 300px; /* Adjusted width */
-    height: 30px; /* Adjusted height */
+    width: 300px;
+    /* Adjusted width */
+    height: 30px;
+    /* Adjusted height */
     display: inline-block;
     padding: 3px 15px;
     background-color: #ffffff;
-    color:#242424;
+    color: #242424;
     border: 2px solid #D2D2D2;
     border-radius: 2px;
     cursor: pointer;
@@ -145,9 +190,9 @@ body {
 
 .file-text {
     margin-left: 5px;
-    color:#242424;
+    color: #242424;
 }
-  
+
 
 /* Password input container */
 .password-input-container {
@@ -165,13 +210,14 @@ body {
     right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
-    color:#D2D2D2
+    color: #D2D2D2
 }
 
 /* Submit button styles */
 .submit-button {
     width: 80%;
-    background-color: #242424; /* Adjusted button color */
+    background-color: #242424;
+    /* Adjusted button color */
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -179,7 +225,8 @@ body {
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px; /* Added margin top */
+    margin-top: 10px;
+    /* Added margin top */
 }
 
 .submit-button:hover {
@@ -201,4 +248,15 @@ body {
 
 .business-checkbox {
     text-align: left;
+}
+
+#reg_logo {
+    position: absolute;
+    bottom: -60px;
+    left: 0px;
+    right: inherit;
+    font-size: 27px;
+    font-family: "El Messiri", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
