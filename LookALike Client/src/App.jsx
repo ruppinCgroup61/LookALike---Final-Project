@@ -30,7 +30,9 @@ import MainPopUpC from './Comps/MainPopUpC'
 import AllPopUp from './Comps/AllPopUp'
 import PopUpDetails from './Comps/PopUpDetails'
 import MySales from './Comps/MySales'
-
+import Algorithm from './Comps/Algorithm';
+import Cart from './Comps/Cart';
+import AlgorithmCalendarPage from './Comps/AlgorithmCalendarPage';
 
 function App() {
   const [selectedTop, setSelectedTop] = useState(null);
@@ -68,6 +70,10 @@ function App() {
         <Route path='/AllPopUp' element={<AllPopUp />}></Route>
         <Route path='/popup-details/:email/:popUpId' element={<PopUpDetails />}></Route>
         <Route path='/MySales' element={<MySales />}></Route>
+        <Route path='/Cart/:email/:popUpId' element={<Cart />}></Route>
+        <Route path='/Algorithm' element={<Algorithm />}></Route>
+        <Route path="/algorithm-calendar" element={<AlgorithmCalendarPage />} />
+
       </Routes>
     </>
   )

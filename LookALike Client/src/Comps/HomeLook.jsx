@@ -56,7 +56,7 @@ const HomeLook = () => {
           <Link to="/FCManualLook">
             <button id="ButtonHomeLook">CREATE BY YOURSELF</button>
           </Link>
-          <Link to="/FCManualLook">
+          <Link to="/ProgressComponent">
             <button id="ButtonHomeLook">GENERATE OUTFIT</button>
           </Link>
         </div>

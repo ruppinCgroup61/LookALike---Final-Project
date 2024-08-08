@@ -72,7 +72,7 @@ const PopUpDetails = () => {
   return (
     <div className="app-container">
       <div className="Upload_Header3">
-        <button onClick={() => navigate("/AllPopUp")} className="popupback">
+        <button onClick={() => navigate("/MainPopUpC")} className="popupback">
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <h4 className="cc" id="LogoFont3">Pop-Up Details</h4>

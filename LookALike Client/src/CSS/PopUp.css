@@ -57,7 +57,20 @@
 }
 
 #no-looks-message {
-    margin-top: -200px;
+    position: absolute;
+    top: 100px;
+    background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+    text-transform: uppercase;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 400;
+    margin-bottom: 20px;
+    width: 400px;
+    height: 50px;
 }
 
 #userpopup p {
@@ -117,6 +130,10 @@
     height: 40px;
 }
 
+.popupbutton:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 #popupdetailes {
     box-shadow: 0 2px 8px rgb(0 0 0 / 20%);

@@ -23,6 +23,7 @@ export default function NaviBarFooter() {
       case /^\/AllLook/.test(pathname):
       case /^\/LookCalendar/.test(pathname):
       case /^\/calendar/.test(pathname):
+        case /^\/Algorithm/.test(pathname):
         return "createLook";
       case /^\/SocialNetwork/.test(pathname):
       case /^\/follower-closet\/.+/.test(pathname):

@@ -26,6 +26,7 @@ const MainPopUpC = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('pops-up', data);
         setPop(data);
         setLoadingPops(false); // Set loading to false when data is fetched
       })
@@ -100,10 +101,10 @@ const MainPopUpC = () => {
               <div className="skeleton skeleton-popup"></div>
               <div className="skeleton skeleton-popup"></div>
             </div>
-            
+
           ) : (
             pops.length === 0 ? (
-              <div id="no-looks-message">You don't have any pop up yet</div>
+              <div id="no-looks-message">There are no active<br></br>pop-ups at the moment</div>
             ) : (
               pops.slice(0, 2).map((pop, index) => (
                 <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}>
@@ -121,12 +122,12 @@ const MainPopUpC = () => {
 
         <div>
           <Link to="/AllPopUp">
-            <button className="popupbutton">All Pop-Up</button>
+            <button className="popupbutton" disabled={pops.length === 0}>All Pop-Ups</button>
           </Link>
         </div>
 
         <div className="items-for-sale-popup" onClick={() => navigate("/MySales")}>
-          <h2>Your Items For Sale:</h2>
+          <h2>Your Items For Sale</h2>
           <div className="items-images-popup">
             {loadingUserItems ? (
               <div className="skeleton skeleton-items"></div>
@@ -141,7 +142,7 @@ const MainPopUpC = () => {
         </div>
 
         <div className="items-for-sale-popup" onClick={() => navigate("/MarketPlace")}>
-          <h2>Enter Market Place:</h2>
+          <h2>Enter Market Place</h2>
           <div className="items-images-popup">
             {loadingMarketPlace ? (
               <div className="skeleton skeleton-items"></div>

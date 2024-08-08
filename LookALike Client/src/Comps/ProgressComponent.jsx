@@ -1,17 +1,58 @@
-// ProgressComponent.jsx
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
 const ProgressComponent = () => {
   const [visible, setVisible] = useState(true);
+  const [redirect, setRedirect] = useState(false);
+  const [timerFinished, setTimerFinished] = useState(false);
+  const [weatherDataUpdated, setWeatherDataUpdated] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setVisible(false);
-    }, 15000); //15000ms = 15 seconds
+      setTimerFinished(true);
+    }, 10000); // 10000ms = 10 seconds
+
+    const updateWeatherData = async () => {
+      try {
+        const response = await fetch('https://localhost:7215/Weather/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update weather data for Tel Aviv');
+        }
+
+        const data = await response.json();
+        console.log(data); // Handle the response if needed
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setWeatherDataUpdated(true);
+      }
+    };
+
+    updateWeatherData();
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (timerFinished && weatherDataUpdated) {
+      setVisible(false);
+      setRedirect(true);
+    }
+  }, [timerFinished, weatherDataUpdated]);
+
+  useEffect(() => {
+    if (redirect) {
+      navigate('/Algorithm');
+    }
+  }, [redirect, navigate]);
 
   if (!visible) {
     return null;
@@ -19,8 +60,9 @@ const ProgressComponent = () => {
 
   return (
     <Container>
-      <Title>Your outfit is getting ready
-      please wait...</Title>
+      <img style={{ width: 300, marginBottom: 50 }} src="src/Images/lookalike.png" alt="lookalike" />
+      <Title>Your outfit is getting ready</Title>
+      <Title>please wait...</Title>
       <ProgressBar className="progress-7" />
     </Container>
   );
@@ -33,12 +75,15 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;`;
+  height: 100vh;
+`;
 
 const Title = styled.h1`
   margin-bottom: 20px;
-  font-size: 25px;
-  color: #333;
+  font-size: 35px;
+  color: #EEEEE;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 400;
 `;
 
 const progressAnimation = keyframes`
