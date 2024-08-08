@@ -60,7 +60,7 @@ const ProgressComponent = () => {
 
   return (
     <Container>
-      <img style={{ width: 300, marginBottom: 50 }} src="src/Images/lookalike.png" alt="lookalike" />
+      {/* <img style={{ width: 180, marginBottom: 50, position: 'absolute', top: '30px' }} src="src/Images/lookalike.png" alt="lookalike" /> */}
       <Title>Your outfit is getting ready</Title>
       <Title>please wait...</Title>
       <ProgressBar className="progress-7" />

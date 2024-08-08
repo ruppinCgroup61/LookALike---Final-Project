@@ -44,11 +44,11 @@ const Cart = () => {
                 <button onClick={() => navigate(`/popup-details/${email}/${popUpId}`)} className="popupback">
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </button>
-                <h4 className="cc" id="LogoFont3">Shopping Cart</h4>
+                <h4 className="cc" id="LogoFont3">Shopping cart</h4>
             </div>
             <div className="list-cart-item">
                 {isCartEmpty ? (
-                    <p>Your cart is empty.</p>
+                    <p>Your cart is empty</p>
                 ) : (
                     cartItems.map((item, index) => (
                         <div key={index} id="cartpopup">
@@ -61,7 +61,7 @@ const Cart = () => {
                     ))
                 )}
                 <div className="cart-total">
-                    <p>Total: ${calculateTotal()}</p>
+                    <p style={{fontSize: '22px'}}>Total: ${calculateTotal()}</p>
                     <button
                         onClick={() => {
                             clearCart();
@@ -70,14 +70,14 @@ const Cart = () => {
                         className="clear-cart-button"
                         disabled={isCartEmpty} // Disable if the cart is empty
                     >
-                        Clear Cart
+                        Clear cart
                     </button>
                 </div>
                
                 {!isCartEmpty && ( // Only show the image if the cart is not empty
                     <div>
                         <img
-                            src="\src\Images\apppay.jpeg"
+                            src="\src\Images\apppay.png"
                             className="bitlogo"
                             alt="Bit logo"
                             onClick={handleBitClick}

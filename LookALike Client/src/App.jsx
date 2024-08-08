@@ -65,7 +65,7 @@ function App() {
         <Route path='/CreatePopup' element={<CreatePopup />}></Route>
         <Route path='/ItemsInPopup' element={<ItemsInPopup />}></Route>
         <Route path='/all-friends' element={<AllFriends />}></Route>
-        <Route path='/ProgressComponent' element={<ProgressComponent />}></Route>
+        <Route path='/ProgressComponent' element={<ProgressComponent />}></Route>
         <Route path='/MainPopUpC' element={<MainPopUpC />}></Route>
         <Route path='/AllPopUp' element={<AllPopUp />}></Route>
         <Route path='/popup-details/:email/:popUpId' element={<PopUpDetails />}></Route>

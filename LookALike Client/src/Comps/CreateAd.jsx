@@ -9,6 +9,7 @@ import SnackbarContent from "@mui/material/SnackbarContent";
 import "../CSS/CreateAd.css";
 import NaviBarFooter from "./NaviBarFooter";
 import { Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemText, TextField } from '@mui/material';
+import { FaWhatsapp, FaTimes } from "react-icons/fa";
 
 function CreateAd() {
   const navigateTo = useNavigate();
@@ -113,6 +114,10 @@ function CreateAd() {
     handleClose();
   };
 
+  const closeAd = () => {
+    navigateTo("/MyWardrobe");
+  };
+
   return (
     <>
       <div className="ad-form">
@@ -152,19 +157,6 @@ function CreateAd() {
               </Alert>
             </Stack>
           )}
-          {/* <div className="ad-input-group">
-            <label htmlFor="condition">Condition:</label>
-            <select
-              id="condition"
-              name="condition"
-              value={ad.condition}
-              onChange={(e) => setAd({ ...ad, condition: e.target.value })}
-            >
-              <option value="new">New</option>
-              <option value="like new">Like New</option>
-              <option value="used">Used</option>
-            </select>
-          </div> */}
           <div className="ad-input-group">
             <label htmlFor="condition">Condition:</label>
             <TextField
@@ -226,6 +218,10 @@ function CreateAd() {
             message={snackbarMessage}
           />
         </Snackbar>
+      </div>
+      {/* Close button */}
+      <div className="CloseAd" style={{ position: "absolute", top: "10px", right: "35px", cursor: "pointer" }}>
+        <FaTimes onClick={closeAd} size={24} />
       </div>
       <NaviBarFooter />
 

@@ -120,8 +120,13 @@
 #del_sale_icon {
   position: relative;
   bottom: 2px;
-  right: 2px;
-  /* הזזת האייקונים למטה */
+  right: 3px;
+}
+
+#edit_icon {
+  position: relative;
+  bottom: 2px;
+  right: 5px;
 }
 
 #item_details_container {

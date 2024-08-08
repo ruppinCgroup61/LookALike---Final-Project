@@ -24,6 +24,10 @@
     font-size: 18px;
 }
 
+.popup-buttons:hover {
+    background-color: #766259
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;

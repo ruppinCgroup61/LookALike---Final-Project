@@ -13,3 +13,8 @@
 .status-dot.red {
     background-color: red;
 }
+
+.popup-item.red {
+    color: grey;
+    pointer-events: none;
+  }

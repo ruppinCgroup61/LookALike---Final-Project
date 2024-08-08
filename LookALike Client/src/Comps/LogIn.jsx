@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import '../CSS/LogIn.css';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
-import Snackbar from '@mui/material/Snackbar';
-import SnackbarContent from '@mui/material/SnackbarContent';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import "../CSS/LogIn.css";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import SnackbarContent from "@mui/material/SnackbarContent";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router-dom";
 
 //shir@gmail.com
 //Shir111!
@@ -31,60 +31,60 @@ import { useNavigate } from 'react-router-dom';
 //Shir111!
 
 const LogIn = () => {
-  const [Email, setUsername] = useState('');
-  const [Password, setPassword] = useState('');
+  const [Email, setUsername] = useState("");
+  const [Password, setPassword] = useState("");
   const [showAlert, setAlert] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigateTo = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
-  const [ForgotPasswordEmail, setForgotPasswordEmail] = useState('');
-  const [retrievedPassword, setRetrievedPassword] = useState('');
+  const [ForgotPasswordEmail, setForgotPasswordEmail] = useState("");
+  const [retrievedPassword, setRetrievedPassword] = useState("");
 
   const handleLogIn = () => {
     const userData = {
-      dateOfBirth: '2024-05-04T16:32:31.976Z',
+      dateOfBirth: "2024-05-04T16:32:31.976Z",
       email: Email,
       firstName: "Null",
       image: "null",
       lastName: "Null",
       password: Password,
-      PhoneNumber: '0501231234',
+      PhoneNumber: "0501231234",
     };
 
     //logIn api
-    fetch('https://localhost:7215/api/User/login', {
-      method: 'PUT',
+    fetch("https://localhost:7215/api/User/login", {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           console.log(response);
-          throw new Error('Login request failed');
+          throw new Error("Login request failed");
         }
         return response.json();
       })
-      .then(data => {
-        console.log('Login successful:', data);
+      .then((data) => {
+        console.log("Login successful:", data);
 
         const { email, isBusiness, firstName, lastName } = data;
         const fullName = `${firstName} ${lastName}`.trim();
-        
-        sessionStorage.setItem('email', email);
-        sessionStorage.setItem('isBusiness', isBusiness);
-        sessionStorage.setItem('fullName', fullName);
+
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("isBusiness", isBusiness);
+        sessionStorage.setItem("fullName", fullName);
 
         setSnackbarMessage(`Welcome ${email}`);
         setOpenSnackbar(true);
 
         setTimeout(() => {
           setOpenSnackbar(false);
-          
+
           // Redirect based on account type
           if (isBusiness) {
             navigateTo("/BusinessHomePage");
@@ -93,8 +93,8 @@ const LogIn = () => {
           }
         }, 2000);
       })
-      .catch(error => {
-        console.error('Error during login:', error);
+      .catch((error) => {
+        console.error("Error during login:", error);
         setAlert(true); // Show the alert if login returns -1
       });
   };
@@ -107,30 +107,31 @@ const LogIn = () => {
 
   const isPasswordValid = () => {
     // Regular expression for password validation
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
     return passwordRegex.test(Password);
   };
 
   const isEmailForPasswordIsValid = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(ForgotPasswordEmail);
-  }
+  };
 
   const handleEmailChange = (e) => {
     setUsername(e.target.value);
     if (!isEmailValid()) {
-      setEmailError('');
+      setEmailError("");
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     if (!isPasswordValid()) {
-      setPasswordError('');
+      setPasswordError("");
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
   };
 
@@ -138,9 +139,7 @@ const LogIn = () => {
     // Check if all validations pass
     if (isEmailValid() && isPasswordValid()) {
       handleLogIn(); // Call handleRegister directly on form submission
-    }
-    else {
-
+    } else {
     }
   };
 
@@ -150,82 +149,90 @@ const LogIn = () => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setForgotPasswordEmail(''); // Clear the input value
-    setRetrievedPassword(''); // Clear the password value
+    setForgotPasswordEmail(""); // Clear the input value
+    setRetrievedPassword(""); // Clear the password value
   };
 
   const handleGetPassword = () => {
     // Fetch password
     console.log(JSON.stringify(ForgotPasswordEmail));
-    fetch('https://localhost:7215/api/User/ForgotPassword', {
-      method: 'POST',
+    fetch("https://localhost:7215/api/User/ForgotPassword", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(ForgotPasswordEmail) // Pass an object with the email property
+      body: JSON.stringify(ForgotPasswordEmail), // Pass an object with the email property
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network Error');
+          throw new Error("Network Error");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data.password);
-        if (data.password === 'Not found') {
-          console.log('NOOOO');
-          setRetrievedPassword('Your Password was not found'); // Clear the password if not found
+        if (data.password === "Not found") {
+          console.log("NOOOO");
+          setRetrievedPassword("Your Password was not found"); // Clear the password if not found
         } else {
-          console.log('YESSSS');
-          setRetrievedPassword('Your Password is:' + data.password); // Clear the password if not found
+          console.log("YESSSS");
+          setRetrievedPassword("Your Password is:" + data.password); // Clear the password if not found
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-        console.error('Error during Api:', error);
+        console.error("Error during Api:", error);
       });
   };
 
-
   return (
-    <div className="container">
-      <div className="tit">
+    <div className="login_container">
+      <div className="login_tit">
         <button onClick={() => navigateTo("/")} className="back-button2">
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
-        <h2 className="title">SIGN IN</h2>
+        <h2 className="login_title">SIGN IN</h2>
       </div>
-      <div className='CenterDiv'>
-        <label className='Label'>Email Address:</label>
-        <input
-          className="input"
-          type="text"
-          placeholder="Email Address"
-          value={Email}
-          onChange={handleEmailChange}
-        />
-        {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
-        <label className='Label'>Password:</label>
-        <div className="password-input-wrapper">
+      <div className="login_middle">
+        <div className="CenterDiv">
+          <label className="login_Label">Email Address :</label>
           <input
-            className="input"
-            type={"password"}
-            placeholder="Password"
-            value={Password}
-            onChange={handlePasswordChange}
+            className="login_input"
+            type="text"
+            placeholder="Email Address"
+            value={Email}
+            onChange={handleEmailChange}
           />
+          {emailError && <p style={{ color: "red" }}>{emailError}</p>}
+          <label className="login_Label">Password :</label>
+          <div className="password-input-wrapper">
+            <input
+              className="login_input"
+              type={"password"}
+              placeholder="Password"
+              value={Password}
+              onChange={handlePasswordChange}
+            />
+          </div>
         </div>
-        {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
+        {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
         <div className="tit1">
-          <button className="button" onClick={isFormValid} disabled={!isEmailValid() || !isPasswordValid()}>
+          <button
+            className="login_button"
+            onClick={isFormValid}
+            disabled={!isEmailValid() || !isPasswordValid()}
+          >
             SIGN IN
           </button>
-          <button className="forgotPasswordButton" onClick={handleForgotPassword}>
+          <button
+            className="forgotPasswordButton"
+            onClick={handleForgotPassword}
+          >
             Forgot Password?
           </button>
         </div>
       </div>
-      <Stack sx={{ width: '100%' }} spacing={2}>
+      <Stack sx={{ width: "60%" }} spacing={2}>
         {showAlert && ( // Conditionally render the alert based on showAlert state
           <Alert severity="error" onClose={() => setAlert(false)}>
             <AlertTitle>Login failed</AlertTitle>
@@ -235,8 +242,8 @@ const LogIn = () => {
       </Stack>
       <Snackbar
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
         open={openSnackbar}
         autoHideDuration={2000}
@@ -244,16 +251,16 @@ const LogIn = () => {
       >
         <SnackbarContent
           sx={{
-            backgroundColor: '#fff',
-            boxShadow: '0 3px 5px rgba(0, 0, 0, 0.2)',
-            borderRadius: '4px',
-            border: '1px solid #d2d2d2',
-            textAlign: 'center',
-            fontFamily: 'Urbanist, sans-serif',
-            fontSize: '20px',
-            color: '#333',
-            fontWeight: 'bold',
-            padding: '10px 20px',
+            backgroundColor: "#fff",
+            boxShadow: "0 3px 5px rgba(0, 0, 0, 0.2)",
+            borderRadius: "4px",
+            border: "1px solid #d2d2d2",
+            textAlign: "center",
+            fontFamily: "Urbanist, sans-serif",
+            fontSize: "20px",
+            color: "#333",
+            fontWeight: "bold",
+            padding: "10px 20px",
           }}
           message={snackbarMessage}
         />
@@ -271,11 +278,16 @@ const LogIn = () => {
             value={ForgotPasswordEmail}
             onChange={(e) => setForgotPasswordEmail(e.target.value)} // Update this line
           />
-          <p className='PasswordToPresent'>{retrievedPassword}</p>
+          <p className="PasswordToPresent">{retrievedPassword}</p>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Close</Button>
-          <Button onClick={handleGetPassword} disabled={!isEmailForPasswordIsValid()} >Get Password</Button>
+          <Button
+            onClick={handleGetPassword}
+            disabled={!isEmailForPasswordIsValid()}
+          >
+            Get Password
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

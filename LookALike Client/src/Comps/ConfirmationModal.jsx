@@ -11,7 +11,7 @@ const ConfirmationModal = ({ showModal, closeModal }) => {
          
         </div>
         <div className="modal-body">
-          <p>The seller will contact you to complete the sale.</p>
+          <p>The payment request has been sent for approval</p>
         </div>
         <div className="modal-footer">
           <button onClick={closeModal} className="close-modal-button">

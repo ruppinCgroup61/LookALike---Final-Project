@@ -39,8 +39,9 @@ const PopupModal = ({ isOpen, onClose, popups }) => {
             }).map(popup => (
                 <li 
                   key={popup.popUpId} 
-                  className="popup-item"
-                  onClick={() => handlePopupClick(popup.popUpId, popup.popUp_Name)}
+                  className={`popup-item ${popup.status ? 'green' : 'red'}`}
+                  // className="popup-item"
+                  onClick={popup.status ? () => handlePopupClick(popup.popUpId, popup.popUp_Name) : null}
                   style={{ cursor: 'pointer' }}
                 >
                   {popup.popUp_Name}  <span 

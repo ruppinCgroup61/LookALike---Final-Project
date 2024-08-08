@@ -34,15 +34,11 @@ const CreatePopup = () => {
     }
 
     const currentDate = new Date();
-    const previousDate = new Date(currentDate);
-    previousDate.setDate(currentDate.getDate() - 1);
     const selectedStartDate = new Date(startDate);
     const selectedEndDate = new Date(endDate);
 
-
-    if (selectedStartDate < previousDate) {
+    if (selectedStartDate < currentDate) {
       setError("Start date must be in the future");
-      console.log(previousDate);
       return;
     }
 
@@ -100,7 +96,7 @@ const CreatePopup = () => {
     <div className="create-popup-container">
       <div className="Upload_Header">
         <button
-          onClick={() => { navigate("/BusinessHomePage"); }}
+          onClick={() => {navigate("/BusinessHomePage");}}
           className="up-button"
         >
           <FontAwesomeIcon icon={faArrowLeft} />

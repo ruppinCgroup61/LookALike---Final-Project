@@ -37,7 +37,12 @@ function UploadItem() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [colors, setColors] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isColorModalOpen, setIsColorModalOpen] = useState(false);
+  const [isClothingModalOpen, setIsClothingModalOpen] = useState(false);
+  const [selectedClothing, setSelectedClothing] = useState(null);
+  const [isSeasonModalOpen, setIsSeasonModalOpen] = useState(false);
+  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState(null);
 
   useEffect(() => {
     // Fetch all brands and clothing types when the component mounts
@@ -273,27 +278,29 @@ function UploadItem() {
   };
   const [imageUrl, setImageUrl] = useState("");
 
-  // useEffect(() => {
-  //     const fetchImage = async () => {
-  //         try {
+  const openClothingModal = () => setIsClothingModalOpen(true);
+  const closeClothingModal = () => setIsClothingModalOpen(false);
 
-  //           // החליפי את ה-URL עם הכתובת של האתר שממנו את רוצה לשלוף את התמונה
-  //           const result = await axios.get('http://www.zara.com/qr/0622449525105');
-  //           const parser = new DOMParser();
-  //           const htmlDocument = parser.parseFromString(result.data, "text/html");
-  //           const imgElement = htmlDocument.querySelector("img"); // הוסיפי מזהה ספציפי אם יש צורך
-  //           setImageUrl(imgElement.src);
-  //         }
-  //         catch (error) {
-  //           console.error('Error fetching image:', error);
-  //         }
-  //       };
+  const openSeasonModal = () => setIsSeasonModalOpen(true);
+  const closeSeasonModal = () => setIsSeasonModalOpen(false);
 
-  //     fetchImage();
-  // }, []);
+  const openBrandModal = () => setIsBrandModalOpen(true);
+  const closeBrandModal = () => setIsBrandModalOpen(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openColorModal = () => setIsColorModalOpen(true);
+  const closeColorModal = () => setIsColorModalOpen(false);
+
+  const ChangeClothingType = (clothingType_ID) => {
+    setFormData((prev) => ({ ...prev, clothingType_ID }));
+  };
+
+  const ChangeSeason = (season) => {
+    setFormData((prev) => ({ ...prev, season }));
+  };
+
+  const ChangeBrand = (brand_ID) => {
+    setFormData((prev) => ({ ...prev, brand_ID }));
+  };
 
   const ChangeColor = (color_Code) => {
     setFormData((prev) => ({ ...prev, color_Code }));
@@ -321,17 +328,10 @@ function UploadItem() {
       <div className="item_form-centerDiv">
         <form onSubmit={SubmitUpload}>
           {/* <div className="button-group"> */}
-            <button onClick={openCamera} type="button" className="takephoto">
-              Take Photo
-            </button>
-            {/* <button
-              type="button"
-              className="takephoto"
-              onClick={() => setIsActive(!isActive)}
-            >
-              {isActive ? "Stop Scanning" : "Start Scanning"}
-            </button> */}
-          {/* </div> */}
+          <button onClick={openCamera} type="button" className="takephoto">
+            Take Photo
+          </button>
+
           {imagePreviewUrl && (
             <img
               src={imagePreviewUrl}
@@ -365,39 +365,102 @@ function UploadItem() {
           <div className="form-group">
             <label>
               CLOTHING TYPE:
-              <select
-                name="clothingType_ID"
-                value={formDataUpload.clothingType_ID}
-                onChange={Change}
-              >
-                <option value="0">Select Clothing Type</option>
-                {clothingTypes.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.clothing_Type}
-                  </option>
-                ))}
-              </select>
+              <button type="button" id="color_list" onClick={openClothingModal}>
+                {selectedClothing || "Select type"}
+              </button>
             </label>
           </div>
+
+          <Modal
+            isOpen={isClothingModalOpen}
+            onRequestClose={closeClothingModal}
+            contentLabel="Select type"
+            className="color_modal"
+            overlayClassName="color_modal-overlay"
+          >
+            <h2>Select type</h2>
+            <div className="color-list-container">
+              <ul className="color-list">
+                {clothingTypes.map((type) => (
+                  <li
+                    key={type.id}
+                    className="color-item"
+                    onClick={() => {
+                      setSelectedClothing(type.clothing_Type);
+                      ChangeClothingType(type.id);
+                      closeClothingModal();
+                    }}
+                  >
+                    {type.clothing_Type}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button className="color_close-button" onClick={closeClothingModal}>
+              Close
+            </button>
+          </Modal>
+
           <div className="form-group">
             <label>
               SEASON:
-              <select
-                name="season"
-                value={formDataUpload.season}
-                onChange={Change}
-              >
-                <option value="">Select a season</option>
-                <option value="Summer">Summer</option>
-                <option value="Winter">Winter</option>
-                <option value="Other">Transition</option>
-              </select>
+              <button type="button" id="color_list" onClick={openSeasonModal}>
+                {formDataUpload.season || "Select season"}
+              </button>
             </label>
           </div>
+
+          <Modal
+            isOpen={isSeasonModalOpen}
+            onRequestClose={closeSeasonModal}
+            contentLabel="Select season"
+            className="color_modal"
+            overlayClassName="color_modal-overlay"
+          >
+            <h2>Select season</h2>
+            <div className="color-list-container">
+              <ul className="color-list">
+                <li
+                  key="Summer"
+                  className="color-item"
+                  onClick={() => {
+                    ChangeSeason("Summer");
+                    closeSeasonModal();
+                  }}
+                >
+                  Summer
+                </li>
+                <li
+                  key="Winter"
+                  className="color-item"
+                  onClick={() => {
+                    ChangeSeason("Winter");
+                    closeSeasonModal();
+                  }}
+                >
+                  Winter
+                </li>
+                <li
+                  key="Other"
+                  className="color-item"
+                  onClick={() => {
+                    ChangeSeason("Other");
+                    closeSeasonModal();
+                  }}
+                >
+                  Other
+                </li>
+              </ul>
+            </div>
+            <button className="color_close-button" onClick={closeSeasonModal}>
+              Close
+            </button>
+          </Modal>
+
           <div className="form-group">
             <label>
               BRAND:
-              <select
+              {/* <select
                 name="brand_ID"
                 value={formDataUpload.brand_ID}
                 onChange={Change}
@@ -410,59 +473,79 @@ function UploadItem() {
                 ))}
               </select>
             </label>
-          </div>
-          {/* <div className="form-group">
-            <label>
-              Color:
-              <select
-                name="color_Code"
-                value={formDataUpload.color_Code}
-                onChange={Change}
-              >
-                <option value="">Select a color</option>
-                {colors.map((color) => (
-                  <option key={color.color_name} value={color.color_name}>
-                    {color.color_name}
-                  </option>
-                ))}
-              </select>
-            </label>
           </div> */}
-
-          <div className="form-group">
-            <label>
-              COLOR:
-              <button type="button" id="color_list" onClick={openModal}>
-                {formDataUpload.color_Code || "Select a color"}
+              <button type="button" id="color_list" onClick={openBrandModal}>
+                {selectedBrand || "Select brand"}
               </button>
             </label>
           </div>
 
           <Modal
-            isOpen={isModalOpen}
-            onRequestClose={closeModal}
-            contentLabel="Select Color"
+            isOpen={isBrandModalOpen}
+            onRequestClose={closeBrandModal}
+            contentLabel="Select brand"
             className="color_modal"
             overlayClassName="color_modal-overlay"
           >
-            <h2>Select a Color</h2>
+            <h2>Select brand</h2>
             <div className="color-list-container">
-            <ul className="color-list">
-              {colors.map((color) => (
-                <li
-                  key={color.color_name}
-                  className="color-item"
-                  onClick={() => {
-                    ChangeColor(color.color_name);
-                    closeModal();
-                  }}
-                >
-                  {color.color_name}
-                </li>
-              ))}
-            </ul>
+              <ul className="color-list">
+                {brands.map((type) => (
+                  <li
+                    key={type.id}
+                    className="color-item"
+                    onClick={() => {
+                      setSelectedBrand(type.brandName);
+                      ChangeBrand(type.id);
+                      closeBrandModal();
+                    }}
+                  >
+                    {type.brandName}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <button className="color_close-button" onClick={closeModal}>Close</button>
+            <button className="color_close-button" onClick={closeBrandModal}>
+              Close
+            </button>
+          </Modal>
+
+          <div className="form-group">
+            <label>
+              COLOR:
+              <button type="button" id="color_list" onClick={openColorModal}>
+                {formDataUpload.color_Code || "Select color"}
+              </button>
+            </label>
+          </div>
+
+          <Modal
+            isOpen={isColorModalOpen}
+            onRequestClose={closeColorModal}
+            contentLabel="Select color"
+            className="color_modal"
+            overlayClassName="color_modal-overlay"
+          >
+            <h2>Select color</h2>
+            <div className="color-list-container">
+              <ul className="color-list">
+                {colors.map((color) => (
+                  <li
+                    key={color.color_name}
+                    className="color-item"
+                    onClick={() => {
+                      ChangeColor(color.color_name);
+                      closeColorModal();
+                    }}
+                  >
+                    {color.color_name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button className="color_close-button" onClick={closeColorModal}>
+              Close
+            </button>
           </Modal>
 
           <div className="form-group">

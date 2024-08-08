@@ -7,7 +7,7 @@
 .AlgoHeader h1 {
     margin: 0;
     text-align: center;
-    font-size: 34px;
+    font-size: 24px;
     font-family: "Urbanist", sans-serif;
     font-weight: 1000;
 }
@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .algorithm-top-image,
@@ -48,6 +49,8 @@
     background-size: 200% auto;
     color: rgb(224, 224, 224);
     box-shadow: 0 0 20px #eee;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .algorithm-action-buttons {

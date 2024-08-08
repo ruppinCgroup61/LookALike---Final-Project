@@ -12,7 +12,6 @@ import WardrobeFilters from "./WardrobeFilters";
 import CircularProgress from "@mui/material/CircularProgress";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyWardrobe() {
   const [selectedItem, setSelectedItem] = useState(null); // מזהה של הפריט הנבחר לצורך פתיחת הפופאפ
@@ -49,56 +48,6 @@ function MyWardrobe() {
       });
   }, []); // [] מועבר כאן כדי להראות שה-fetch צריך להתרחש רק פעם אחת בטעינה הראשונית של המרכיב
 
-  // useEffect(() => {
-  //   // Fetch all brands and clothing types when the component mounts
-  //   GetAllBrands();
-  //   GetAllClothingTypes();
-  // }, []);
-
-  // const GetAllBrands = () => {
-  //   fetch("https://localhost:7215/api/Brand", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Catch Error");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setBrands(data);
-  //       console.log(brands);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error during fetching brands:", error);
-  //     });
-  // };
-
-  // const GetAllClothingTypes = () => {
-  //   fetch("https://localhost:7215/api/ClothingType", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Catch Error");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setClothingTypes(data);
-  //       console.log(clothingTypes);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error during fetching clothing types:", error);
-  //     });
-  // };
-
   // Render the circular loader if still loading
   if (!dataFromServer) {
     return (
@@ -128,22 +77,6 @@ function MyWardrobe() {
 
     // שינוי של is_Favorite בהתאם לערך הנוכחי שלו
     updatedItem.is_Favorite = !selectedItem.is_Favorite;
-
-    // מציאת brand_ID התואם מתוך המותגים
-    // const matchedBrand = brands.find(
-    //   (brand) => brand.brandName === selectedItem.brand
-    // );
-    // if (matchedBrand) {
-    //   updatedItem.brand_ID = matchedBrand.id;
-    // }
-
-    // // מציאת clothingType_ID התואם מתוך סוגי הבגדים
-    // const matchedClothingType = clothingTypes.find(
-    //   (type) => type.clothing_Type === selectedItem.clothing_Type
-    // );
-    // if (matchedClothingType) {
-    //   updatedItem.clothingType_ID = matchedClothingType.id;
-    // }
 
     // ביצוע בקשת API לעדכון הפריט בשרת
     let api = `https://localhost:7215/api/Item/${selectedItem.item_ID}`;
@@ -299,14 +232,10 @@ function MyWardrobe() {
                       className="delete-confirm-modal"
                     >
                       <Modal.Dialog>
-                        <Modal.Header
-                          closeButton
-                          className="delete-confirm-header"
-                        >
+  
                           <Modal.Title className="delete-confirm-title">
                             Delete
                           </Modal.Title>
-                        </Modal.Header>
 
                         <Modal.Body className="delete-confirm-body">
                           <p className="delete-confirm-message">
