@@ -40,6 +40,7 @@ const FCManualLook = (props) => {
   }, [openSnackbar, navigate]);
 
   const saveLook = async () => {
+    
     const outfitToSave = {
       lookId: -1,
       topSelection_ItemId: selectedTop.item_ID,
@@ -47,7 +48,7 @@ const FCManualLook = (props) => {
       topSelection_Image: selectedTop.image,
       buttomSelection_Image: selectedBottom.image,
       createdDate: new Date().toISOString(),
-      calendarDate: new Date().toISOString(),
+      calendarDate: '1800-01-01',
       userEmail: userEmail,
     };
 

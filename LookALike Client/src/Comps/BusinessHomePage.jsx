@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PopupModal from "./PopupsModal";
 import "../CSS/BusinessHomePage.css";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const BusinessHomePage = () => {
   const storedFullName = sessionStorage.getItem("fullName");
@@ -17,6 +18,10 @@ const BusinessHomePage = () => {
       setFullName(storedFullName);
     }
   }, []);
+
+  const handleLogOut = () => {
+    sessionStorage.clear();
+  };
 
   const handleCreatePopup = () => {
     navigateTo("/CreatePopup");
@@ -61,6 +66,9 @@ const BusinessHomePage = () => {
   return (
     <div>
       <div id="businessHP">
+        <Link to="/">
+            <IoLogOutOutline id="options_dots" onClick={handleLogOut}/>
+        </Link>
         <img style={{ width: 60 }} src="src/Images/kolav.png" alt="lookalike" />
         <img
           style={{ width: 280, marginBottom: 50 }}

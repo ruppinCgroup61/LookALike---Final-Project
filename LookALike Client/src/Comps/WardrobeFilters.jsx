@@ -3,7 +3,7 @@ import { CgMenuGridR } from "react-icons/cg";
 
 import FilterPopup from "./FilterPopup";
 
-export default function WardrobeFilters({ clothes, setFilteredClothes }) {
+export default function WardrobeFilters({ clothes, setFilteredClothes, flag }) {
   const [open, setOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All");
 
@@ -32,8 +32,15 @@ export default function WardrobeFilters({ clothes, setFilteredClothes }) {
 
   return (
     <>
-      <CgMenuGridR className="filter_icon" onClick={handleOpen} />
-      <FilterPopup open={open} onClose={handleClose} clothes={clothes} setFilteredClothes={setFilteredClothes}/>
+      {flag === 'w' && (
+        <CgMenuGridR className="filter_icon" onClick={handleOpen} />
+      )}
+      <FilterPopup
+        open={open}
+        onClose={handleClose}
+        clothes={clothes}
+        setFilteredClothes={setFilteredClothes}
+      />
       <span
         className={`menu_filters ${
           activeFilter === "All" ? "active_filter" : ""

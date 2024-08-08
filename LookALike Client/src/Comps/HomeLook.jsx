@@ -68,7 +68,7 @@ const HomeLook = () => {
               {loading ? (
                 <div id="loading-message">Loading looks...</div>
               ) : looks.length === 0 ? (
-                <div id="no-looks-message">You don't have any look yet</div>
+                <div className="no-looks-message">You don't have any look yet</div>
               ) : (
                 looks.slice(-3).map((look, index) => (
                   <div key={index} id="clothing-item">

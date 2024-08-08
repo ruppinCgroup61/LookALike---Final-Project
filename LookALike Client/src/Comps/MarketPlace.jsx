@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../CSS/WardrobeFilters.css";
 import WardrobeFilters from "./WardrobeFilters";
 import NaviBarFooter from "./NaviBarFooter";
 import CircularProgress from "@mui/material/CircularProgress";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function MarketPlace() {
   const [dataFromServer, setDataFromServer] = useState(null);
@@ -52,37 +54,61 @@ export default function MarketPlace() {
   return (
     <>
       <div className="containerW">
+        <div className="Upload_Header3">
+          <Link to="/MainPopUpC">
+            <button
+              className="PUup-button"
+              style={{
+                position: "absolute",
+                top: "40px",
+                left: "30px",
+                height: '10px'
+              }}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+          </Link>
+        </div>
         <div className="header">
           <WardrobeFilters
             clothes={dataFromServer}
             setFilteredClothes={setFilteredClothes}
+            flag='mp'
           />
         </div>
-        <div className="MP_ALL">
-        <div className="clothing-list">
-          {filteredClothes.map((item, index) => (
-            <div key={index} className="clothing-item">
-              <div className="clothing-image">
-                <img
-                  src={item.item_Image}
-                  alt={item.itemName}
-                  onClick={() => Showad(item)}
-                />
-              </div>
-              <div className="clothing-details">
-                <p>
-                    {item.fullName}
-                </p>
-                <p>
+        <h2
+          style={{
+            position: "absolute",
+            top: "65px",
+            left: "0px",
+            right: "0px",
+          }}
+        >
+          Market place
+        </h2>
+        <div id="MP_ALL">
+          <div className="clothing-list">
+            {filteredClothes.map((item, index) => (
+              <div key={index} className="clothing-item">
+                <div className="clothing-image">
+                  <img
+                    src={item.item_Image}
+                    alt={item.itemName}
+                    onClick={() => Showad(item)}
+                  />
+                </div>
+                <div className="clothing-details">
+                  <p>{item.fullName}</p>
+                  <p>
                     {item.itemName.toUpperCase()} - {item.price}$
-                </p>
+                  </p>
+                </div>
               </div>
+            ))}
+            <div className="Navbar Footer">
+              <NaviBarFooter />
             </div>
-          ))}
-          <div className="Navbar Footer">
-            <NaviBarFooter />
           </div>
-        </div>
         </div>
       </div>
     </>

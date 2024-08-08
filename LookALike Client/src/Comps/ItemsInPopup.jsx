@@ -74,7 +74,7 @@ export default function ItemsInPopup() {
             onClick={() => {
               navigate("/BusinessHomePage");
             }}
-            className="PUup-button"
+            className="IPUup-button"
           >
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>

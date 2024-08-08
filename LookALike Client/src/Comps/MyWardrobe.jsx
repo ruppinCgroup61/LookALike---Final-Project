@@ -160,6 +160,7 @@ function MyWardrobe() {
           <WardrobeFilters
             clothes={dataFromServer}
             setFilteredClothes={setFilteredClothes}
+            flag='w'
           />
           <Link to="/UploadItem">
             <button className="UploadBTNRoute">Upload New Item</button>
