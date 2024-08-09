@@ -41,7 +41,7 @@ namespace LookALike_Server.Controllers
         public IActionResult Login([FromBody] User userCredentials)
         {
             // Authenticate user
-            var authenticatedUser = userCredentials.UserLogin();
+            var authenticatedUser = userCredentials.Login(userCredentials.Email, userCredentials.Password);
 
             if (authenticatedUser != null)
             {

@@ -44,45 +44,45 @@ public class DBservices
     //--------------------------------------------------------------------------------------------------
     // This method Inserts a User to the Users table 
     //--------------------------------------------------------------------------------------------------
-    public int Insert(User user)
+    public string Insert(User user)
     {
-
         SqlConnection con;
         SqlCommand cmd;
 
         try
         {
-            con = connect("myProjDB"); // create the connection
+            con = connect("myProjDB"); // יצירת החיבור
         }
         catch (Exception ex)
         {
-            // write to log
+            // כתיבה ללוג
             throw (ex);
         }
 
-        cmd = CreateUserInsertCommandWithStoredProcedure("sp_LAL_InsertUser", con, user);  // create the command
+        cmd = CreateUserInsertCommandWithStoredProcedure("sp_LAL_InsertUser", con, user);  // יצירת הפקודה
 
         try
         {
-            int numEffected = cmd.ExecuteNonQuery(); // execute the command
-            return numEffected;
+            // ביצוע הקריאה לפרוצדורה ושמירת התוצאה
+            string result = (string)cmd.ExecuteScalar();
+
+            return result;
         }
         catch (Exception ex)
         {
-            // write to log
+            // כתיבה ללוג
             throw (ex);
         }
-
         finally
         {
             if (con != null)
             {
-                // close the db connection
+                // סגירת החיבור לבסיס הנתונים
                 con.Close();
             }
         }
-
     }
+
 
     //---------------------------------------------------------------------------------
     // Create the SqlCommand for Insert User using a stored procedure
@@ -326,6 +326,87 @@ public class DBservices
 
         // Add the input parameter for the stored procedure
         cmd.Parameters.AddWithValue("@Email", email);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
+    // This method Login into the app
+    //--------------------------------------------------------------------------------------------------
+    public User Login(string email, string password)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // יצירת החיבור
+        }
+        catch (Exception ex)
+        {
+            // כתיבה ללוג
+            throw (ex);
+        }
+
+        cmd = CreateUserLoginCommandWithStoredProcedure("sp_LAL_LoginUser", con, email, password);  // יצירת הפקודה
+
+        try
+        {
+            SqlDataReader reader = cmd.ExecuteReader(); // ביצוע הקריאה לפרוצדורה
+
+            User user = null;
+            if (reader.Read())
+            {
+                // אם נמצאה התאמה, יצירת אובייקט משתמש עם הפרטים
+                user = new User
+                {
+                    Email = reader["Email"].ToString(),
+                    FirstName = reader["First_Name"].ToString(),
+                    LastName = reader["Last_Name"].ToString(),
+                    Image = reader["Image"].ToString(),
+                    PhoneNumber = Convert.ToInt32(reader["Phone_Number"]),
+                    DateOfBirth = (DateTime)reader["Date_of_Birth"],
+                    //Password = reader["Password"].ToString(),
+                    IsBusiness = Convert.ToBoolean(reader["Is_Business"])
+                };
+            }
+
+            return user; // החזרת האובייקט או null אם לא נמצא
+        }
+        catch (Exception ex)
+        {
+            // כתיבה ללוג
+            throw (ex);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // סגירת החיבור לבסיס הנתונים
+                con.Close();
+            }
+        }
+    }
+
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand for Login User using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CreateUserLoginCommandWithStoredProcedure(String spName, SqlConnection con, string email, string password)
+    {
+        SqlCommand cmd = new SqlCommand(); // יצירת אובייקט הפקודה
+
+        cmd.Connection = con;              // שיוך החיבור לפקודה
+
+        cmd.CommandText = spName;          // ציון שם הפרוצדורה
+
+        cmd.CommandTimeout = 10;           // זמן המתנה לביצוע
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // סוג הפקודה, פרוצדורה מאוחסנת
+
+        // הוספת הפרמטרים
+        cmd.Parameters.AddWithValue("@Email", email);
+        cmd.Parameters.AddWithValue("@Password", password);
 
         return cmd;
     }

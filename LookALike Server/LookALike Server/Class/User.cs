@@ -38,13 +38,23 @@
         public int Insert()
         {
             DBservices dbs = new DBservices();
-            List<User> AllUsers = dbs.ReadUsers();
-            if (AllUsers.Exists(user => user.email == email)) //to check that a user is not sign with the same email
+            string result = dbs.Insert(this); // שינוי הסוג ל-string
+
+            if (result == "User already exists")
             {
-                return -1;
+                return 0;
             }
-            return dbs.Insert(this);
+            else if (result == "User inserted successfully")
+            {
+                return 1;
+            }
+            else
+            {
+                // אם התוצאה אינה תואמת לאף אחת מהאפשרויות - טיפול במקרה חריג
+                throw new Exception("Unexpected result from stored procedure");
+            }
         }
+
 
         public List<User> Read()
         {
@@ -52,14 +62,20 @@
             return dbs.ReadUsers();
         }
 
-        public User UserLogin()
+        public User Login(string email, string password)
         {
+            DBservices dbs = new DBservices();
+            User user = dbs.Login(email, password);
 
-            List<User> AllUsers = Read();
-            User FindUserInList = AllUsers.Find(user => user.Email == this.Email && user.Password == this.Password);
-            return FindUserInList;
+            if (user == null)
+            {
+                // החזרת null במקרה שהמשתמש לא נמצא או שהסיסמא לא נכונה
+                return null;
+            }
 
+            return user;
         }
+
 
         public int UpdateUser()
         {
