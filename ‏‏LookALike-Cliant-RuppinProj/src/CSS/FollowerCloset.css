@@ -1,0 +1,165 @@
+.containerW {
+  height: 100%;
+  /* Set container height to 100% of viewport height */
+}
+
+.header_FC {
+  position: fixed;
+  /* Change to fixed to stay at the top when scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Ensure it spans the full width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  background-color: #fff;
+  /* Add background color to avoid content overlap */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Add shadow for visual separation */
+  z-index: 1000;
+  /* Ensure it's above other content */
+}
+
+.FC_back-icon {
+  position: absolute;
+  left: 25px;
+  top: 8px;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.clothing-list-Follower {
+  flex: 1;
+  /* Fill remaining space */
+  overflow-y: auto;
+  /* Allow vertical scrolling */
+  position: absolute;
+  width: 90%;
+  top: 60px;
+  left: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 20px;
+  /* Less spacing between items */
+}
+
+.clothing-item-Follower {
+  box-sizing: border-box;
+  margin: 10px auto;
+  position: relative;
+  /* Set position of the icon relative to the bottom right of the image */
+  /* border: 1px solid #252525; */
+}
+
+.FC_fav-icon {
+  position: relative;
+  bottom: 110px;
+  right: 35px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  /* Adjust the size as needed */
+  color: rgb(0, 0, 0);
+  /* Adjust the color as needed */
+}
+
+.FC_fav-icon-liked {
+  position: relative;
+  bottom: 110px;
+  right: 35px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  /* Adjust the size as needed */
+  color: rgb(0, 0, 0);
+  /* Adjust the color as needed */
+}
+
+
+.clothing-image-Follower img {
+  width: 100%;
+  height: auto;
+  /* Maintain image proportions */
+  max-width: 100%;
+  /* Maximum width */
+  max-height: 200px;
+  /* Maximum height */
+  display: block;
+  margin-bottom: 10px;
+  object-fit: contain;
+  /* Maintain proportions within the defined size */
+}
+
+.clothing-details-Follower {
+  padding: 2px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.clothing-details-Follower p {
+  margin: 5px 0;
+  color: black;
+}
+
+.fav {
+  position: absolute;
+  bottom: 85px;
+  right: 10px;
+  z-index: 1;
+}
+
+.opt {
+  position: absolute;
+  bottom: 85px;
+  left: 10px;
+  z-index: 1;
+}
+
+.popup {
+  position: absolute;
+  bottom: 100px;
+  z-index: 1;
+}
+
+.del_sale_icon {
+  position: relative;
+  top: 2.5px;
+  /* Move icons down */
+}
+
+#item_details_container {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  right: 30px;
+  bottom: 60px;
+  padding: 10px;
+}
+
+#item_details_container img {
+  max-height: 250px;
+  margin-top: 10px;
+}
+
+#item_details_container strong {
+  font-size: 22px;
+}
+
+.FooterFC {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Ensure full viewport height */
+  position: relative;
+  /* Maintain relative positioning */
+}

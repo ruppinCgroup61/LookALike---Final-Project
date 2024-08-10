@@ -1,0 +1,229 @@
+.app-container {
+  text-align: center;
+}
+
+.HeaderForLook {
+  padding-top: 10px;
+  font-size: 35px;
+  margin-top: 30px;
+}
+
+.Upload_Header3 {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  border-bottom: 1px solid grey;
+  padding-bottom: 5px;
+  gap: 20px;
+  top: 20px;
+  left: 30px;
+  right: 30px;
+}
+
+.LogoFont3 {
+  font-size: 32px;
+  font-family: "El Messiri", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.manual_h2 {
+  position: relative;
+  top: 10px;
+}
+
+.icon-section {
+  position: relative;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  /* שינוי לכיוון אנכי */
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.icon-container {
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.icon-button {
+  position: absolute;
+  /* האייקון יישאר במקום אחרי התצוגה ויהיה נראה גם במקום אחר */
+  top: 50%;
+  /* מיקום אנכי באמצעות ההתחלה מאמצע האלמנט האב */
+  left: 50%;
+  /* מיקום אופקי באמצעות ההתחלה מאמצע האלמנט האב */
+  transform: translate(-50%, -50%);
+  /* תיקוני תצורה של האייקון כך שיהיה במרכז האב */
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 0%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: #fff;
+  color: black;
+}
+
+.icon {
+  font-size: 140px;
+  /* margin-top: 40px; */
+  color: #000;
+  /* הגדרת הצבע לשחור */
+}
+
+.btn_manual_look {
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+  margin: 5px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  font-family: "Urbanist", sans-serif;
+  margin-top: 10px;
+  height: 45px;
+}
+
+.btn_no_manual_look {
+  background-color: #676464;
+  margin: 1px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  font-family: "Urbanist", sans-serif;
+  margin-top: 10px;
+  height: 45px;
+}
+
+.icon_ML {
+  position: relative;
+  bottom: 2px;
+  right: 5px;
+}
+
+.btn_my_closet {
+  background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+  margin: 1px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  font-family: "Urbanist", sans-serif;
+  font-weight: 400;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  width: 120px;
+}
+
+.ADD_Look {
+  margin-top: 30px;
+}
+
+.sorry_selTop_icon {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 20px;
+}
+
+.selTop_h2 {
+  position: absolute;
+  top: 85px;
+  left: 10px;
+  right: 10px;
+}
+
+.list-tops {
+  flex: 1;
+  position: absolute;
+  width: 90%;
+  top: 80px;
+  left: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 0px;
+  /* פחות מרווחים בין הפריטים */
+  margin-top: 40px;
+  padding-bottom: 50px;
+}
+
+#selPart_img {
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+  /* שמירה על הפרופורציות של התמונה */
+  max-width: 100%;
+  /* גודל מקסימלי לרוחב */
+  max-height: 200px;
+  /* גודל מקסימלי לגובה, לדוגמה */
+  display: block;
+  margin-bottom: 10px;
+  object-fit: contain;
+  /* שמירה על הפרופורציות בתוך הגודל המוגדר */
+}
+
+.selected-outfit {
+  margin-top: 20px;
+}
+
+.selected-item {
+  margin: 10px 0;
+}
+
+.selected-item img {
+  width: 100px;
+  height: auto;
+}
+
+.items-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.item {
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.item img {
+  width: 50px;
+  height: auto;
+}
+
+.item span {
+  display: block;
+  margin-top: 5px;
+}
+
+img.icon {
+  width: 100px;
+}
+
+.Calendar {
+  background-color: grey;
+}
+
+.react-calendar__navigation button,
+.react-calendar__month-view__weekdays__weekday,
+.react-calendar__month-view__days__day--weekend,
+.react-calendar.react-calendar button {
+  color: #fff;
+}
+
+.react-calendar {
+  background-color: #676464;
+}
+
+.h4 {
+  color: grey;
+}

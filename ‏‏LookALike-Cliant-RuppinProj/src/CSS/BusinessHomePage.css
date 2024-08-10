@@ -1,0 +1,145 @@
+#hbusinessaccount {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    right: 20px;
+}
+
+#options_dots {
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    height: 30px;
+    width: 30px;
+    color: #212020;
+}
+
+#options_dots:hover {
+    color: #666666; /* Darker gray */
+  }
+
+#hellobusinessaccount {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    right: 20px;
+}
+
+.popup-buttons {
+    background-color: #947b6f;
+    width: 250px;
+    height: 50px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.popup-buttons:hover {
+    background-color: #766259
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.popup-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    /* מאפשר גלילה אנכית */
+    margin-bottom: 20px;
+}
+
+.popup-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.popup-item {
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #444;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup-item:hover {
+    background-color: #e0e0e0;
+}
+
+.no-popups-message {
+    color: #666;
+    font-style: italic;
+}
+
+.close-button {
+    padding: 10px 20px;
+    background-color: #947b6f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    align-self: center;
+}
+
+.close-button:hover {
+    background-color: #816c62;
+}
+
+#businessHP {
+    position: relative;
+    bottom: 90px;
+}
+
+#businessHP2 {
+    position: relative;
+    bottom: 150px;
+    font-family: "Urbanist", sans-serif;
+}
+
+#businessHPbuttons {
+    position: relative;
+    top: 30px;
+    font-family: "Urbanist", sans-serif;
+}
+
+.IPUup-button {
+    position: absolute;
+    top: 2px;
+    left: 10px;
+}
