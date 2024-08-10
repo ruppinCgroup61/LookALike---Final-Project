@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../CSS/HomeLook.css";
 import "../CSS/PopUp.css";
 import NaviBarFooter from "./NaviBarFooter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -41,8 +40,8 @@ const AllPopUp = () => {
     return `${day}.${month}.${year}`;
   };
 
-  const handlePopUpClick = (popUpId, userEmail) => {
-    navigate(`/popup-details/${userEmail}/${popUpId}`);
+  const handlePopUpClick = (popUpId, userEmail,popupname) => {
+    navigate(`/popup-details/${userEmail}/${popUpId}/${popupname}`);
   };
 
   return (
@@ -62,13 +61,13 @@ const AllPopUp = () => {
               <div key={index} className="skeleton-popup skeleton" />
             ))
           ) : pops.length === 0 ? (
-            <div id="no-looks-message">You don't have any pop up yet</div>
+            <div id="no-popup-message">You don't have any pop up yet</div>
           ) : (
             pops.map((pop, index) => (
               <div
                 key={index}
                 id="userpopup"
-                onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}
+                onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email,pop.popUp_Name)}
               >
                 <img src={pop.userImage} alt="PopUp" />
                 <div>

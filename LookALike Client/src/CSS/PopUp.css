@@ -56,7 +56,7 @@
     /* מאפשר לטקסט לתפוס את שאר רוחב השורה */
 }
 
-#no-looks-message {
+#no-popup-message {
     position: absolute;
     top: 100px;
     background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
@@ -365,3 +365,8 @@
         background-position: -200% 0;
     }
 }
+
+.alert-notexist{
+    text-align: center;
+    width: 350px;
+  }

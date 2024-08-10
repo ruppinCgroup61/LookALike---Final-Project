@@ -6,6 +6,8 @@ import NaviBarFooter from "./NaviBarFooter";
 import { GoTrash } from "react-icons/go";
 import { MdDeleteForever } from "react-icons/md";
 import { IoBagCheckOutline } from "react-icons/io5";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const MySales = () => {
   const [items, setItems] = useState([]);
@@ -13,6 +15,7 @@ const MySales = () => {
   const [message, setMessage] = useState(""); // State for feedback message
   const navigate = useNavigate();
   const email = sessionStorage.getItem("email");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetch(`https://localhost:7215/api/ClothingAd/GetAllUserItemsForSale${email}`, {
@@ -73,12 +76,19 @@ const MySales = () => {
 
   const deleteItem = (id) => {
     updateItemStatus(id, 1);
+    closeModal();
   };
 
   const markAsSold = (id) => {
     updateItemStatus(id, 2);
   };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="app-container">
        {/* Feedback Message */}
@@ -92,7 +102,7 @@ const MySales = () => {
 
       <div className="clothing-list">
         {items.length === 0 ? (
-          <p>You dont have items for sale</p>
+          <h3 className="alert-notexist" >You dont have items for sale</h3>
         ) : (
           items.map((item, index) => (
             <div key={index} className="clothing-item" id="popupdetailes">
@@ -122,10 +132,48 @@ const MySales = () => {
                         <IoBagCheckOutline id="del_sale_icon" /> Sold
                       </button>
                       <button
-                        onClick={() => deleteItem(item.item_ID)}
+                      onClick={openModal}
                       >
                         <MdDeleteForever id="del_sale_icon" /> Delete
                       </button>
+                      <Modal
+                      show={isModalOpen}
+                      onHide={closeModal}
+                      className="delete-confirm-modal"
+                    >
+                      <Modal.Dialog>
+  
+                          <Modal.Title className="delete-confirm-title">
+                            Delete
+                          </Modal.Title>
+
+                        <Modal.Body className="delete-confirm-body">
+                          <p className="delete-confirm-message">
+                            Are you sure ?
+                          </p>
+                        </Modal.Body>
+
+                        <Modal.Footer className="delete-confirm-footer">
+                          <Button
+                            variant="secondary"
+                            onClick={closeModal}
+                            className="delete-confirm-cancel-btn"
+                          >
+                            Cancle
+                          </Button>
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              deleteItem(item.item_ID);
+                            }}
+                            className="delete-confirm-delete-btn"
+                          >
+                            Delete
+                          </Button>
+                        </Modal.Footer>
+                      </Modal.Dialog>
+                    </Modal>
+                  
                     </div>
                   )}
                 </div>

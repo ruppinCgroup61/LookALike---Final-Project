@@ -104,7 +104,7 @@ const MainPopUpC = () => {
 
           ) : (
             pops.length === 0 ? (
-              <div id="no-looks-message">There are no active<br></br>pop-ups at the moment</div>
+              <div id="no-popup-message">There are no active<br></br>pop-ups at the moment</div>
             ) : (
               pops.slice(0, 2).map((pop, index) => (
                 <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}>
