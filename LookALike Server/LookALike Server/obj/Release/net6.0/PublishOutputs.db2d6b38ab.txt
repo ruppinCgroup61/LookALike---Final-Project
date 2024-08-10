@@ -9,6 +9,10 @@ C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALik
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\System.Net.Http.Formatting.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\System.Web.Http.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\System.Web.Http.Cors.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Logging.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.Bson.dll
@@ -16,6 +20,8 @@ C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALik
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\System.Data.SqlClient.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\Twilio.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm64\native\sni.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\runtimes\win-x64\native\sni.dll
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\PubTmp\Out\runtimes\win-x86\native\sni.dll

@@ -42,3 +42,9 @@ C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALik
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\LookALike Server.pdb
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\LookALike Server.genruntimeconfig.cache
 C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\obj\Release\net6.0\ref\LookALike Server.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Release\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Release\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Release\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Release\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Release\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\97250\OneDrive - Ruppin Academic Center\Desktop\LookALike Proj\LookALike Server\LookALike Server\bin\Release\net6.0\Twilio.dll

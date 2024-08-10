@@ -1,0 +1,95 @@
+/* General styles for the Algorithm component */
+.algorithm-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.AlgoHeader h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 24px;
+    font-family: "Urbanist", sans-serif;
+    font-weight: 1000;
+}
+
+.algorithm-look-container {
+    display: grid;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.algorithm-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.algorithm-top-image,
+.algorithm-bottom-image {
+    width: 120px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.algorithm-image-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.algorithm-like-button {
+    margin-top: 5px;
+    background-image: linear-gradient(to left, #c1b1a7 0%, #876253 51%, #b89587 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: rgb(224, 224, 224);
+    box-shadow: 0 0 20px #eee;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.algorithm-action-buttons {
+    margin-top: 20px;
+}
+
+.algorithm-try-again-button,
+.algorithm-save-calendar-button,
+.algorithm-save-look-button {
+    margin: 5px;
+}
+
+.popupAlgo {
+    position: absolute;
+    top: 380px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid grey;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background-image: linear-gradient(rgba(238, 238, 238, 0.933), rgb(255, 255, 255));
+    z-index: 1000;
+    width: 220px;
+    text-align: center;
+}
+
+.popup-close-buttonAlgo {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000;
+
+}
+
+.Algo-Back-Button{
+    position: relative;
+    right:150px;
+    border: 1px solid #ffffff;
+}

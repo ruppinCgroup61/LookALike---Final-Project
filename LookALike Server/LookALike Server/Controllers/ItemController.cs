@@ -68,6 +68,18 @@ namespace LookALike_Server.Controllers
             return Ok(items);
         }
 
+        // GET api/<ItemController>/5
+        [HttpGet("CountItems{email}")]
+        public ActionResult<List<object>> CountItems(string email)
+        {
+            // Create an instance of Item to access the method
+            Item item = new Item();
+            // Call the method and get the list of items
+            List<object> CountList = item.NumberOfItems(email);
+
+            return Ok(CountList);
+        }
+
         // POST api/<ItemController>
         [HttpPost]
         public int Post([FromBody] Item item)

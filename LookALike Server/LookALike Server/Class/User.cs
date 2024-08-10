@@ -6,7 +6,7 @@
         string firstName;
         string lastName;
         string image;
-        int phoneNumber;
+        string phoneNumber;
         DateTime dateOfBirth;
         string password;
         bool isBusiness;
@@ -18,12 +18,12 @@
         public string FirstName { get => firstName; set => firstName = value; }
         public string LastName { get => lastName; set => lastName = value; }
         public string Image { get => image; set => image = value; }
-        public int PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
+        public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
         public DateTime DateOfBirth { get => dateOfBirth; set => dateOfBirth = value; }
         public string Password { get => password; set => password = value; }
         public bool IsBusiness { get => isBusiness; set => isBusiness = value; }
 
-        public User(string email, string firstName, string lastName, string image, int phoneNumber, DateTime dateOfBirth, string password,bool isBusiness)
+        public User(string email, string firstName, string lastName, string image, string phoneNumber, DateTime dateOfBirth, string password,bool isBusiness)
         {
             this.email = email;
             this.firstName = firstName;

@@ -146,7 +146,7 @@ public class DBservices
                 u.FirstName = dataReader["First_Name"].ToString();
                 u.LastName = dataReader["Last_Name"].ToString();
                 u.Image = dataReader["Image"].ToString();
-                u.PhoneNumber = Convert.ToInt32(dataReader["Phone_Number"]);
+                u.PhoneNumber = dataReader["Phone_Number"].ToString();
                 // Retrieve Date_of_birth as DateTime
                 DateTime dateOfBirth = (DateTime)dataReader["Date_of_Birth"];
                 // Convert DateTime to DateOnly
@@ -364,7 +364,7 @@ public class DBservices
                     FirstName = reader["First_Name"].ToString(),
                     LastName = reader["Last_Name"].ToString(),
                     Image = reader["Image"].ToString(),
-                    PhoneNumber = Convert.ToInt32(reader["Phone_Number"]),
+                    PhoneNumber = reader["Phone_Number"].ToString(),
                     DateOfBirth = (DateTime)reader["Date_of_Birth"],
                     //Password = reader["Password"].ToString(),
                     IsBusiness = Convert.ToBoolean(reader["Is_Business"])
@@ -746,6 +746,85 @@ public class DBservices
     //--------------------------------------------------------------------------------------------------
     // This method read all top items from the database 
     //--------------------------------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------------------------------
+    // This method read the count of items
+    //--------------------------------------------------------------------------------------------------
+    public List<object> NumberOfItemsFunc(string email)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> CountList = new List<object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CountItemsByUserCommandWithStoredProcedureWithoutParameters("sp_LAL_CheckNumOfItems", con, email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                var countPart = new
+                {
+                    Clothing_Part = dataReader["Clothing_Part"].ToString(),
+                    CountItems = Convert.ToInt32(dataReader["CountItems"]),
+                    
+                };
+                CountList.Add(countPart);
+            }
+            return CountList;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the Read using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand CountItemsByUserCommandWithStoredProcedureWithoutParameters(String spName, SqlConnection con, string email)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@UserMail", email);
+
+
+        return cmd;
+    }
+
+
     public List<Item> GetAllTop(string email)
     {
         SqlConnection con;

@@ -114,5 +114,11 @@ namespace LookALike_Server.Class
             DBservices dbs = new DBservices();
             return dbs.DeleteItemFromDatabase(itemId);
         }
+
+        public List<object> NumberOfItems(string Email)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.NumberOfItemsFunc(Email);
+        }
     }
 }
