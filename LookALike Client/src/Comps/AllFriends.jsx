@@ -98,14 +98,14 @@ const AllFriends = () => {
                     'Content-Type': 'application/json',
                 },
             });
-    
+
             console.log(response); // Log the response for debugging
-    
+
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Failed to delete friend: ${errorText}`);
             }
-    
+
             setFollowers(followers.filter(follower => follower.following_Email !== friendEmail));
         } catch (error) {
             console.error('Error deleting friend:', error);
@@ -113,7 +113,41 @@ const AllFriends = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="all-friends-container">
+                <div className="AF_Header">
+                    <button
+                        onClick={() => {
+                            navigate("/SocialNetwork");
+                        }}
+                        className="AF-button"
+                    >
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                    </button>
+                    <h2>All Friends</h2>
+                </div>
+                <div className='AF_Center'>
+                    <div className="all-friends-list">
+                        {[...Array(5)].map((_, index) => (
+                            <div key={index} className="all-friend-card-container">
+                                <div className="all-friend-card">
+                                    <div className="skeleton skeleton-image"></div>
+                                    <div className="all-friend-info">
+                                        <div className="skeleton skeleton-name"></div>
+                                    </div>
+                                </div>
+                                <div className="delete-friend-button">
+                                    <div className="skeleton skeleton-delete-icon"></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <NaviBarFooter />
+                </div>
+            </div>
+        );
     }
 
     return (

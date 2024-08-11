@@ -15,28 +15,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 
-//aviv@gmail.com
-//Aviv111!
-
-//shir@gmail.com
-//Shir111!
-
-//shir2024@gmail.com
-//Shir111!
-
-//yakirco0412@gmail.com
-//Yc2023!!
-
-//shirturg@gmail.com
-//Shir11!!
-
-//echeck@gmail.com
-//Shir111!
-
 const LogIn = () => {
-  const [Email, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const [showAlert, setAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigateTo = useNavigate();
@@ -44,6 +26,10 @@ const LogIn = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [ForgotPasswordEmail, setForgotPasswordEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [dialogState, setDialogState] = useState("requestCode"); // State to track dialog flow
   const [retrievedPassword, setRetrievedPassword] = useState("");
 
   const handleLogIn = () => {
@@ -57,7 +43,8 @@ const LogIn = () => {
       PhoneNumber: "0501231234",
     };
 
-    //logIn api
+    console.log(userData);
+
     fetch("https://localhost:7215/api/User/login", {
       method: "PUT",
       headers: {
@@ -67,7 +54,6 @@ const LogIn = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          console.log(response);
           throw new Error("Login request failed");
         }
         return response.json();
@@ -98,52 +84,26 @@ const LogIn = () => {
       })
       .catch((error) => {
         console.error("Error during login:", error);
-        setAlert(true); // Show the alert if login returns -1
+        setShowAlert(true);
       });
   };
 
-  const isEmailValid = () => {
-    // Regular expression for email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(Email);
-  };
+  const isEmailValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(Email);
 
-  const isPasswordValid = () => {
-    // Regular expression for password validation
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
-    return passwordRegex.test(Password);
-  };
+  const isPasswordValid = () => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(Password);
 
-  const isEmailForPasswordIsValid = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(ForgotPasswordEmail);
-  };
+  const isEmailForPasswordIsValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ForgotPasswordEmail);
+
+  const isPhoneNumberValid = () => /^\d{9}$/.test(phoneNumber); // Only digits and exactly 9 digits
 
   const handleEmailChange = (e) => {
-    setUsername(e.target.value);
-    if (!isEmailValid()) {
-      setEmailError("");
-    } else {
-      setEmailError("");
-    }
+    setEmail(e.target.value);
+    setEmailError("");
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    if (!isPasswordValid()) {
-      setPasswordError("");
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const isFormValid = () => {
-    // Check if all validations pass
-    if (isEmailValid() && isPasswordValid()) {
-      handleLogIn(); // Call handleRegister directly on form submission
-    } else {
-    }
+    setPasswordError("");
   };
 
   const handleForgotPassword = () => {
@@ -152,40 +112,65 @@ const LogIn = () => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setForgotPasswordEmail(""); // Clear the input value
-    setRetrievedPassword(""); // Clear the password value
+    setForgotPasswordEmail("");
+    setPhoneNumber("");
+    setVerificationCode("");
+    setNewPassword("");
+    setRetrievedPassword("");
+    setDialogState("requestCode"); // Reset to request code state
   };
 
-  const handleGetPassword = () => {
-    // Fetch password
-    console.log(JSON.stringify(ForgotPasswordEmail));
-    fetch("https://localhost:7215/api/User/ForgotPassword", {
+  const handleRequestCode = () => {
+    if (!isEmailForPasswordIsValid() || !isPhoneNumberValid()) {
+      setRetrievedPassword("Please enter a valid email address and phone number.");
+      return;
+    }
+
+    fetch("https://localhost:7215/api/ForgotPassword/sendVerificationCode", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ForgotPasswordEmail), // Pass an object with the email property
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phoneNumber: `+972${phoneNumber}` }), // Prepend +972 to phoneNumber
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network Error");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data.password);
-        if (data.password === "Not found") {
-          console.log("NOOOO");
-          setRetrievedPassword("Your Password was not found"); // Clear the password if not found
+        if (data.success) {
+          setDialogState("verifyCode"); // Switch to code verification state
+          setRetrievedPassword("A verification code has been sent to your phone.");
         } else {
-          console.log("YESSSS");
-          setRetrievedPassword("Your Password is:" + data.password); // Clear the password if not found
+          setRetrievedPassword("Your phone number was not found.");
         }
       })
-      .catch((error) => {
-        console.log(error);
-        console.error("Error during Api:", error);
-      });
+      .catch((error) => console.error("Error during API call:", error));
+  };
+
+  const handleVerifyCode = () => {
+    if (!verificationCode || !newPassword) {
+      setRetrievedPassword("Please enter all required fields.");
+      return;
+    }
+
+    fetch("https://localhost:7215/api/ForgotPassword/verifyCode", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        phoneNumber: `+972${phoneNumber}`, // Prepend +972 to phoneNumber
+        code: verificationCode,
+        email: ForgotPasswordEmail,
+        newPassword: newPassword,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setRetrievedPassword("Your password has been successfully reset.");
+          handleCloseDialog();
+          setOpenSnackbar(true);
+          setSnackbarMessage("Password has been successfully reset.");
+        } else {
+          setRetrievedPassword("Invalid verification code or phone number.");
+        }
+      })
+      .catch((error) => console.error("Error during password reset:", error));
   };
 
   return (
@@ -211,7 +196,7 @@ const LogIn = () => {
           <div className="password-input-wrapper">
             <input
               className="login_input"
-              type={"password"}
+              type="password"
               placeholder="Password"
               value={Password}
               onChange={handlePasswordChange}
@@ -222,7 +207,7 @@ const LogIn = () => {
         <div className="tit1">
           <button
             className="login_button"
-            onClick={isFormValid}
+            onClick={handleLogIn}
             disabled={!isEmailValid() || !isPasswordValid()}
           >
             SIGN IN
@@ -236,18 +221,15 @@ const LogIn = () => {
         </div>
       </div>
       <Stack sx={{ width: "60%" }} spacing={2}>
-        {showAlert && ( // Conditionally render the alert based on showAlert state
-          <Alert severity="error" onClose={() => setAlert(false)}>
+        {showAlert && (
+          <Alert severity="error" onClose={() => setShowAlert(false)}>
             <AlertTitle>Login failed</AlertTitle>
             Wrong Email or Password!
           </Alert>
         )}
       </Stack>
       <Snackbar
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnackbar}
         autoHideDuration={2000}
         onClose={() => setOpenSnackbar(false)}
@@ -268,29 +250,82 @@ const LogIn = () => {
           message={snackbarMessage}
         />
       </Snackbar>
-      {/* Forgot Password Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>Forgot Password?</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Email Address"
-            type="text"
-            fullWidth
-            value={ForgotPasswordEmail}
-            onChange={(e) => setForgotPasswordEmail(e.target.value)} // Update this line
-          />
-          <p className="PasswordToPresent">{retrievedPassword}</p>
+          {dialogState === "requestCode" ? (
+            <>
+              <TextField
+                autoFocus
+                margin="dense"
+                label="Email Address"
+                type="text"
+                fullWidth
+                value={ForgotPasswordEmail}
+                onChange={(e) => setForgotPasswordEmail(e.target.value)}
+              />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <TextField
+                  margin="dense"
+                  label="Prefix"
+                  type="text"
+                  value="+972"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  style={{ maxWidth: "80px", marginRight: "8px" }} // Adjust the width and spacing as needed
+                />
+                <TextField
+                  margin="dense"
+                  label="Phone Number"
+                  type="text"
+                  fullWidth
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+              </div>
+              <p className="PasswordToPresent">{retrievedPassword}</p>
+            </>
+          ) : (
+            <>
+              <TextField
+                margin="dense"
+                label="Verification Code"
+                type="text"
+                fullWidth
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+              />
+              <TextField
+                margin="dense"
+                label="New Password"
+                type="password"
+                fullWidth
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <p className="PasswordToPresent">{retrievedPassword}</p>
+            </>
+          )}
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleCloseDialog}>Close</Button>
-          <Button
-            onClick={handleGetPassword}
-            disabled={!isEmailForPasswordIsValid()}
-          >
-            Get Password
-          </Button>
+          {dialogState === "requestCode" ? (
+            <Button
+              onClick={handleRequestCode}
+              disabled={!isEmailForPasswordIsValid() || !isPhoneNumberValid()}
+            >
+              Get Verification Code
+            </Button>
+          ) : (
+            <Button
+              onClick={handleVerifyCode}
+              disabled={!verificationCode || !newPassword}
+            >
+              Verify Code and Reset Password
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

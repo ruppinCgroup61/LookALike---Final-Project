@@ -34,11 +34,18 @@ const LogIn = () => {
 
   const handleLogIn = () => {
     const userData = {
+      dateOfBirth: "2024-05-04T16:32:31.976Z",
       email: Email,
+      firstName: "Null",
+      image: "null",
+      lastName: "Null",
       password: Password,
+      PhoneNumber: "0501231234",
     };
 
-    fetch("https://proj.ruppin.ac.il/cgroup61/api/User/login", {
+    console.log(userData);
+
+    fetch("https://proj.ruppin.ac.il/api/User/login", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -119,7 +126,7 @@ const LogIn = () => {
       return;
     }
 
-    fetch("https://proj.ruppin.ac.il/cgroup61/api/ForgotPassword/sendVerificationCode", {
+    fetch("https://proj.ruppin.ac.il/api/ForgotPassword/sendVerificationCode", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ phoneNumber: `+972${phoneNumber}` }), // Prepend +972 to phoneNumber
@@ -142,7 +149,7 @@ const LogIn = () => {
       return;
     }
 
-    fetch("https://proj.ruppin.ac.il/cgroup61/api/ForgotPassword/verifyCode", {
+    fetch("https://proj.ruppin.ac.il/api/ForgotPassword/verifyCode", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

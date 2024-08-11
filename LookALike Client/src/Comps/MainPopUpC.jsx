@@ -76,8 +76,8 @@ const MainPopUpC = () => {
     return `${day}.${month}.${year}`;
   };
 
-  const handlePopUpClick = (popUpId, user_Email) => {
-    navigate(`/popup-details/${user_Email}/${popUpId}`);
+  const handlePopUpClick = (popUpId, user_Email,popUp_Name) => {
+    navigate(`/popup-details/${user_Email}/${popUpId}/${popUp_Name}`);
   };
 
   return (
@@ -107,7 +107,7 @@ const MainPopUpC = () => {
               <div id="no-popup-message">There are no active<br></br>pop-ups at the moment</div>
             ) : (
               pops.slice(0, 2).map((pop, index) => (
-                <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}>
+                <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email,pop.popUp_Name)}>
                   <img src={pop.userImage} alt="PopUp" />
                   <div>
                     <p>{pop.popUp_Name}</p>

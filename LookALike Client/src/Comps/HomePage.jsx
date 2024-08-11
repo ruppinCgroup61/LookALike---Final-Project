@@ -82,7 +82,7 @@ export default function HomePage() {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    navigate("/");
+    navigate("/cgroup61/test2/tar3/");
   };
 
   const handleNotificationClick = (event) => {
@@ -307,7 +307,7 @@ export default function HomePage() {
         </Link>
 
         <div className="LogoBlock">
-          <img src="src/Images/kolav.png" />
+          <img src="https://i.imgur.com/mMRaL3f.png" />
         </div>
       </div>
       <div className="bottom-div">

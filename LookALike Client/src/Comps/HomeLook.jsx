@@ -10,6 +10,8 @@ const HomeLook = () => {
   const [looks, setLooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [CountItems, setCountItems] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(
@@ -35,7 +37,46 @@ const HomeLook = () => {
         console.error("There was a problem with fetch operation:", error);
         setLoading(false);
       });
-  }, []);
+
+    fetch(
+      `https://localhost:7215/api/Item/CountItems${userEmail}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setCountItems(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with fetch operation:", error);
+      });
+  }, [userEmail]);
+
+  const CheckItems = () => {
+    if (CountItems.length > 0 && CountItems[0].countItems >=2 && CountItems[1].countItems >=2) {
+      console.log("You have enough items!");
+      console.log(CountItems[0].clothing_Part, CountItems[0].countItems);
+      console.log(CountItems[1].clothing_Part, CountItems[1].countItems);
+      navigate("/ProgressComponent");
+    } else {
+      console.log("You don't have enough items to generate an outfit.");
+      setShowModal(true);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -56,13 +97,10 @@ const HomeLook = () => {
           <Link to="/FCManualLook">
             <button id="ButtonHomeLook">CREATE BY YOURSELF</button>
           </Link>
-          <Link to="/ProgressComponent">
-            <button id="ButtonHomeLook">GENERATE OUTFIT</button>
-          </Link>
+          <button id="ButtonHomeLook" onClick={CheckItems}>GENERATE OUTFIT</button>
         </div>
         <div className="LastOutfitBlock">
           <h3 id="h3"> MY LAST OUTFITS</h3>
-          {/* {filteredClothes.slice(0, 3).map((item, index) => ( */}
           <div id="bb">
             <div id="clothing-list-home">
               {loading ? (
@@ -81,9 +119,6 @@ const HomeLook = () => {
               )}
             </div>
           </div>
-          {/* <Link to="/AllLook">
-            <button id="ButtonMoreLook">ALL OUTFITS</button>
-          </Link> */}
         </div>
         <div className="ADD_Look_home">
           <Link to="/AllLook">
@@ -97,6 +132,17 @@ const HomeLook = () => {
         <div className="bottom-div">
           <NaviBarFooter />
         </div>
+
+        {showModal && (
+          <div className="modal_HomeLook">
+            <div className="modal-content_HomeLook">
+              <p>You need to add more Items to your wardrobe in order to activate the Algorithm.</p>
+              <div className="modal-footer_HomeLook">
+                <button onClick={closeModal}>&times;</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

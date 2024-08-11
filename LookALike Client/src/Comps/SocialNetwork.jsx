@@ -10,11 +10,10 @@ import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import { useNavigate } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
 import Carousel from "react-bootstrap/Carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../CSS/SocialNetwork.css";
 
 export default function SocialNetwork() {
@@ -28,68 +27,26 @@ export default function SocialNetwork() {
   const [likedItems, setLikedItems] = useState([]);
   const navigate = useNavigate();
   const userEmail = sessionStorage.getItem("email");
-  const [DatafromUsers, setDatafromUsers] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://localhost:7215/api/UserFollower/followers/${userEmail}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setFollowers(
-          data.filter((follower) => follower.follower_Email === userEmail)
-        );
-      })
-      .catch((error) => {
-        console.error("Error fetching followers:", error);
-      });
+    Promise.all([
+      fetch(`https://localhost:7215/api/UserFollower/followers/${userEmail}`),
+      fetch("https://localhost:7215/api/User"),
+      fetch(`https://localhost:7215/api/Algorithm/GetAllLikedItems?AdminUserMail=${userEmail}`)
+    ]).then(async ([followersRes, usersRes, likedItemsRes]) => {
+      const followersData = await followersRes.json();
+      const usersData = await usersRes.json();
+      const likedItemsData = await likedItemsRes.json();
 
-    fetch("https://localhost:7215/api/User", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUserList(data);
-        setDatafromUsers(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
-
-    fetch(
-      `https://localhost:7215/api/Algorithm/GetAllLikedItems?AdminUserMail=${userEmail}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(text);
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setLikedItems(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching liked items:", error);
-      });
+      setFollowers(followersData.filter((follower) => follower.follower_Email === userEmail));
+      setUserList(usersData);
+      setLikedItems(likedItemsData);
+      setLoading(false);
+    }).catch(error => {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    });
   }, [userEmail]);
 
   const handleClickOpen = () => {
@@ -171,7 +128,7 @@ export default function SocialNetwork() {
   };
 
   const goToFollowerCloset = (email) => {
-    countEntriesForFriendCloset(userEmail, email); // Call the function to update entry count
+    countEntriesForFriendCloset(userEmail, email);
     const user = userList.find((user) => user.email === email);
     if (user) {
       navigate(`/follower-closet/${email}`, {
@@ -182,21 +139,13 @@ export default function SocialNetwork() {
 
   const getUserImage = (email) => {
     const user = userList.find((user) => user.email === email);
-    return user ? user.image : "default-image-path"; // Default image path if user or image not found
+    return user ? user.image : "default-image-path";
   };
 
   const getUserFullName = (email) => {
     const user = userList.find((user) => user.email === email);
     return user ? `${user.firstName} ${user.lastName}` : "Unknown User";
   };
-
-  if (!DatafromUsers) {
-    return (
-      <div className="loading-container">
-        <CircularProgress color="inherit" />
-      </div>
-    );
-  }
 
   const getRandomFriends = () => {
     if (followers.length <= 2) return followers;
@@ -211,6 +160,38 @@ export default function SocialNetwork() {
   };
 
   const displayedFriends = getRandomFriends();
+
+  if (loading) {
+    return (
+      <div className="SN_Container">
+        <div className="SN_Header">
+          <h2 className="HeaderSocial">Social Network</h2>
+          <IoPeopleSharp className="header-icon" />
+        </div>
+        <div className="SN_Center">
+          <div className="add-friend" onClick={handleClickOpen}>
+            <IoShirtSharp className="wardrobe-icon" />
+            <span>Add New Friend</span>
+          </div>
+          <div className="followers-slider">
+            <h2 className="H2inSN">Enter Friend Wardrobe:</h2>
+            <div className="follower-cards">
+              <div className="skeleton skeleton-follower"></div>
+              <div className="skeleton skeleton-follower"></div>
+            </div>
+          </div>
+          <div id="liked-items-slider">
+            <h2 id="H2inSN">Liked Items:</h2>
+            <div className="d-flex justify-content-center2">
+              <div className="skeleton skeleton-liked-item"></div>
+              <div className="skeleton skeleton-liked-item"></div>
+            </div>
+          </div>
+        </div>
+        <NaviBarFooter />
+      </div>
+    );
+  }
 
   return (
     <div className="SN_Container">

@@ -71,7 +71,7 @@
   /* עובי גופן לכותרת */
   position: relative;
   z-index: 1;
-  top: -220px;
+  bottom: 230px;
 }
 
 .clothing-list_AL {

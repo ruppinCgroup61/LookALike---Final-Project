@@ -114,7 +114,7 @@ const Register = () => {
       })
       .then((data) => {
         console.log(data);
-        if (data === -1) {
+        if (data === 0) {
           console.log("Registration failed");
           setEmailAlreadyExsistAlert(true);
         }

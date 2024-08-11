@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {}
+    "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {
+    "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike Server\\LookALike Server\\LookALike Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
+        "projectUniqueName": "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
         "projectName": "LookALike Server",
-        "projectPath": "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
+        "projectPath": "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike Server\\LookALike Server\\LookALike Server.csproj",
         "packagesPath": "C:\\Users\\97250\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike---Final-Project\\LookALike Server\\LookALike Server\\obj\\",
+        "outputPath": "C:\\Users\\97250\\OneDrive - Ruppin Academic Center\\Desktop\\LookALike Proj\\LookALike Server\\LookALike Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

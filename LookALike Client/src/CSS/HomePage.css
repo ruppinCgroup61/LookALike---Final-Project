@@ -118,22 +118,22 @@
 }
 
 .block#b_one {
-  background-image: url('src/Images/banner4.1.jpg');
+  background-image: url('/./Images/banner4.1.jpg');
   opacity: 1;
 }
 
 .block#b_two {
-  background-image: url('src/Images/banner2.jpg');
+  background-image: url('/./Images/banner2.jpg');
   opacity: 1;
 }
 
 .block#b_three {
-  background-image: url('src/Images/banner3.1.jpg');
+  background-image: url('/./Images/banner3.1.jpg');
   opacity: 1;
 }
 
 .block#b_four {
-  background-image: url('src/Images/banner1.jpg');
+  background-image: url('/./Images/banner1.jpg');
   opacity: 1;
 }
 

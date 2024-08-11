@@ -144,7 +144,7 @@ const MySales = () => {
                       <Modal.Dialog>
   
                           <Modal.Title className="delete-confirm-title">
-                            Delete
+                            Delete Item Ad
                           </Modal.Title>
 
                         <Modal.Body className="delete-confirm-body">

@@ -77,7 +77,7 @@ const Cart = () => {
                 {!isCartEmpty && ( // Only show the image if the cart is not empty
                     <div>
                         <img
-                            src="\src\Images\apppay.png"
+                            src="https://i.imgur.com/5j46uJL.png"
                             className="bitlogo"
                             alt="Bit logo"
                             onClick={handleBitClick}

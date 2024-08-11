@@ -7,7 +7,7 @@ import { AiOutlineShopping, AiFillShopping } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 
 const PopUpDetails = () => {
-  const { email, popUpId } = useParams(); 
+  const { email, popUpId ,popupname} = useParams(); 
   const [items, setItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
@@ -16,7 +16,7 @@ const PopUpDetails = () => {
 
   useEffect(() => {
     // Fetch items for this pop-up
-    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopupDetails/GetAllPopUpItems/${email}/${popUpId}`, {
+    fetch(`https://proj.ruppin.ac.il/api/PopupDetails/GetAllPopUpItems/${email}/${popUpId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const PopUpDetails = () => {
         <button onClick={() => navigate("/MainPopUpC")} className="popupback">
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
-        <h4 className="cc" id="LogoFont3">Pop-Up Details</h4>
+        <h4 className="cc" id="LogoFont3">{popupname}</h4>
         <button onClick={() => navigate(`/cart/${email}/${popUpId}`)} className="cart-button">
           <FiShoppingCart />
           {cartCount > 0 && <span className="cart-count">{cartCount}</span>}

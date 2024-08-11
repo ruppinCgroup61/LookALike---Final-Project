@@ -51,7 +51,7 @@ const AllPopUp = () => {
           <button onClick={() => navigate("/MainPopUpC")} className="popupback">
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>
-          <h4 className="cc" id="LogoFont3">All Pop-Up</h4>
+          <h4 className="cc" id="LogoFont3">All Pop-Ups</h4>
         </div>
 
         <div id="list-All-pop">

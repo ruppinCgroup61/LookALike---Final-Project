@@ -66,13 +66,13 @@ const BusinessHomePage = () => {
   return (
     <div>
       <div id="businessHP">
-        <Link to="/">
+        <Link to="/cgroup61/test2/tar3/">
             <IoLogOutOutline id="options_dots" onClick={handleLogOut}/>
         </Link>
-        <img style={{ width: 60 }} src="src/Images/kolav.png" alt="lookalike" />
+        <img style={{ width: 60 }} src="https://i.imgur.com/mMRaL3f.png" alt="lookalike" />
         <img
           style={{ width: 280, marginBottom: 50 }}
-          src="src/Images/lookalike.png"
+          src="https://i.imgur.com/X5SKuNv.png"
           alt="lookalike"
         />
       </div>

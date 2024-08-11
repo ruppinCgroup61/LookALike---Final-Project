@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../CSS/HomeLook.css";
 import "../CSS/PopUp.css";
 import NaviBarFooter from "./NaviBarFooter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +12,7 @@ const AllPopUp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopUp/GetActivePopUps`, {
+    fetch(`https://proj.ruppin.ac.il/api/PopUp/GetActivePopUps`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,8 +40,8 @@ const AllPopUp = () => {
     return `${day}.${month}.${year}`;
   };
 
-  const handlePopUpClick = (popUpId, userEmail) => {
-    navigate(`/popup-details/${userEmail}/${popUpId}`);
+  const handlePopUpClick = (popUpId, userEmail,popupname) => {
+    navigate(`/popup-details/${userEmail}/${popUpId}/${popupname}`);
   };
 
   return (
@@ -52,7 +51,7 @@ const AllPopUp = () => {
           <button onClick={() => navigate("/MainPopUpC")} className="popupback">
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>
-          <h4 className="cc" id="LogoFont3">All Pop-Up</h4>
+          <h4 className="cc" id="LogoFont3">All Pop-Ups</h4>
         </div>
 
         <div id="list-All-pop">
@@ -62,13 +61,13 @@ const AllPopUp = () => {
               <div key={index} className="skeleton-popup skeleton" />
             ))
           ) : pops.length === 0 ? (
-            <div id="no-looks-message">You don't have any pop up yet</div>
+            <div id="no-popup-message">You don't have any pop up yet</div>
           ) : (
             pops.map((pop, index) => (
               <div
                 key={index}
                 id="userpopup"
-                onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}
+                onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email,pop.popUp_Name)}
               >
                 <img src={pop.userImage} alt="PopUp" />
                 <div>

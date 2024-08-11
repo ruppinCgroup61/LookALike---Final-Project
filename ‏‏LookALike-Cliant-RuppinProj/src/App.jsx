@@ -68,7 +68,7 @@ function App() {
         <Route path='/ProgressComponent' element={<ProgressComponent />}></Route>
         <Route path='/MainPopUpC' element={<MainPopUpC />}></Route>
         <Route path='/AllPopUp' element={<AllPopUp />}></Route>
-        <Route path='/popup-details/:email/:popUpId' element={<PopUpDetails />}></Route>
+        <Route path='/popup-details/:email/:popUpId/:popupname' element={<PopUpDetails />}></Route>
         <Route path='/MySales' element={<MySales />}></Route>
         <Route path='/Cart/:email/:popUpId' element={<Cart />}></Route>
         <Route path='/Algorithm' element={<Algorithm />}></Route>

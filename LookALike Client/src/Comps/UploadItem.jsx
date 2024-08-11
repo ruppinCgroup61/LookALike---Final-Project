@@ -6,7 +6,6 @@ import NaviBarFooter from "./NaviBarFooter";
 import { useNavigate } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
-import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import Modal from "react-modal";
 
 function UploadItem() {

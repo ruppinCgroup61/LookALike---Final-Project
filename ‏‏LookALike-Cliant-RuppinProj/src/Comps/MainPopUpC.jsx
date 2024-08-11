@@ -18,7 +18,7 @@ const MainPopUpC = () => {
 
   useEffect(() => {
     // Fetch active popups
-    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopUp/GetActivePopUps`, {
+    fetch(`https://proj.ruppin.ac.il/api/PopUp/GetActivePopUps`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const MainPopUpC = () => {
       });
 
     // Fetch user items for sale
-    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ClothingAd/GetAllUserItemsForSale${userEmail}`, {
+    fetch(`https://proj.ruppin.ac.il/api/ClothingAd/GetAllUserItemsForSale${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const MainPopUpC = () => {
       });
 
     // Fetch marketplace items
-    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ClothingAd/GetWithFullName`, {
+    fetch(`https://proj.ruppin.ac.il/api/ClothingAd/GetWithFullName`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -76,8 +76,8 @@ const MainPopUpC = () => {
     return `${day}.${month}.${year}`;
   };
 
-  const handlePopUpClick = (popUpId, user_Email) => {
-    navigate(`/popup-details/${user_Email}/${popUpId}`);
+  const handlePopUpClick = (popUpId, user_Email,popUp_Name) => {
+    navigate(`/popup-details/${user_Email}/${popUpId}/${popUp_Name}`);
   };
 
   return (
@@ -104,10 +104,10 @@ const MainPopUpC = () => {
 
           ) : (
             pops.length === 0 ? (
-              <div id="no-looks-message">There are no active<br></br>pop-ups at the moment</div>
+              <div id="no-popup-message">There are no active<br></br>pop-ups at the moment</div>
             ) : (
               pops.slice(0, 2).map((pop, index) => (
-                <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email)}>
+                <div key={index} id="userpopup" onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email,pop.popUp_Name)}>
                   <img src={pop.userImage} alt="PopUp" />
                   <div>
                     <p>{pop.popUp_Name}</p>

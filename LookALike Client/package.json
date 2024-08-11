@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://proj.ruppin.ac.il/cgroup61/test2/tar2/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -31,7 +32,6 @@
     "react-leaflet": "^4.2.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.1",
-    "react-webcam-barcode-scanner": "^0.0.2-rc2",
     "styled-components": "^6.1.10"
   },
   "devDependencies": {
@@ -42,6 +42,8 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "file-loader": "^6.2.0",
+    "url-loader": "^4.1.1",
     "vite": "^5.2.0"
   }
 }
