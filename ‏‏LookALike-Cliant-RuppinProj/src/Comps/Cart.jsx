@@ -7,7 +7,7 @@ import ConfirmationModal from "./ConfirmationModal"; // Import the modal
 import "../CSS/PopUp.css";
 
 const Cart = () => {
-    const { email, popUpId } = useParams();
+    const { email, popUpId,popupname } = useParams();
     const [cartItems, setCartItems] = useState([]);
     const [showModal, setShowModal] = useState(false); // State for modal visibility
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ const Cart = () => {
     return (
         <div className="app-container">
             <div className="Upload_Header3">
-                <button onClick={() => navigate(`/popup-details/${email}/${popUpId}`)} className="popupback">
+                <button onClick={() => navigate(`/popup-details/${email}/${popUpId}/${popupname}`)} className="popupback">
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </button>
                 <h4 className="cc" id="LogoFont3">Shopping cart</h4>
@@ -65,7 +65,7 @@ const Cart = () => {
                     <button
                         onClick={() => {
                             clearCart();
-                            navigate(`/popup-details/${email}/${popUpId}`);
+                            navigate(`/popup-details/${email}/${popUpId}/${popupname}`);
                         }}
                         className="clear-cart-button"
                         disabled={isCartEmpty} // Disable if the cart is empty

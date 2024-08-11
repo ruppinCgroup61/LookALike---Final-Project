@@ -15,7 +15,7 @@ const AllFriends = () => {
     useEffect(() => {
         const fetchFollowers = async () => {
             try {
-                const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/api/UserFollower/followers/${userEmail}`, {
+                const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/UserFollower/followers/${userEmail}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const AllFriends = () => {
 
         const fetchUsers = async () => {
             try {
-                const response = await fetch("https://proj.ruppin.ac.il/cgroup61/api/User", {
+                const response = await fetch("https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const AllFriends = () => {
 
     const countEntriesForFriendCloset = async (adminUserMail, closetMail) => {
         try {
-            const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/api/Algorithm/AddOrUpdateEntry?adminUserMail=${adminUserMail}&closetMail=${closetMail}`, {
+            const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/Algorithm/AddOrUpdateEntry?adminUserMail=${adminUserMail}&closetMail=${closetMail}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ const AllFriends = () => {
 
     const deleteFriend = async (friendEmail) => {
         try {
-            const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/api/UserFollower/deleteFriend?adminMail=${encodeURIComponent(userEmail)}&friendMail=${encodeURIComponent(friendEmail)}`, {
+            const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/UserFollower/deleteFriend?adminMail=${encodeURIComponent(userEmail)}&friendMail=${encodeURIComponent(friendEmail)}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

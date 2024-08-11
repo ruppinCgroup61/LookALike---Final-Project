@@ -70,7 +70,7 @@ function App() {
         <Route path='/AllPopUp' element={<AllPopUp />}></Route>
         <Route path='/popup-details/:email/:popUpId/:popupname' element={<PopUpDetails />}></Route>
         <Route path='/MySales' element={<MySales />}></Route>
-        <Route path='/Cart/:email/:popUpId' element={<Cart />}></Route>
+        <Route path='/Cart/:email/:popUpId/:popupname' element={<Cart />}></Route>
         <Route path='/Algorithm' element={<Algorithm />}></Route>
         <Route path="/algorithm-calendar" element={<AlgorithmCalendarPage />} />
 

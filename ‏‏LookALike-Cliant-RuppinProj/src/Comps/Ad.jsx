@@ -52,7 +52,7 @@ export default function Ad() {
 
   // Function to navigate to MyWardrobe when the close button is clicked
   const closeAd = () => {
-    navigateTo("/MySales");
+    navigateTo("/MarketPlace");
   };
 
   return (

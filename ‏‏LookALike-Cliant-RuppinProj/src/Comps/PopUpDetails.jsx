@@ -76,7 +76,7 @@ const PopUpDetails = () => {
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <h4 className="cc" id="LogoFont3">{popupname}</h4>
-        <button onClick={() => navigate(`/cart/${email}/${popUpId}`)} className="cart-button">
+        <button onClick={() => navigate(`/cart/${email}/${popUpId}/${popupname}`)} className="cart-button">
           <FiShoppingCart />
           {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </button>
