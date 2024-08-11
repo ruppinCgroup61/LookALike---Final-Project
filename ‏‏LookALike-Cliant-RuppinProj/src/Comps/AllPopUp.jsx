@@ -12,7 +12,7 @@ const AllPopUp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://proj.ruppin.ac.il/api/PopUp/GetActivePopUps`, {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopUp/GetActivePopUps`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -18,7 +18,7 @@ const MySales = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    fetch(`https://proj.ruppin.ac.il/api/ClothingAd/GetAllUserItemsForSale${email}`, {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ClothingAd/GetAllUserItemsForSale${email}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const MySales = () => {
   }, [email]);
 
   const updateItemStatus = (id, statusCheck) => {
-    fetch(`https://proj.ruppin.ac.il/api/Item/UpdateItemStatusAndDeleteAd?itemId=${id}&statusCheck=${statusCheck}`, {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/Item/UpdateItemStatusAndDeleteAd?itemId=${id}&statusCheck=${statusCheck}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const MySales = () => {
         setTimeout(() => setMessage(""), 3000);
 
         // Re-fetch the updated items list to re-render the page
-        fetch(`https://proj.ruppin.ac.il/api/ClothingAd/GetAllUserItemsForSale${email}`, {
+        fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ClothingAd/GetAllUserItemsForSale${email}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

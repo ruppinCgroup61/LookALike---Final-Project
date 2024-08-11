@@ -45,7 +45,7 @@ const LogIn = () => {
 
     console.log(userData);
 
-    fetch("https://proj.ruppin.ac.il/api/User/login", {
+    fetch("https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User/login", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ const LogIn = () => {
       return;
     }
 
-    fetch("https://proj.ruppin.ac.il/api/ForgotPassword/sendVerificationCode", {
+    fetch("https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ForgotPassword/sendVerificationCode", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ phoneNumber: `+972${phoneNumber}` }), // Prepend +972 to phoneNumber
@@ -149,7 +149,7 @@ const LogIn = () => {
       return;
     }
 
-    fetch("https://proj.ruppin.ac.il/api/ForgotPassword/verifyCode", {
+    fetch("https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ForgotPassword/verifyCode", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

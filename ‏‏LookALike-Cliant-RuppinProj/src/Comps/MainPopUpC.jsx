@@ -18,7 +18,7 @@ const MainPopUpC = () => {
 
   useEffect(() => {
     // Fetch active popups
-    fetch(`https://proj.ruppin.ac.il/api/PopUp/GetActivePopUps`, {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopUp/GetActivePopUps`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const MainPopUpC = () => {
       });
 
     // Fetch user items for sale
-    fetch(`https://proj.ruppin.ac.il/api/ClothingAd/GetAllUserItemsForSale${userEmail}`, {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ClothingAd/GetAllUserItemsForSale${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const MainPopUpC = () => {
       });
 
     // Fetch marketplace items
-    fetch(`https://proj.ruppin.ac.il/api/ClothingAd/GetWithFullName`, {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/ClothingAd/GetWithFullName`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

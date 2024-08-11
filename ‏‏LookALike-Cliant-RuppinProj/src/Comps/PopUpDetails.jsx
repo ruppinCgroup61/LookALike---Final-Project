@@ -16,7 +16,7 @@ const PopUpDetails = () => {
 
   useEffect(() => {
     // Fetch items for this pop-up
-    fetch(`https://proj.ruppin.ac.il/api/PopupDetails/GetAllPopUpItems/${email}/${popUpId}`, {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopupDetails/GetAllPopUpItems/${email}/${popUpId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
