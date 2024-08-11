@@ -7,7 +7,6 @@ import '../CSS/AllFriends.css';
 
 const AllFriends = () => {
     const [followers, setFollowers] = useState([]);
-    const [userList, setUserList] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const userEmail = sessionStorage.getItem('email');
@@ -15,7 +14,7 @@ const AllFriends = () => {
     useEffect(() => {
         const fetchFollowers = async () => {
             try {
-                const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/UserFollower/followers/${userEmail}`, {
+                const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/UserFollower/GetUserFriendsList/${userEmail}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -23,33 +22,14 @@ const AllFriends = () => {
                 });
                 const data = await response.json();
                 console.log(data);
-                setFollowers(data.filter(follower => follower.follower_Email === userEmail));
+                setFollowers(data);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching followers:', error);
             }
         };
 
-        const fetchUsers = async () => {
-            try {
-                const response = await fetch("https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                const data = await response.json();
-                setUserList(data);
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
-
-        const fetchData = async () => {
-            await Promise.all([fetchFollowers(), fetchUsers()]);
-            setLoading(false);
-        };
-
-        fetchData();
+        fetchFollowers();
     }, [userEmail]);
 
     const countEntriesForFriendCloset = async (adminUserMail, closetMail) => {
@@ -72,22 +52,9 @@ const AllFriends = () => {
         }
     };
 
-    const goToFollowerCloset = (email) => {
+    const goToFollowerCloset = (email, fullName) => {
         countEntriesForFriendCloset(userEmail, email); // Call the function to update entry count
-        const user = userList.find(user => user.email === email);
-        if (user) {
-            navigate(`/follower-closet/${email}`, { state: { fullName: `${user.firstName} ${user.lastName}` } });
-        }
-    };
-
-    const getUserImage = (email) => {
-        const user = userList.find(user => user.email === email);
-        return user ? user.image : 'default-image-path'; // Default image path if user or image not found
-    };
-
-    const getUserFullName = (email) => {
-        const user = userList.find(user => user.email === email);
-        return user ? `${user.firstName} ${user.lastName}` : 'Unknown User';
+        navigate(`/follower-closet/${email}`, { state: { fullName } });
     };
 
     const deleteFriend = async (friendEmail) => {
@@ -169,15 +136,15 @@ const AllFriends = () => {
                         <div key={index} className="all-friend-card-container">
                             <div
                                 className="all-friend-card"
-                                onClick={() => goToFollowerCloset(follower.following_Email)}
+                                onClick={() => goToFollowerCloset(follower.following_Email, follower.fullName)}
                             >
                                 <img
-                                    src={getUserImage(follower.following_Email)}
-                                    alt={`Profile of ${getUserFullName(follower.following_Email)}`}
+                                    src={follower.userImage || 'default-image-path'}
+                                    alt={`Profile of ${follower.fullName}`}
                                     className="all-friend-image"
                                 />
                                 <div className="all-friend-info">
-                                    <span className="all-friend-name">{getUserFullName(follower.following_Email)}</span>
+                                    <span className="all-friend-name">{follower.fullName}</span>
                                 </div>
                             </div>
                             <div className="delete-friend-button" onClick={() => deleteFriend(follower.following_Email)}>

@@ -45,6 +45,35 @@ namespace LookALike_Server.Controllers
             }
         }
 
+        [HttpGet("GetUserFriendsList/{Follower_Email}")]
+        public ActionResult<List<object>> GetUserFriendsList(string Follower_Email)
+        {
+            try
+            {
+                // Create an instance of UserFollowers class
+                UserFollowers userFollowers = new UserFollowers("", Follower_Email);
+
+                // Call the method to search for followers' emails
+                List<object> followerEmails = userFollowers.GetUserFriendsList(Follower_Email);
+
+                if (followerEmails.Count > 0)
+                {
+                    // Found followers, return them
+                    return followerEmails;
+                }
+                else
+                {
+                    // No followers found
+                    return NotFound("No followers found for the specified following email.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         // POST api/<UserController>
         [HttpPost]
         public int Post([FromBody] UserFollowers userF)

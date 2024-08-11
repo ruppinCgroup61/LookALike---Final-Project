@@ -1349,6 +1349,80 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
+    // This method read all bottom items from the database 
+    //--------------------------------------------------------------------------------------------------
+    public List<object> GetUserFriendsList(string email)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+        List<object> UserFollowers_List = new List<object>();
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadGetUserFriendsListWithStoredProcedureWithParameters("sp_LAL_GetUserFriendsList", con, email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                var FollowerObj = new
+                {
+                    Following_Email = dataReader["Following_Email"].ToString(),
+                    FullName = dataReader["FullName"].ToString(),
+                    UserImage = dataReader["Image"].ToString(),
+                };
+                UserFollowers_List.Add(FollowerObj);
+
+            }
+            return UserFollowers_List;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the command with stored procedure and parameters
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadGetUserFriendsListWithStoredProcedureWithParameters(string spName, SqlConnection con, string email)
+    {
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;          // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        // Add parameters
+        cmd.Parameters.AddWithValue("@Follower_Email", email);
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
     // This method reads ClothingAds from the database 
     //--------------------------------------------------------------------------------------------------
     public List<ClothingAd> ReadClothingAds()

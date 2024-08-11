@@ -29,6 +29,12 @@
             return dbs.SearchUserFollowers(email);
         }
 
+        public List<object> GetUserFriendsList(string email)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetUserFriendsList(email);
+        }
+
         public int InsertNewFollower()
         {
             DBservices dbs = new DBservices();

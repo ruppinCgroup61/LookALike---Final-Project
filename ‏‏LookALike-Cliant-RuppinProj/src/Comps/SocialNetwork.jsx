@@ -22,31 +22,40 @@ export default function SocialNetwork() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [followers, setFollowers] = useState([]);
-  const [userList, setUserList] = useState([]);
-  const [validEmail, setValidEmail] = useState(false);
   const [likedItems, setLikedItems] = useState([]);
+  const [validEmail, setValidEmail] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const userEmail = sessionStorage.getItem("email");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/UserFollower/followers/${userEmail}`),
-      fetch("https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User"),
-      fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/Algorithm/GetAllLikedItems?AdminUserMail=${userEmail}`)
-    ]).then(async ([followersRes, usersRes, likedItemsRes]) => {
-      const followersData = await followersRes.json();
-      const usersData = await usersRes.json();
-      const likedItemsData = await likedItemsRes.json();
+    const fetchData = async () => {
+      try {
+        // Fetch followers and friends data from the new API
+        const response = await fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/UserFollower/GetUserFriendsList/${userEmail}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        setFollowers(data); // Assuming the API returns data in a 'friends' array
+        console.log(followers);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching followers:', error);
+        setLoading(false);
+      }
+    };
 
-      setFollowers(followersData.filter((follower) => follower.follower_Email === userEmail));
-      setUserList(usersData);
-      setLikedItems(likedItemsData);
-      setLoading(false);
-    }).catch(error => {
-      console.error("Error fetching data:", error);
-      setLoading(false);
-    });
+    fetchData();
+
+    // Fetch liked items from the separate API
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/Algorithm/GetAllLikedItems?AdminUserMail=${userEmail}`)
+      .then(response => response.json())
+      .then(data => setLikedItems(data))
+      .catch(error => console.error('Error fetching liked items:', error));
   }, [userEmail]);
 
   const handleClickOpen = () => {
@@ -129,22 +138,7 @@ export default function SocialNetwork() {
 
   const goToFollowerCloset = (email) => {
     countEntriesForFriendCloset(userEmail, email);
-    const user = userList.find((user) => user.email === email);
-    if (user) {
-      navigate(`/follower-closet/${email}`, {
-        state: { fullName: `${user.firstName} ${user.lastName}` },
-      });
-    }
-  };
-
-  const getUserImage = (email) => {
-    const user = userList.find((user) => user.email === email);
-    return user ? user.image : "default-image-path";
-  };
-
-  const getUserFullName = (email) => {
-    const user = userList.find((user) => user.email === email);
-    return user ? `${user.firstName} ${user.lastName}` : "Unknown User";
+    navigate(`/follower-closet/${email}`);
   };
 
   const getRandomFriends = () => {
@@ -217,16 +211,15 @@ export default function SocialNetwork() {
                   onClick={() => goToFollowerCloset(follower.following_Email)}
                 >
                   <img
-                    src={getUserImage(follower.following_Email)}
-                    alt={`Profile of ${follower.userYouFollow_Full_Name}`}
+                    src={follower.userImage}
+                    alt={`Profile of ${follower.fullName}`}
                     className="follower-image"
                   />
-                  <span>@{follower.userYouFollow_Full_Name}</span>
+                  <span>@{follower.fullName}</span>
                 </div>
               ))
             )}
           </div>
-
           <button
             className="next-button"
             onClick={() => navigate("/all-friends")}
@@ -266,7 +259,7 @@ export default function SocialNetwork() {
             ) : (
               <Carousel.Item>
                 <div className="d-flex justify-content-center2">
-                  <p>There are no liked items yet</p>
+                  <p>No liked items yet</p>
                 </div>
               </Carousel.Item>
             )}
@@ -275,44 +268,41 @@ export default function SocialNetwork() {
       </div>
       <NaviBarFooter />
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add a Friend</DialogTitle>
+        <DialogTitle>Add New Friend</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
             id="friendEmail"
-            label="Friend Email"
+            label="Friend's Email Address"
             type="email"
             fullWidth
+            variant="standard"
             value={friendEmail}
             onChange={handleEmailChange}
-            error={!validEmail && friendEmail.length > 0}
-            helperText={
-              !validEmail && friendEmail.length > 0
-                ? "Invalid email address"
-                : ""
-            }
+            error={!validEmail}
+            helperText={!validEmail ? "Invalid email format" : ""}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button
             onClick={handleAddFriend}
-            color="primary"
             disabled={!validEmail}
           >
-            Add
+            Add Friend
           </Button>
         </DialogActions>
       </Dialog>
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={6000}
+        autoHideDuration={2000}
         onClose={() => setOpenSnackbar(false)}
       >
-        <SnackbarContent message={snackbarMessage} />
+        <SnackbarContent
+          message={snackbarMessage}
+          style={{ backgroundColor: snackbarMessage.includes("success") ? "green" : "red" }}
+        />
       </Snackbar>
     </div>
   );
