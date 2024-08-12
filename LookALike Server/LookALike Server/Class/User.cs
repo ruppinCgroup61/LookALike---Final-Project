@@ -76,6 +76,12 @@
             return user;
         }
 
+        public User ReadUserByMail(string email)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.ReadUserByMail(email);
+        }
+
 
         public int UpdateUser()
         {

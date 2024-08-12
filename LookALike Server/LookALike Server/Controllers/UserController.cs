@@ -21,6 +21,14 @@ namespace LookALike_Server.Controllers
             return user.Read();
         }
 
+        // GET: api/<UserController>
+        [HttpGet("ReadUserByMail{Email}")]
+        public User Get(string Email)
+        {
+            User user = new User();
+            return user.ReadUserByMail(Email);
+        }
+
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         public string Get(int id)

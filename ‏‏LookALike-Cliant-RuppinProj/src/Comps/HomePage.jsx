@@ -3,21 +3,14 @@ import "../CSS/HomePage.css";
 import NaviBarFooter from "../Comps/NaviBarFooter";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useNavigate } from "react-router-dom";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { IoCloseOutline } from "react-icons/io5";
 
 export default function HomePage() {
-  const [userList, setUserList] = useState([]);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editedUser, setEditedUser] = useState(null);
-  const [notifications, setNotifications] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
   const userEmail = sessionStorage.getItem("email");
   const navigate = useNavigate();
 
@@ -26,7 +19,7 @@ export default function HomePage() {
   }, []);
 
   const fetchUserDetails = () => {
-    fetch("https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User", {
+    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/User/ReadUserByMail${userEmail}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -39,9 +32,8 @@ export default function HomePage() {
         return response.json();
       })
       .then((data) => {
-        setUserList([...data]);
-        const currentUser = data.find((user) => user.email === userEmail);
-        setEditedUser(currentUser);
+        setUser(data);
+        setEditedUser(data);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
@@ -59,38 +51,9 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // useEffect(() => {
-  //   const ws = new WebSocket("ws://https://proj.ruppin.ac.il/cgroup61/test2/tar1/ws");
-
-  //   ws.onopen = () => {
-  //     console.log("Connected to WebSocket server");
-  //   };
-
-  //   ws.onmessage = (event) => {
-  //     const message = event.data;
-  //     setNotifications((prevNotifications) => [...prevNotifications, message]);
-  //   };
-
-  //   ws.onclose = () => {
-  //     console.log("Disconnected from WebSocket server");
-  //   };
-
-  //   return () => {
-  //     ws.close();
-  //   };
-  // }, []);
-
   const handleLogout = () => {
     sessionStorage.clear();
     navigate("/cgroup61/test2/tar3/");
-  };
-
-  const handleNotificationClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleNotificationClose = () => {
-    setAnchorEl(null);
   };
 
   const handleEditClick = () => {
@@ -134,79 +97,54 @@ export default function HomePage() {
     );
   }
 
-  let u = "";
-  if (userList && userList.length > 0) {
-    u = userList.find((user) => user.email === userEmail);
+  if (!user) {
+    return <div>Error loading user data</div>;
   }
 
   return (
     <div className="container">
       <div className="top-div">
         <div className="user-circle" onClick={() => setShowPopup(true)}>
-          <img src={u.image} alt="User" />
+          <img src={user.image} alt="User" />
         </div>
         <h1 className="welcome-text">
-          Welcome {u.firstName} {u.lastName}
-          {/* <IconButton color="inherit" onClick={handleNotificationClick}>
-            <Badge badgeContent={notifications.length} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleNotificationClose}
-          >
-            {notifications.map((notification, index) => (
-              <MenuItem key={index} onClick={handleNotificationClose}>
-                {notification}
-              </MenuItem>
-            ))}
-          </Menu> */}
+          Welcome {user.firstName} {user.lastName}
         </h1>
       </div>
       {showPopup && (
-        <div
-          className="popupInHP"
-          style={{
-            position: "absolute",
-            // left: 'calc(100% + 10px)',
-            top: "170px",
-            border: "1px solid grey",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-            padding: "10px",
-            // backgroundColor: "rgb(238, 232, 230)",
-            background: "linear-gradient(#eeee, #ffff)",
-            // backgroundImage: "linear-gradient(to left, #c1b1a7 0%, #c39b8b 51%, #b89587 100%)",
-            zIndex: 1000,
-          }}
-        >
+        <div className="popupInHP" style={{
+          position: "absolute",
+          // left: 'calc(100% + 10px)',
+          top: "170px",
+          border: "1px solid grey",
+          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+          padding: "10px",
+          // backgroundColor: "rgb(238, 232, 230)",
+          background: "linear-gradient(#eeee, #ffff)",
+          // backgroundImage: "linear-gradient(to left, #c1b1a7 0%, #c39b8b 51%, #b89587 100%)",
+          zIndex: 1000,
+        }}>
           <button className="picPopUpBtn" onClick={handleLogout}>
             Log out
           </button>
           <button className="picPopUpBtn" onClick={handleEditClick}>
             Edit user
           </button>
-          {/* <button className="picPopUpBtn" onClick={() => setShowPopup(false)}>
-            Close
-          </button> */}
-          <IoCloseOutline className="ClosepicPopUpBtn" onClick={() => setShowPopup(false)}/>
+          <IoCloseOutline className="ClosepicPopUpBtn" onClick={() => setShowPopup(false)} />
         </div>
       )}
       {showEditForm && (
-        <div
-          className="edit-form"
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "white",
-            padding: "60px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-            zIndex: 1000,
-          }}
-        >
+        <div className="edit-form" style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "linear-gradient(#eeee, #ffff)",
+          padding: "15px",
+          boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+          zIndex: 1000,
+        }}>
+          <h2>Update User Details:</h2>
           <input
             type="email"
             name="email"

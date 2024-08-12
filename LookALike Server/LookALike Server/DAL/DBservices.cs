@@ -194,6 +194,86 @@ public class DBservices
     }
 
     //--------------------------------------------------------------------------------------------------
+    // This method reads User from the database 
+    //--------------------------------------------------------------------------------------------------
+    public User ReadUserByMail(string Email)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        User u = new User();
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = ReadUserWithStoredProcedureWithoutParameters("sp_LAL_ReadUserByMail", con, Email);   // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                u.Email = dataReader["Email"].ToString();
+                u.FirstName = dataReader["First_Name"].ToString();
+                u.LastName = dataReader["Last_Name"].ToString();
+                u.Image = dataReader["Image"].ToString();
+                u.PhoneNumber = dataReader["Phone_Number"].ToString();
+                // Retrieve Date_of_birth as DateTime
+                DateTime dateOfBirth = (DateTime)dataReader["Date_of_Birth"];
+                // Convert DateTime to DateOnly
+                u.DateOfBirth = dateOfBirth;
+                u.Password = dataReader["Password"].ToString();
+                u.IsBusiness = Convert.ToBoolean(dataReader["Is_Business"]);
+            }
+            return u;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure
+    //---------------------------------------------------------------------------------
+    private SqlCommand ReadUserWithStoredProcedureWithoutParameters(String spName, SqlConnection con, string Email)
+    {
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 20;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@UserMail", Email);
+
+
+        return cmd;
+    }
+
+    //--------------------------------------------------------------------------------------------------
     // This method Update User from the database 
     //--------------------------------------------------------------------------------------------------
     public int UpdateUser(User user)
