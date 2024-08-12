@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import Modal from "react-modal";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function UploadItem() {
   const [formDataUpload, setFormData] = useState({
@@ -42,6 +43,7 @@ function UploadItem() {
   const [isSeasonModalOpen, setIsSeasonModalOpen] = useState(false);
   const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Fetch all brands and clothing types when the component mounts
@@ -137,6 +139,7 @@ function UploadItem() {
 
   const SubmitUpload = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     if (!isFormValid) {
       setSnackbarMessage("Please fill all required fields");
       setOpenSnackbar(true);
@@ -152,8 +155,10 @@ function UploadItem() {
         },
         body: JSON.stringify(formDataUpload),
       })
+
         .then((response) => {
           if (!response.ok) {
+            setIsLoading(false);
             throw new Error("Catch Error");
           }
           return response.json();
@@ -162,10 +167,12 @@ function UploadItem() {
           console.log(data);
           if (data === -1) {
             console.log("item exists");
+            setIsLoading(false);
           }
           if (data === 1) {
             console.log("item added successfully");
             setSnackbarMessage(`item added successfully`);
+            setIsLoading(false);
             setOpenSnackbar(true);
             setTimeout(() => {
               setOpenSnackbar(false);
@@ -176,6 +183,7 @@ function UploadItem() {
           }
         })
         .catch((error) => {
+          setIsLoading(false);
           console.error("Error during registration:", error);
         });
     } else {
@@ -193,6 +201,7 @@ function UploadItem() {
       })
         .then((response) => {
           if (!response.ok) {
+            setIsLoading(false);
             throw new Error("Catch Error");
           }
           return response.text();
@@ -202,6 +211,7 @@ function UploadItem() {
           if (data === "Item successfully inserted into the popup.") {
             console.log("item added successfully");
             setSnackbarMessage(`item added successfully`);
+            setIsLoading(false);
             setOpenSnackbar(true);
             setTimeout(() => {
               setOpenSnackbar(false);
@@ -209,10 +219,12 @@ function UploadItem() {
             }, 2000);
           } else {
             console.log("Failed to add item:", data);
+            setIsLoading(false);
           }
         })
         .catch((error) => {
           console.error("Error during registration:", error);
+          setIsLoading(false);
         });
     }
   };
@@ -304,6 +316,14 @@ function UploadItem() {
   const ChangeColor = (color_Code) => {
     setFormData((prev) => ({ ...prev, color_Code }));
   };
+
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <CircularProgress color="inherit" />
+      </div>
+    );
+  }
 
   return (
     <div className="Upload_Container">

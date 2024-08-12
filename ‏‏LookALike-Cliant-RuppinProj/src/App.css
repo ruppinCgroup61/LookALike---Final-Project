@@ -15,6 +15,8 @@ body {
 }
 
 #map_container {
+  position: relative;
+  left: 10px;
   height: 300px;
   width: 100%;
   margin: 0;

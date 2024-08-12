@@ -62,8 +62,19 @@
     border-radius: 8px;
 }
 
-.ad_container a {
+.whatsapp_icon {
     position: relative;
-    top: 0px;
+    bottom: 2px;
     right: 5px;
+}
+
+.ad_img {
+    position: relative;
+}
+
+.ad_img h3 {
+    position: absolute;
+    top: 5px;
+    left: 80px;
+    margin: 0;
 }

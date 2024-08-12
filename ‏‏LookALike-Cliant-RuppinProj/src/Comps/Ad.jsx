@@ -58,14 +58,18 @@ export default function Ad() {
   return (
     <>
       <div className="ad_container">
+        <div className="ad_img">
+        <h3>{foundAd.itemSize}</h3>
         <img src={foundAd.item_Image} alt={foundAd.itemName} />
-        <h3 style={{marginBottom: 0}}>{foundAd.itemName.toUpperCase()} ( {foundAd.itemSize} )</h3>
-        <h3 style={{marginTop: 0}}>by {foundAd.fullName.toUpperCase()}</h3>
+        </div>
+        <h3 style={{marginBottom: 10}}>{foundAd.itemName.toUpperCase()}</h3>
+        {/* <h3>Size: {foundAd.itemSize}</h3> */}
+        <h3 style={{marginTop: 0}}>By {foundAd.fullName.toUpperCase()}</h3>
         <p>Price: {foundAd.price}$</p>
         <p>Condition: {foundAd.condition1}</p>
         {/* Link that triggers the openWhatsApp function */}
-        <p style={{marginBottom: 20}}>
-          <a href="#" onClick={openWhatsApp} style={{ color: "black" }}>
+        <p style={{marginBottom: 20, position: 'relative'}}>
+          <a href="#" onClick={openWhatsApp} className="whatsapp_icon" style={{ color: "black" }}>
             <FaWhatsapp />
           </a>
           0{foundAd.phone_Number}

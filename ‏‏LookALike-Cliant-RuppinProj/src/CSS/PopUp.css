@@ -9,12 +9,50 @@
 }
 
 #list-All-pop {
+    position: absolute;
+    top: 75px;
+    left: 0px;
+    right: 0px;
     display: flex;
     flex-direction: column;
     /* מוודא שכל פופ אפ יהיה בשורה נפרדת */
     align-items: center;
     /* מרכז את הפופ אפים באמצע */
     margin-top: 10px;
+}
+
+#popupdetails img {
+    position: relative;
+    width: 160px;
+    height: 240px;
+    object-fit: cover;
+}
+
+.add-to-cart-button {
+    position: absolute;
+    top: 200px;
+    right: 0px;
+    background-color: rgb(255 255 255 / 0%);
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+    /* background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px; */
+    background-color: inherit; 
+    color: inherit; 
+}
+
+#PU_cl {
+    margin-top: 25px;
+}
+
+#PU_cl2 {
+    margin-top: 15px;
 }
 
 #userpopup {
@@ -87,12 +125,11 @@
     position: absolute;
     left: -20px;
     border: white;
-    top: -5px;
+    top: -2px;
 
 }
 
 .cc {
-
     font-size: 30px;
 }
 
@@ -144,18 +181,6 @@
     box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
 }
 
-.add-to-cart-button {
-    position: absolute;
-    top: 200px;
-    right: 0px;
-    background-color: rgb(255 255 255 / 0%);
-    border: none;
-    border-radius: 50%;
-    padding: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
 .add-to-bin-button {
     position: absolute;
     top: 200px;
@@ -166,10 +191,6 @@
     padding: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.add-to-cart-button:hover {
-    background-color: rgba(255, 255, 255, 1);
 }
 
 .add-to-cart-button svg {
@@ -221,9 +242,8 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+    padding-top: 0px;
     background-color: #fefefe;
-
-
     border-bottom: 1px solid white;
 }
 
@@ -233,6 +253,7 @@
 
 .p_ {
     margin-bottom: 1px;
+    font-size: 18px;
 }
 
 .notification {

@@ -23,6 +23,7 @@ const TopSelectionPage = ({ setSelectedTop }) => {
     })
       .then((response) => {
         if (!response.ok) {
+          setIsLoading(false);
           console.log("Error fetching tops");
           throw new Error("Error fetching tops");
         }

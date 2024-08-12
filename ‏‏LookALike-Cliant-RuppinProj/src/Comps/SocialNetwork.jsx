@@ -24,6 +24,7 @@ export default function SocialNetwork() {
   const [followers, setFollowers] = useState([]);
   const [likedItems, setLikedItems] = useState([]);
   const [validEmail, setValidEmail] = useState(false);
+  const [touched, setTouched] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const userEmail = sessionStorage.getItem("email");
@@ -87,17 +88,20 @@ export default function SocialNetwork() {
       .then((data) => {
         if (data === 1) {
           setSnackbarMessage(`Friend added successfully`);
+          setFriendEmail("")
         }
         if (data === 0) {
           setSnackbarMessage(`Friend already exists`);
+          setFriendEmail("")
         }
         if (data === -1) {
           setSnackbarMessage(`Email does not exist in the system`);
+          setFriendEmail("")
         }
         setOpenSnackbar(true);
         setTimeout(() => {
           setOpenSnackbar(false);
-          window.location.reload();
+          // window.location.reload();
         }, 2000);
       })
       .catch((error) => {
@@ -111,6 +115,7 @@ export default function SocialNetwork() {
     setFriendEmail(email);
     const isValidEmail = /\S+@\S+\.\S+/.test(email);
     setValidEmail(isValidEmail);
+    setTouched(true);
   };
 
   const countEntriesForFriendCloset = async (adminUserMail, closetMail) => {
@@ -280,7 +285,7 @@ export default function SocialNetwork() {
             variant="standard"
             value={friendEmail}
             onChange={handleEmailChange}
-            error={!validEmail}
+            error={touched && !validEmail}
             helperText={!validEmail ? "Invalid email format" : ""}
           />
         </DialogContent>

@@ -24,6 +24,7 @@ export default function ItemsInPopup() {
     )
       .then((response) => {
         if (!response.ok) {
+          setIsLoading(false);
           throw new Error("Network response was not ok");
         }
         return response.json();
@@ -80,7 +81,7 @@ export default function ItemsInPopup() {
           </button>
           <h2 id="PUh2header">{sessionStorage.getItem("PopupName")}</h2>
         </div>
-        <div className="PUclothing-list">
+        <div className="PUclothing-list" id="PU_cl2">
           {dataFromServer.map((item, index) => (
             <div key={index} className="clothing-item">
               <div className="clothing-image">
