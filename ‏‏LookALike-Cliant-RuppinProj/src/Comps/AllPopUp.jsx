@@ -12,12 +12,15 @@ const AllPopUp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopUp/GetActivePopUps`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/PopUp/GetActivePopUps`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -40,7 +43,7 @@ const AllPopUp = () => {
     return `${day}.${month}.${year}`;
   };
 
-  const handlePopUpClick = (popUpId, userEmail,popupname) => {
+  const handlePopUpClick = (popUpId, userEmail, popupname) => {
     navigate(`/popup-details/${userEmail}/${popUpId}/${popupname}`);
   };
 
@@ -51,7 +54,9 @@ const AllPopUp = () => {
           <button onClick={() => navigate("/MainPopUpC")} className="popupback">
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>
-          <h4 className="cc" id="LogoFont3">All Pop-Ups</h4>
+          <h4 className="cc" id="LogoFont3">
+            All Pop-Ups
+          </h4>
         </div>
 
         <div id="list-All-pop">
@@ -67,12 +72,17 @@ const AllPopUp = () => {
               <div
                 key={index}
                 id="userpopup"
-                onClick={() => handlePopUpClick(pop.popUp_Id, pop.user_Email,pop.popUp_Name)}
+                onClick={() =>
+                  handlePopUpClick(pop.popUp_Id, pop.user_Email, pop.popUp_Name)
+                }
               >
                 <img src={pop.userImage} alt="PopUp" />
                 <div>
+                  <p>{pop.popUp_Name}</p>
                   <p>{pop.fullUserName}</p>
-                  <p>{formatDate(pop.startDate)} - {formatDate(pop.endDate)}</p>
+                  <p>
+                    {formatDate(pop.startDate)} - {formatDate(pop.endDate)}
+                  </p>
                 </div>
               </div>
             ))

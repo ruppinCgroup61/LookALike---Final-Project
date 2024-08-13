@@ -19,6 +19,7 @@
     align-items: center;
     /* מרכז את הפופ אפים באמצע */
     margin-top: 10px;
+    padding-bottom: 50px;
 }
 
 #popupdetails img {

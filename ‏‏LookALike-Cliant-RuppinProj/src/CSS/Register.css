@@ -254,7 +254,7 @@ body {
     position: absolute;
     bottom: -60px;
     left: 0px;
-    right: inherit;
+    right: 0px;
     font-size: 27px;
     font-family: "El Messiri", sans-serif;
     font-optical-sizing: auto;
