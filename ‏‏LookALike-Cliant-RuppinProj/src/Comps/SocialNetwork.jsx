@@ -28,6 +28,7 @@ export default function SocialNetwork() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const userEmail = sessionStorage.getItem("email");
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,10 +55,10 @@ export default function SocialNetwork() {
 
     // Fetch liked items from the separate API
     fetch(`https://proj.ruppin.ac.il/cgroup61/test2/tar1/api/Algorithm/GetAllLikedItems?AdminUserMail=${userEmail}`)
-      .then(response => response.json())
-      .then(data => setLikedItems(data))
-      .catch(error => console.error('Error fetching liked items:', error));
-  }, [userEmail]);
+    .then(response => response.json())
+    .then(data => setLikedItems(data))
+    .catch(error => console.error('Error fetching liked items:', error));
+}, [userEmail, refreshTrigger]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,20 +89,20 @@ export default function SocialNetwork() {
       .then((data) => {
         if (data === 1) {
           setSnackbarMessage(`Friend added successfully`);
-          setFriendEmail("")
+          setFriendEmail("");
+          setRefreshTrigger(prev => prev + 1); // זה יגרום לרינדור מחדש
         }
         if (data === 0) {
           setSnackbarMessage(`Friend already exists`);
-          setFriendEmail("")
+          setFriendEmail("");
         }
         if (data === -1) {
           setSnackbarMessage(`Email does not exist in the system`);
-          setFriendEmail("")
+          setFriendEmail("");
         }
         setOpenSnackbar(true);
         setTimeout(() => {
           setOpenSnackbar(false);
-          // window.location.reload();
         }, 2000);
       })
       .catch((error) => {
