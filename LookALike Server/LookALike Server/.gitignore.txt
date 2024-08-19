@@ -1,0 +1,2 @@
+# Ignore the appsettings.json file to protect sensitive data
+LookALike Server/LookALike Server/appsettings.json
